@@ -9,11 +9,14 @@
 			<Target title="Debug">
 				<Option output="bin\Debug\SDL_SimpleControls" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Debug\" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add library="libsdl_ttf.dll" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin\Release\SDL_SimpleControls" prefix_auto="1" extension_auto="1" />
@@ -25,6 +28,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="libsdl_ttf.dll" />
 				</Linker>
 			</Target>
 		</Build>
@@ -42,6 +46,19 @@
 			<Add library="dxguid" />
 			<Add directory="$(#sdl.lib)" />
 		</Linker>
+		<Unit filename="SDL_Button.cpp" />
+		<Unit filename="SDL_Button.h" />
+		<Unit filename="SDL_Glyph.cpp" />
+		<Unit filename="SDL_Glyph.h" />
+		<Unit filename="SDL_Image.cpp" />
+		<Unit filename="SDL_Image.h" />
+		<Unit filename="SDL_Setting.h" />
+		<Unit filename="SDL_SimpleControls.cbp" />
+		<Unit filename="SDL_SimpleControls.h" />
+		<Unit filename="SDL_Text.cpp" />
+		<Unit filename="SDL_Text.h" />
+		<Unit filename="SDL_Widget.cpp" />
+		<Unit filename="SDL_Widget.h" />
 		<Unit filename="cb.bmp" />
 		<Unit filename="main.cpp" />
 		<Extensions>

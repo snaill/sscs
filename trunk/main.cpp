@@ -32,7 +32,6 @@ SDL_Glyph * CreateTestScreen()
     SDL_Button * pButton = new SDL_Button("cb.bmp");
     pButton->SetBounds( &rc );
     return pButton;
-//    return p;
 }
 
 int main ( int argc, char** argv )
