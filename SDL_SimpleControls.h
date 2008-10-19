@@ -17,7 +17,6 @@
 #include "SDL_Glyph.h"
 #include "SDL_Image.h"
 #include "SDL_Text.h"
-#include "SDL_Container.h"
 #include "SDL_Button.h"
 
 #endif // SDL_SIMPLECONTROLS_H_INCLUDED
