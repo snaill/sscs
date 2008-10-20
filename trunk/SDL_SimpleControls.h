@@ -37,5 +37,6 @@
 #include "SDL_Image.h"
 #include "SDL_Text.h"
 #include "SDL_Button.h"
+#include "SDL_MessageBox.h"
 
 #endif // SDL_SIMPLECONTROLS_H_INCLUDED

@@ -24,25 +24,28 @@ SDL_Setting * SDL_Setting::m_this = 0;
 
 SDL_Glyph * CreateTestScreen()
 {
-    SDL_Image * pImage = new SDL_Image("cb.bmp");
-
-    SDL_Status status;
-    SDL_Text * pText = new SDL_Text( "cb.bmp" );
-    pText->GetTextStatus( &status );
-    status.type = SDL_TEXTSTATUS;
-    status.text.size = 13;
-    status.text.crText.r = 0;
-    status.text.crText.g = 0;
-    status.text.crText.b = 0;
-    pText->SetTextStatus( &status );
-
+//    SDL_Image * pImage = new SDL_Image("cb.bmp");
+//
+//    SDL_Status status;
+//    SDL_Text * pText = new SDL_Text( "cb.bmp" );
+//    pText->GetTextStatus( &status );
+//    status.type = SDL_TEXTSTATUS;
+//    status.text.size = 13;
+//    status.text.crText.r = 0;
+//    status.text.crText.g = 0;
+//    status.text.crText.b = 0;
+//    pText->SetTextStatus( &status );
+//
     SDL_Rect  rc;
     rc.x = rc.y = 100;
-    rc.w = rc.h = 100;
-//    SDL_Button * pButton = new SDL_Button( pText );
-    SDL_Button * pButton = new SDL_Button( pImage );
-    pButton->SetBounds( &rc );
-    return pButton;
+    rc.w = rc.h = 200;
+////    SDL_Button * pButton = new SDL_Button( pText );
+//    SDL_Button * pButton = new SDL_Button( pImage );
+//    pButton->SetBounds( &rc );
+//    return pButton;
+    SDL_MessageBox * pmsg = new SDL_MessageBox( "Test MessageBox", "This is a MessageBox" );
+    pmsg->SetBounds( &rc );
+    return pmsg;
 }
 
 int main ( int argc, char** argv )

@@ -50,7 +50,7 @@ protected:
 
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-    virtual void DrawWidget( SDL_Surface * screen ) = 0;
+    virtual void DrawWidget( SDL_Surface * screen ) {}
 
     virtual void OnMouseEnter() {}
     virtual void OnMouseLeave() {}
