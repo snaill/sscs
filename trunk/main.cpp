@@ -1,19 +1,21 @@
 /*
- * main.cpp
- * Copyright (C) Snaill 2008 <snaill@jeebook.com>
+ * SDL_SimpleControls
+ * Copyright (C) 2008 Snaill
  *
-    main.cpp is free software: you can redistribute it and/or modify it
+    SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    main.c is distributed in the hope that it will be useful, but
+    SDL_SimpleControls is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
     See the GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Snaill  <snaill@jeebook.com>
  */
 
 #include "SDL_SimpleControls.h"
@@ -22,14 +24,23 @@ SDL_Setting * SDL_Setting::m_this = 0;
 
 SDL_Glyph * CreateTestScreen()
 {
-//    SDL_Container * p = new SDL_Container();
-//    p->Add( new SDL_Image("cb.bmp") );
-  //  p->Add( new SDL_Text("this is a test!") );
-  SDL_Rect  rc;
-  rc.x = rc.y = 100;
-  rc.w = 100;
-  rc.h = 100;
-    SDL_Button * pButton = new SDL_Button("cb.bmp");
+    SDL_Image * pImage = new SDL_Image("cb.bmp");
+
+    SDL_Status status;
+    SDL_Text * pText = new SDL_Text( "cb.bmp" );
+    pText->GetTextStatus( &status );
+    status.type = SDL_TEXTSTATUS;
+    status.text.size = 13;
+    status.text.crText.r = 0;
+    status.text.crText.g = 0;
+    status.text.crText.b = 0;
+    pText->SetTextStatus( &status );
+
+    SDL_Rect  rc;
+    rc.x = rc.y = 100;
+    rc.w = rc.h = 100;
+//    SDL_Button * pButton = new SDL_Button( pText );
+    SDL_Button * pButton = new SDL_Button( pImage );
     pButton->SetBounds( &rc );
     return pButton;
 }

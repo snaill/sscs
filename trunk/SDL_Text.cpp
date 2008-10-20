@@ -1,23 +1,27 @@
 /*
- * SDL_Text.cpp
- * Copyright (C) Snaill 2008 <snaill@jeebook.com>
+ * SDL_SimpleControls
+ * Copyright (C) 2008 Snaill
  *
-    SDL_Text.cpp is free software: you can redistribute it and/or modify it
+    SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    main.c is distributed in the hope that it will be useful, but
+    SDL_SimpleControls is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
     See the GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Snaill  <snaill@jeebook.com>
  */
 
 #include "SDL_Text.h"
 #include "SDL_Setting.h"
+
+const char *pszFontName="C:\\Windows\\Fonts\\arial.ttf";
 
 SDL_Text::SDL_Text( const char * text )
 {
@@ -44,17 +48,34 @@ SDL_Text::~SDL_Text(void)
         delete[] m_pszText;
 }
 
-void SDL_Text::GetBounds( SDL_Rect * lprc )
+void SDL_Text::GetMinSize( int * w, int * h )
 {
-	if ( !m_pszText )
+	*w = *h = 0;
+
+	if ( m_pszText )
 	{
-		lprc->x = lprc->y = lprc->w = lprc->h = 0;
-	}
-	else
-	{
- //       lprc->x = lprc->y = 0;
-//		lprc->w = m_pBitmap->w;
-	//	lprc->h = m_pBitmap->h;
+        TTF_Font *pFont = 0;
+        if((pFont = TTF_OpenFont( pszFontName, m_aStatus.size )) == NULL)
+        {
+            printf("call TTF_Open failed: %s\n", SDL_GetError());
+            return;
+        }
+
+        //设置字体属性
+        int nStyle = TTF_STYLE_NORMAL;
+        if ( m_aStatus.style_blod )
+            nStyle |= TTF_STYLE_BOLD;
+        if ( m_aStatus.style_italic )
+            nStyle |= TTF_STYLE_ITALIC;
+        if ( m_aStatus.style_underline )
+            nStyle |= TTF_STYLE_UNDERLINE;
+        TTF_SetFontStyle( pFont, nStyle );
+
+        //
+        TTF_SizeText( pFont, m_pszText, w, h );
+
+        //关闭字体
+        TTF_CloseFont(pFont);
 	}
 }
 
@@ -62,8 +83,6 @@ void SDL_Text::Draw( SDL_Surface * screen )
 {
 	if ( !m_pszText )
         return;
-
-    const char *pszFontName="C:\\Windows\\Fonts\\arial.ttf";
 
     //打开字体文件并设置字体大小
     TTF_Font *pFont = 0;
@@ -123,7 +142,9 @@ void SDL_Text::Draw( SDL_Surface * screen )
             rect.y = m_rc.y + ( m_rc.h - rect.h ) / 2;
 
         //将内存(显示环境中的)数据拷贝到当前显示设备环境
+        SDL_SetClipRect( screen, &m_rc );
         SDL_BlitSurface( pTextSurface, NULL, screen, &rect );
+	    SDL_SetClipRect( screen, 0 );
     }
 
     //释放内存显示环境

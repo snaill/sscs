@@ -1,19 +1,21 @@
 /*
- * SDL_Glyph.cpp
- * Copyright (C) Snaill 2008 <snaill@jeebook.com>
+ * SDL_SimpleControls
+ * Copyright (C) 2008 Snaill
  *
-    SDL_Glyph.cpp is free software: you can redistribute it and/or modify it
+    SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    main.c is distributed in the hope that it will be useful, but
+    SDL_SimpleControls is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
     See the GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Snaill  <snaill@jeebook.com>
  */
 
 #include "SDL_Glyph.h"
