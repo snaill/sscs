@@ -142,9 +142,11 @@ void SDL_Text::Draw( SDL_Surface * screen )
             rect.y = m_rc.y + ( m_rc.h - rect.h ) / 2;
 
         //将内存(显示环境中的)数据拷贝到当前显示设备环境
+        SDL_Rect    rcOldClip;
+        SDL_GetClipRect( screen, &rcOldClip );
         SDL_SetClipRect( screen, &m_rc );
         SDL_BlitSurface( pTextSurface, NULL, screen, &rect );
-	    SDL_SetClipRect( screen, 0 );
+	    SDL_SetClipRect( screen, &rcOldClip );
     }
 
     //释放内存显示环境

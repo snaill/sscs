@@ -25,7 +25,14 @@
 
 class SDL_BoxLayout : public SDL_Layout
 {
+public:
+    /// @brief 获取图元所需的最小区域
+    /// @param w 返回的矩形宽度
+    /// @param h 返回的矩形宽度
+    virtual void GetMinSize( int * w, int * h );
 
+    /// @brief 重新计算布局位置
+    virtual void ReCalc( );
 };
 
 #endif // SDL_BOXLAYOUT_H_INCLUDED

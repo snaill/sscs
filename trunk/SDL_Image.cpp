@@ -48,8 +48,10 @@ void SDL_Image::Draw( SDL_Surface * screen )
 {
 	if ( m_pBitmap )
 	{
-	    SDL_SetClipRect( screen, &m_rc );
+        SDL_Rect    rcOldClip;
+        SDL_GetClipRect( screen, &rcOldClip );
+        SDL_SetClipRect( screen, &m_rc );
         SDL_BlitSurface(m_pBitmap, 0, screen, &m_rc);
-	    SDL_SetClipRect( screen, 0 );
+	    SDL_SetClipRect( screen, &rcOldClip );
 	}
 }

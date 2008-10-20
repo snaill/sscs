@@ -28,6 +28,8 @@ class SDL_Layout : public SDL_Glyph
 {
 // 基本属性
 public:
+	virtual const char * GetType()				{ return "boxlayout"; }
+
     virtual void Release()
     {
         m_nRef --;
@@ -38,18 +40,32 @@ public:
         }
     }
 
-    /// @brief 获取图元所在区域
-    /// @param lprc 返回的矩形位置
-    virtual void GetBounds( SDL_Rect * lprc )
-    {
- //       memcpy( lprc, &m_rc, sizeof( SDL_Rect ) );
-    }
-
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void SetBounds( const SDL_Rect * lprc )
     {
- //       memcpy( &m_rc, lprc, sizeof( SDL_Rect ) );
+        if ( m_rc.w != lprc->w || m_rc.h != lprc->h )
+        {
+            SDL_Layout::SetBounds( lprc );
+            ReCalc( );
+        }
+        else
+        {
+            if ( m_rc.x != lprc->x || m_rc.y != lprc->y )
+            {
+                // 如果只是位移，则更新位移偏移量
+                SDL_Rect    rect;
+                Uint16      xOff = lprc->x - m_rc.x;
+                Uint16      yOff = lprc->y - m_rc.y;
+                for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+                {
+                    (*pos)->GetBounds( &rect );
+                    rect.x += xOff;
+                    rect.y += yOff;
+                    (*pos)->SetBounds( &rect );
+                }
+            }
+        }
     }
 
 // 方法
@@ -58,8 +74,14 @@ public:
     /// @param screen	屏幕Surface
     virtual void Draw( SDL_Surface * screen )
     {
+        SDL_Rect    rcOldClip;
+        SDL_GetClipRect( screen, &rcOldClip );
+        SDL_SetClipRect( screen, &m_rc );
+
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
             (*pos)->Draw( screen );
+
+	    SDL_SetClipRect( screen, &rcOldClip );
     }
 
 
@@ -126,9 +148,10 @@ public:
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
-    SDL_Layout() { }
+    SDL_Layout()            { }
+    virtual ~SDL_Layout()	{ }
 
-    virtual ~SDL_Layout()					{}
+    virtual void ReCalc( ) = 0;
 
 protected:
     /// 子图元列表

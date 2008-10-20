@@ -23,7 +23,7 @@
 
 #include <SDL_ttf.h>
 
-/* Event enumerations */
+/* Status enumerations */
 typedef enum {
        SDL_NOSTATUS = 0,	    /* Unused (do not remove) */
        SDL_TEXTSTATUS,
@@ -61,6 +61,8 @@ typedef union {
     SDL_TextStatus      text;
     SDL_WidgetStatus    widget;
 } SDL_Status;
+
+/* Layout enumerations */
 
 // @brief …Ë÷√¿‡
 class SDL_Setting
