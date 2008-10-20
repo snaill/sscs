@@ -1,22 +1,24 @@
 /*
- * SDL_Image.cpp
- * Copyright (C) Snaill 2008 <snaill@jeebook.com>
+ * SDL_SimpleControls
+ * Copyright (C) 2008 Snaill
  *
-    SDL_Image.cpp is free software: you can redistribute it and/or modify it
+    SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    main.c is distributed in the hope that it will be useful, but
+    SDL_SimpleControls is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
     See the GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Snaill  <snaill@jeebook.com>
  */
 
- #include "SDL_Image.h"
+#include "SDL_Image.h"
 
 SDL_Image::SDL_Image( const char * bmp )
 {
@@ -29,17 +31,16 @@ SDL_Image::~SDL_Image(void)
         SDL_FreeSurface( m_pBitmap );
 }
 
-void SDL_Image::GetBounds( SDL_Rect * lprc )
+void SDL_Image::GetMinSize( int * w, int * h )
 {
 	if ( !m_pBitmap )
 	{
-		lprc->x = lprc->y = lprc->w = lprc->h = 0;
+		*w = *h = 0;
 	}
 	else
 	{
-        lprc->x = lprc->y = 0;
-		lprc->w = m_pBitmap->w;
-		lprc->h = m_pBitmap->h;
+		*w = m_pBitmap->w;
+		*h = m_pBitmap->h;
 	}
 }
 
@@ -47,6 +48,8 @@ void SDL_Image::Draw( SDL_Surface * screen )
 {
 	if ( m_pBitmap )
 	{
+	    SDL_SetClipRect( screen, &m_rc );
         SDL_BlitSurface(m_pBitmap, 0, screen, &m_rc);
+	    SDL_SetClipRect( screen, 0 );
 	}
 }

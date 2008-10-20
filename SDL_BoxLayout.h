@@ -18,24 +18,14 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_SIMPLECONTROLS_H_INCLUDED
-#define SDL_SIMPLECONTROLS_H_INCLUDED
+#ifndef SDL_BOXLAYOUT_H_INCLUDED
+#define SDL_BOXLAYOUT_H_INCLUDED
 
-#ifdef __cplusplus
-    #include <cstdlib>
-#else
-    #include <stdlib.h>
-#endif
+#include "SDL_Layout.h"
 
-#ifdef __APPLE__
-    #include <SDL/SDL.h>
-#else
-    #include <SDL.h>
-#endif
+class SDL_BoxLayout : public SDL_Layout
+{
 
-#include "SDL_Setting.h"
-#include "SDL_Image.h"
-#include "SDL_Text.h"
-#include "SDL_Button.h"
+};
 
-#endif // SDL_SIMPLECONTROLS_H_INCLUDED
+#endif // SDL_BOXLAYOUT_H_INCLUDED

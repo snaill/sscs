@@ -1,3 +1,23 @@
+/*
+ * SDL_SimpleControls
+ * Copyright (C) 2008 Snaill
+ *
+    SDL_SimpleControls is free software: you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SDL_SimpleControls is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Snaill  <snaill@jeebook.com>
+ */
+
 #ifndef SDL_GLYPH_H_INCLUDED
 #define SDL_GLYPH_H_INCLUDED
 
@@ -17,12 +37,8 @@ protected:
     /// 图元的矩形范围
     SDL_Rect	m_rc;
 
-    /// 子图元列表
-	std::vector<SDL_Glyph *>	m_aChildren;
-
 // 基本属性
 public:
-    virtual ~SDL_Glyph()					{}
 
     /// @brief 获取图元类别
     /// @return 返回的图元类别
@@ -40,10 +56,16 @@ public:
     {
         m_nRef --;
         if ( !m_nRef )
-        {
-            Clear();
             delete this;
-        }
+    }
+
+    /// @brief 获取图元所需的最小区域
+    /// @param w 返回的矩形宽度
+    /// @param h 返回的矩形宽度
+    virtual void GetMinSize( int * w, int * h )
+    {
+        *w = m_rc.w;
+        *h = m_rc.h;
     }
 
     /// @brief 获取图元所在区域
@@ -64,12 +86,7 @@ public:
 public:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
-    virtual void Draw( SDL_Surface * screen )
-    {
-        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-            (*pos)->Draw( screen );
-    }
-
+    virtual void Draw( SDL_Surface * screen ) = 0;
 
     /// @brief 测试相应点是否在图元范围内
     /// @param x 屏幕坐标x
@@ -86,50 +103,9 @@ public:
     /// @brief 发送事件
     /// @param evnet 事件信息
  	virtual bool HandleEvent(const SDL_Event *event)
-	{
-        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-            if ( (*pos)->HandleEvent( event ) )
-                return true;
-	    return false;
-	}
-// 子图元操作
-public:
-    /// 添加一个图元
-    virtual bool Add( SDL_Glyph * g )
-    {
-        assert( g );
-        m_aChildren.push_back( g );
-        return true;
-    }
-
-    /// 删除一个图元
-    virtual void Remove( SDL_Glyph * g )
-    {
-        assert( g );
-        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-            if ( g == *pos )
-                m_aChildren.erase( pos );
-    }
-
-    /// 清除所有子图元
-    virtual void Clear()
-    {
-        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-           (*pos)->Release();
-        m_aChildren.clear();
-    }
-
-    /// 获取子图元个数
-    virtual size_t	GetChildCount()
-    {
-        return m_aChildren.size();
-    }
-
-    /// 获取对应下标的子图元
-    virtual SDL_Glyph * GetChild( int index )
-    {
-        return m_aChildren[index];
-    }
+ 	{
+ 	    return false;
+ 	}
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
@@ -137,6 +113,8 @@ protected:
     {
         memset( &m_rc, 0x00, sizeof( SDL_Rect ) );
     }
+
+    virtual ~SDL_Glyph()					{}
 
     ///
     void DrawPixel( SDL_Surface *screen, int x, int y, Uint32 color );
