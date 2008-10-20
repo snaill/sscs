@@ -18,33 +18,20 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_BOXLAYOUT_H_INCLUDED
-#define SDL_BOXLAYOUT_H_INCLUDED
+#ifndef SDL_MESSAGEBOX_H_INCLUDED
+#define SDL_MESSAGEBOX_H_INCLUDED
 
-#include "SDL_Layout.h"
+#include "SDL_Widget.h"
 
-class SDL_HBoxLayout : public SDL_Layout
+class SDL_MessageBox : public SDL_Widget
 {
 public:
-    /// @brief 获取图元所需的最小区域
-    /// @param w 返回的矩形宽度
-    /// @param h 返回的矩形宽度
-    virtual void GetMinSize( int * w, int * h );
+    SDL_MessageBox( const char * szTitle, const char * szMsg );
 
-    /// @brief 重新计算布局位置
-    virtual void ReCalc( );
+    /// @brief 获取图元类别
+    /// @return 返回的图元类别
+    virtual const char * GetType()  { return "messagebox"; }
+
 };
 
-class SDL_VBoxLayout : public SDL_Layout
-{
-public:
-    /// @brief 获取图元所需的最小区域
-    /// @param w 返回的矩形宽度
-    /// @param h 返回的矩形宽度
-    virtual void GetMinSize( int * w, int * h );
-
-    /// @brief 重新计算布局位置
-    virtual void ReCalc( );
-};
-
-#endif // SDL_BOXLAYOUT_H_INCLUDED
+#endif // SDL_MESSAGEBOX_H_INCLUDED

@@ -30,23 +30,13 @@ class SDL_Layout : public SDL_Glyph
 public:
 	virtual const char * GetType()				{ return "boxlayout"; }
 
-    virtual void Release()
-    {
-        m_nRef --;
-        if ( !m_nRef )
-        {
-            Clear();
-            delete this;
-        }
-    }
-
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void SetBounds( const SDL_Rect * lprc )
     {
         if ( m_rc.w != lprc->w || m_rc.h != lprc->h )
         {
-            SDL_Layout::SetBounds( lprc );
+            SDL_Glyph::SetBounds( lprc );
             ReCalc( );
         }
         else
@@ -149,7 +139,9 @@ public:
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
     SDL_Layout()            { }
-    virtual ~SDL_Layout()	{ }
+    virtual ~SDL_Layout()	{
+        Clear();
+    }
 
     virtual void ReCalc( ) = 0;
 

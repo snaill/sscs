@@ -20,13 +20,14 @@
 
 #include "SDL_BoxLayout.h"
 
-void SDL_BoxLayout::ReCalc()
+/* SDL_HBoxLayout member function */
+void SDL_HBoxLayout::ReCalc()
 {
     int w, h;
     GetMinSize( &w, &h );
 }
 
-void SDL_BoxLayout::GetMinSize( int * w, int * h )
+void SDL_HBoxLayout::GetMinSize( int * w, int * h )
 {
     int wSub, hSub;
     *w = *h = 0;
@@ -38,3 +39,24 @@ void SDL_BoxLayout::GetMinSize( int * w, int * h )
             *h = hSub;
     }
 }
+
+/* SDL_VBoxLayout member function */
+void SDL_VBoxLayout::ReCalc()
+{
+    int w, h;
+    GetMinSize( &w, &h );
+}
+
+void SDL_VBoxLayout::GetMinSize( int * w, int * h )
+{
+    int wSub, hSub;
+    *w = *h = 0;
+    for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    {
+        (*pos)->GetMinSize( &wSub, &hSub );
+        *w += wSub;
+        if ( *h < hSub )
+            *h = hSub;
+    }
+}
+

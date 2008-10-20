@@ -18,33 +18,21 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_BOXLAYOUT_H_INCLUDED
-#define SDL_BOXLAYOUT_H_INCLUDED
+#include "SDL_MessageBox.h"
+#include "SDL_BoxLayout.h"
+#include "SDL_Button.h"
+#include "SDL_Text.h"
 
-#include "SDL_Layout.h"
-
-class SDL_HBoxLayout : public SDL_Layout
+SDL_MessageBox::SDL_MessageBox( const char * szTitle, const char * szMsg )
 {
-public:
-    /// @brief 获取图元所需的最小区域
-    /// @param w 返回的矩形宽度
-    /// @param h 返回的矩形宽度
-    virtual void GetMinSize( int * w, int * h );
+    SDL_HBoxLayout * hbox = new SDL_HBoxLayout();
+    hbox->Add( new SDL_Button( new SDL_Text( "OK" ) ) );
+    hbox->Add( new SDL_Button( new SDL_Text( "Cancel" ) ) );
 
-    /// @brief 重新计算布局位置
-    virtual void ReCalc( );
-};
+    SDL_VBoxLayout * vbox = new SDL_VBoxLayout();
+    vbox->Add( new SDL_Text( szTitle ) );
+    vbox->Add( new SDL_Text( szMsg ) );
+    vbox->Add( hbox );
 
-class SDL_VBoxLayout : public SDL_Layout
-{
-public:
-    /// @brief 获取图元所需的最小区域
-    /// @param w 返回的矩形宽度
-    /// @param h 返回的矩形宽度
-    virtual void GetMinSize( int * w, int * h );
-
-    /// @brief 重新计算布局位置
-    virtual void ReCalc( );
-};
-
-#endif // SDL_BOXLAYOUT_H_INCLUDED
+    SetClientObject( vbox );
+}

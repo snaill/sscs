@@ -86,8 +86,7 @@ public:
 public:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
-    virtual void Draw( SDL_Surface * screen ) = 0;
-
+    virtual void Draw( SDL_Surface * screen )   {}
     /// @brief 测试相应点是否在图元范围内
     /// @param x 屏幕坐标x
     /// @param y 屏幕坐标y
