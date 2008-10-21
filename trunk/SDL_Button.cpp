@@ -38,6 +38,16 @@ void SDL_Button::GetClientRect( SDL_Rect *rc )
     rc->h = m_rc.h - 2 * 2;
 }
 
+void SDL_Button::GetMinSize( int * w, int * h )
+{
+    *w = *h = 0;
+    if ( m_pg )
+        m_pg->GetMinSize( w, h );
+
+    *w += 4;
+    *h += 4;
+}
+
 void SDL_Button::DrawWidget( SDL_Surface * screen )
 {
     if ( m_aStatus.mouse_on )

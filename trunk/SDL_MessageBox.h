@@ -32,6 +32,14 @@ public:
     /// @return 返回的图元类别
     virtual const char * GetType()  { return "messagebox"; }
 
+protected:
+
+    virtual void GetClientRect( SDL_Rect *rc );
+
+    /// @brief 绘制当前图元
+    /// @param screen	屏幕Surface
+    virtual void DrawWidget( SDL_Surface * screen );
+
 };
 
 #endif // SDL_MESSAGEBOX_H_INCLUDED

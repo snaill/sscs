@@ -45,6 +45,14 @@ void SDL_Widget::GetClientRect( SDL_Rect *rc )
     GetBounds( rc );
 }
 
+void SDL_Widget::GetMinSize( int * w, int * h )
+{
+    if ( m_pg )
+        m_pg->GetMinSize( w, h );
+    else
+        SDL_Glyph::GetMinSize( w, h );
+}
+
 void SDL_Widget::SetBounds( const SDL_Rect *rc )
 {
     SDL_Glyph::SetBounds( rc );
@@ -65,6 +73,9 @@ void SDL_Widget::Draw( SDL_Surface * screen )
 
 bool SDL_Widget::HandleEvent(const SDL_Event *event)
 {
+    if ( m_pg && m_pg->HandleEvent( event ) )
+        return true;
+
     switch ( event->type )
     {
         case SDL_MOUSEMOTION:

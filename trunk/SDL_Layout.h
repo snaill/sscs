@@ -91,10 +91,11 @@ public:
     /// @param evnet 事件信息
  	virtual bool HandleEvent(const SDL_Event *event)
 	{
+	    bool bHandled = false;
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
             if ( (*pos)->HandleEvent( event ) )
-                return true;
-	    return false;
+                bHandled = true;
+	    return bHandled;
 	}
 
 // 子图元操作

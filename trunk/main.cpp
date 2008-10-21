@@ -39,8 +39,8 @@ SDL_Glyph * CreateTestScreen()
     SDL_Rect  rc;
     rc.x = rc.y = 100;
     rc.w = rc.h = 200;
-////    SDL_Button * pButton = new SDL_Button( pText );
-//    SDL_Button * pButton = new SDL_Button( pImage );
+//    SDL_Button * pButton = new SDL_Button( pText );
+////    SDL_Button * pButton = new SDL_Button( pImage );
 //    pButton->SetBounds( &rc );
 //    return pButton;
     SDL_MessageBox * pmsg = new SDL_MessageBox( "Test MessageBox", "This is a MessageBox" );
