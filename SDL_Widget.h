@@ -27,6 +27,11 @@
 class SDL_Widget : public SDL_Glyph
 {
 public:
+    /// @brief 获取图元所需的最小区域
+    /// @param w 返回的矩形宽度
+    /// @param h 返回的矩形宽度
+    virtual void GetMinSize( int * w, int * h );
+
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void SetBounds( const SDL_Rect * lprc );

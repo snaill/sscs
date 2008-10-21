@@ -25,6 +25,20 @@ void SDL_HBoxLayout::ReCalc()
 {
     int w, h;
     GetMinSize( &w, &h );
+
+    int xOff = m_rc.x + ( m_rc.w - w ) / 2;
+    int yOff = m_rc.y + ( m_rc.h - h ) / 2;
+    for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    {
+        SDL_Rect    rect;
+
+        (*pos)->GetMinSize( ( int * )&rect.w, ( int * )&rect.h );
+        rect.x = xOff;
+        rect.y = yOff + ( h - rect.h ) / 2;
+        (*pos)->SetBounds( &rect );
+
+        xOff += rect.w;
+    }
 }
 
 void SDL_HBoxLayout::GetMinSize( int * w, int * h )
@@ -45,6 +59,20 @@ void SDL_VBoxLayout::ReCalc()
 {
     int w, h;
     GetMinSize( &w, &h );
+
+    int xOff = m_rc.x + ( m_rc.w - w ) / 2;
+    int yOff = m_rc.y + ( m_rc.h - h ) / 2;
+    for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    {
+        SDL_Rect    rect;
+
+        (*pos)->GetMinSize( ( int * )&rect.w, ( int * )&rect.h );
+        rect.x = xOff + ( w - rect.w ) / 2;
+        rect.y = yOff;
+        (*pos)->SetBounds( &rect );
+
+        yOff += rect.h;
+    }
 }
 
 void SDL_VBoxLayout::GetMinSize( int * w, int * h )
@@ -54,9 +82,9 @@ void SDL_VBoxLayout::GetMinSize( int * w, int * h )
     for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
     {
         (*pos)->GetMinSize( &wSub, &hSub );
-        *w += wSub;
-        if ( *h < hSub )
-            *h = hSub;
+         if ( *w < wSub )
+            *w = wSub;
+        *h += hSub;
     }
 }
 

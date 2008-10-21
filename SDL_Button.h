@@ -31,6 +31,11 @@ public:
 
 	virtual const char * GetType()				{ return "button"; }
 
+    /// @brief 获取图元所需的最小区域
+    /// @param w 返回的矩形宽度
+    /// @param h 返回的矩形宽度
+    virtual void GetMinSize( int * w, int * h );
+
     /// @brief 发送事件
     /// @param evnet 事件信息
  	virtual bool HandleEvent(const SDL_Event *event);

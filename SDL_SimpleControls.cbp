@@ -46,12 +46,17 @@
 			<Add library="dxguid" />
 			<Add directory="$(#sdl.lib)" />
 		</Linker>
+		<Unit filename="SDL_BoxLayout.cpp" />
+		<Unit filename="SDL_BoxLayout.h" />
 		<Unit filename="SDL_Button.cpp" />
 		<Unit filename="SDL_Button.h" />
 		<Unit filename="SDL_Glyph.cpp" />
 		<Unit filename="SDL_Glyph.h" />
 		<Unit filename="SDL_Image.cpp" />
 		<Unit filename="SDL_Image.h" />
+		<Unit filename="SDL_Layout.h" />
+		<Unit filename="SDL_MessageBox.cpp" />
+		<Unit filename="SDL_MessageBox.h" />
 		<Unit filename="SDL_Setting.h" />
 		<Unit filename="SDL_SimpleControls.cbp" />
 		<Unit filename="SDL_SimpleControls.h" />
