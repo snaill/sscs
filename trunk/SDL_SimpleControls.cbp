@@ -66,6 +66,7 @@
 		<Unit filename="SDL_Widget.h" />
 		<Unit filename="cb.bmp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sigslot.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
