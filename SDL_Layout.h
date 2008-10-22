@@ -64,14 +64,8 @@ public:
     /// @param screen	ÆÁÄ»Surface
     virtual void Draw( SDL_Surface * screen )
     {
-        SDL_Rect    rcOldClip;
-        SDL_GetClipRect( screen, &rcOldClip );
-        SDL_SetClipRect( screen, &m_rc );
-
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
             (*pos)->Draw( screen );
-
-	    SDL_SetClipRect( screen, &rcOldClip );
     }
 
 
