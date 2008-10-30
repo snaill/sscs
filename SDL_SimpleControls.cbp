@@ -15,7 +15,9 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
+					<Add library="libSDL_draw" />
 					<Add library="libsdl_ttf.dll" />
+					<Add library="libSDL.dll" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -29,6 +31,8 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="libsdl_ttf.dll" />
+					<Add library="libSDL_draw" />
+					<Add library="libSDL.dll" />
 				</Linker>
 			</Target>
 		</Build>
