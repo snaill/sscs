@@ -116,10 +116,6 @@ protected:
     virtual ~SDL_Glyph()					{}
 
     ///
-    void DrawPixel( SDL_Surface *screen, int x, int y, Uint32 color );
-    void DrawLine( SDL_Surface *screen, int x, int y, int x2, int y2, Uint32 color );
-    void DrawRgn( SDL_Surface *screen, int* xs, int* ys, int count, Uint32 color, bool bClose );
-    void DrawRect( SDL_Surface *screen, SDL_Rect rect, Uint32 color );
     void Draw3DRect( SDL_Surface *screen, SDL_Rect rect, Uint32 clrTopLeft, Uint32 clrBottomRight );
 };
 
