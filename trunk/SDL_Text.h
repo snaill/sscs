@@ -35,17 +35,9 @@ public:
 	virtual void GetMinSize( int * w, int * h );
 	virtual void Draw( SDL_Surface * screen );
 
-// 类成员函数
-public:
-    void GetTextStatus( SDL_Status * status );
-    void SetTextStatus( const SDL_Status * status );
-
 protected:
     /// 图元所显示的文本
 	char	*       m_pszText;
-
-	/// 文本对齐方式
-	SDL_TextStatus  m_aStatus;
 };
 
 #endif //!SDL_TEXT_H_INCLUDED

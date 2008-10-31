@@ -21,7 +21,7 @@
 #ifndef SDL_SETTING_H_INCLUDED
 #define SDL_SETTING_H_INCLUDED
 
-#include <SDL_ttf.h>
+#include "SDL_DC.h"
 
 /* Status enumerations */
 typedef enum {
@@ -72,11 +72,9 @@ protected:
 
 public:
     SDL_Setting()   {
-       TTF_Init();
     }
 
     ~SDL_Setting()  {
-       TTF_Quit();
     }
 	// 获取当时
 	static SDL_Setting * Get()	{
@@ -86,9 +84,16 @@ public:
 		return m_this;
 	}
 
-	void Release() {
+	void Release()      {
         delete this;
 	}
+
+    SDL_DC * GetDC()    {
+        return &m_dc;
+    }
+
+protected:
+    SDL_DC      m_dc;
 };
 
 #endif // SDL_SETTING_H_INCLUDED

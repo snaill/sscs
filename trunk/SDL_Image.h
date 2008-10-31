@@ -34,8 +34,8 @@ public:
 
 	virtual const char * GetType()				{ return "image"; }
 
-	virtual void GetMinSize( int * w, int * h );
-	virtual void Draw( SDL_Surface * screen );
+	virtual void GetMinSize( int * w, int * h, SDL_DC * pDC );
+	virtual void Draw( SDL_Surface * screen, SDL_DC * pDC );
 };
 
 #endif //!SDL_IMAGE_H_INCLUDED

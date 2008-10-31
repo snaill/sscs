@@ -22,6 +22,7 @@
 #define SDL_GLYPH_H_INCLUDED
 
 #include "SDL_Setting.h"
+#include "SDL_DC.h"
 #include <assert.h>
 #include <vector>
 #include <SDL.h>
