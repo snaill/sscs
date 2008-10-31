@@ -31,7 +31,7 @@ SDL_Image::~SDL_Image(void)
         SDL_FreeSurface( m_pBitmap );
 }
 
-void SDL_Image::GetMinSize( int * w, int * h )
+void SDL_Image::GetMinSize( int * w, int * h, SDL_DC * pDC )
 {
 	if ( !m_pBitmap )
 	{
@@ -44,7 +44,7 @@ void SDL_Image::GetMinSize( int * w, int * h )
 	}
 }
 
-void SDL_Image::Draw( SDL_Surface * screen )
+void SDL_Image::Draw( SDL_Surface * screen, SDL_DC * pDC )
 {
 	if ( m_pBitmap )
 	{

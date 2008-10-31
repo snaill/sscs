@@ -21,8 +21,6 @@
 #include "SDL_Text.h"
 #include "SDL_Setting.h"
 
-const char *pszFontName="C:\\Windows\\Fonts\\arial.ttf";
-
 SDL_Text::SDL_Text( const char * text )
 {
     // 初始化图元文本
@@ -30,16 +28,6 @@ SDL_Text::SDL_Text( const char * text )
     m_pszText = new char[ len + 1 ];
     strcpy( m_pszText, text );
     m_pszText[ len ] = '\0';
-
-    // 初始化图元状态
-    memset( &m_aStatus, 0x00, sizeof( SDL_TextStatus ) );
-    m_aStatus.type = SDL_TEXTSTATUS;
-    m_aStatus.transparent = true;
-    m_aStatus.quality_high = true;
-    m_aStatus.size = 10;
-    m_aStatus.crBack.r = 255;
-    m_aStatus.crBack.g = 255;
-    m_aStatus.crBack.b = 255;
 }
 
 SDL_Text::~SDL_Text(void)
@@ -54,22 +42,9 @@ void SDL_Text::GetMinSize( int * w, int * h )
 
 	if ( m_pszText )
 	{
-        TTF_Font *pFont = 0;
-        if((pFont = TTF_OpenFont( pszFontName, m_aStatus.size )) == NULL)
-        {
-            printf("call TTF_Open failed: %s\n", SDL_GetError());
-            return;
-        }
+	    SDL_DC * pDC = SDL_Setting::Get()->GetDC();
 
-        //设置字体属性
-        int nStyle = TTF_STYLE_NORMAL;
-        if ( m_aStatus.style_blod )
-            nStyle |= TTF_STYLE_BOLD;
-        if ( m_aStatus.style_italic )
-            nStyle |= TTF_STYLE_ITALIC;
-        if ( m_aStatus.style_underline )
-            nStyle |= TTF_STYLE_UNDERLINE;
-        TTF_SetFontStyle( pFont, nStyle );
+        TTF_Font *pFont = pDC->GetFont();
 
         //
         TTF_SizeText( pFont, m_pszText, w, h );
@@ -85,35 +60,22 @@ void SDL_Text::Draw( SDL_Surface * screen )
         return;
 
     //打开字体文件并设置字体大小
-    TTF_Font *pFont = 0;
-    if((pFont = TTF_OpenFont( pszFontName, m_aStatus.size )) == NULL)
-    {
-        printf("call TTF_Open failed: %s\n", SDL_GetError());
-        return;
-    }
-
-    //设置字体属性
-    int nStyle = TTF_STYLE_NORMAL;
-    if ( m_aStatus.style_blod )
-        nStyle |= TTF_STYLE_BOLD;
-    if ( m_aStatus.style_italic )
-        nStyle |= TTF_STYLE_ITALIC;
-    if ( m_aStatus.style_underline )
-        nStyle |= TTF_STYLE_UNDERLINE;
-    TTF_SetFontStyle( pFont, nStyle );
+    SDL_DC * pDC = SDL_Setting::Get()->GetDC();
+    TTF_Font *pFont = pDC->GetFont();
 
     //使用打开的字体,将字符串"画"到内存(显示环境)中
     SDL_Surface  *pTextSurface = 0;
-    if ( m_aStatus.transparent )
+    Uint32 uStyle = pDC->GetTextStyle();
+    if ( uStyle & SDL_DC::TEXT_STYLE_TRANSPARENT )
     {
-        if ( m_aStatus.quality_high )
-            pTextSurface = TTF_RenderText_Blended( pFont, m_pszText, m_aStatus.crText );
+        if ( uStyle & SDL_DC::TEXT_STYLE_HIGHQUALITY )
+            pTextSurface = TTF_RenderText_Blended( pFont, m_pszText, pDC->GetTextColor() );
         else
-            pTextSurface = TTF_RenderText_Solid( pFont, m_pszText, m_aStatus.crText );
+            pTextSurface = TTF_RenderText_Solid( pFont, m_pszText, pDC->GetTextColor() );
     }
     else
     {
-        pTextSurface = TTF_RenderText_Shaded( pFont, m_pszText, m_aStatus.crText, m_aStatus.crBack );
+        pTextSurface = TTF_RenderText_Shaded( pFont, m_pszText, pDC->GetTextColor(), pDC->GetBkColor() );
     }
 
     // 绘制到屏幕缓存
@@ -127,16 +89,17 @@ void SDL_Text::Draw( SDL_Surface * screen )
         rect.w = pTextSurface->w;
         rect.h = pTextSurface->h;
 
-        if ( m_aStatus.align_left )
+        Uint32 uAlign = pDC->GetTextAlign();
+        if ( uAlign & SDL_DC::TEXT_ALIGN_LEFT )
             rect.x = m_rc.x;
-        else if ( m_aStatus.align_right )
+        else if ( uAlign & SDL_DC::TEXT_ALIGN_RIGHT )
             rect.x = m_rc.x + m_rc.w - rect.w;
         else
             rect.x = m_rc.x + ( m_rc.w - rect.w ) / 2;
 
-        if ( m_aStatus.align_top )
+        if ( uAlign & SDL_DC::TEXT_ALIGN_TOP )
             rect.y = m_rc.y;
-        else if ( m_aStatus.align_bottom )
+        else if ( uAlign & SDL_DC::TEXT_ALIGN_BOTTOM )
             rect.y = m_rc.y + m_rc.h;
         else
             rect.y = m_rc.y + ( m_rc.h - rect.h ) / 2;
@@ -154,14 +117,4 @@ void SDL_Text::Draw( SDL_Surface * screen )
 
     //关闭字体
     TTF_CloseFont(pFont);
-}
-
-void SDL_Text::GetTextStatus( SDL_Status * status )
-{
-    memcpy( &status->text, &m_aStatus, sizeof( SDL_TextStatus ) );
-}
-
-void SDL_Text::SetTextStatus( const SDL_Status * status )
-{
-    memcpy( &m_aStatus, &status->text, sizeof( SDL_TextStatus ) );
 }
