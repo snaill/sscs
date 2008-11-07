@@ -69,6 +69,8 @@
 		<Unit filename="SDL_SimpleControls.depend" />
 		<Unit filename="SDL_SimpleControls.h" />
 		<Unit filename="SDL_SimpleControls.layout" />
+		<Unit filename="SDL_Static.cpp" />
+		<Unit filename="SDL_Static.h" />
 		<Unit filename="SDL_Text.cpp" />
 		<Unit filename="SDL_Text.h" />
 		<Unit filename="SDL_Widget.cpp" />
