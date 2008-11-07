@@ -21,7 +21,9 @@
 #include "SDL_MessageBox.h"
 #include "SDL_BoxLayout.h"
 #include "SDL_Button.h"
+#include "SDL_Static.h"
 #include "SDL_Text.h"
+#include "SDL_Setting.h"
 #include <SDL_draw.h>
 
 SDL_MessageBox::SDL_MessageBox( const char * szTitle, const char * szMsg )
@@ -30,9 +32,15 @@ SDL_MessageBox::SDL_MessageBox( const char * szTitle, const char * szMsg )
     hbox->Add( new SDL_Button( new SDL_Text( "OK" ) ) );
     hbox->Add( new SDL_Button( new SDL_Text( "Cancel" ) ) );
 
+    SDL_Static * pMsg = new SDL_Static( new SDL_Text( szMsg ) );
+    SDL_LayoutObject * pObj = new SDL_LayoutObject();
+    pObj->type = SDL_LAYOUT_BOX;
+    pObj->box.dock = SDL_DOCK_FILL;
+    pMsg->SetLayout( pObj );
+
     SDL_VBoxLayout * vbox = new SDL_VBoxLayout();
-    vbox->Add( new SDL_Text( szTitle ) );
-    vbox->Add( new SDL_Text( szMsg ) );
+    vbox->Add( new SDL_Static( new SDL_Text( szTitle ) ) );
+    vbox->Add( pMsg );
     vbox->Add( hbox );
 
     SetClientObject( vbox );

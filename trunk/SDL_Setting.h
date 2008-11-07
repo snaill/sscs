@@ -25,27 +25,9 @@
 
 /* Status enumerations */
 typedef enum {
-       SDL_NOSTATUS = 0,	    /* Unused (do not remove) */
-       SDL_TEXTSTATUS,
-       SDL_WIDGETSTATUS
+       SDL_STATUS_UNKNOWN = 0,	    /* Unused (do not remove) */
+       SDL_STATUS_WIDGET
 } SDL_StatusType;
-
-typedef struct {
-    Uint8    type;
-    Uint32 align_left       :1;	/* 是否左对齐 */
-    Uint32 align_right      :1;	/* 是否右对齐 */
-    Uint32 align_top        :1; /* 是否顶边对齐 */
-    Uint32 align_bottom     :1; /* 是否底边对齐 */
-    Uint32 style_blod       :1;	/* 是否粗体 */
-    Uint32 style_italic     :1;	/* 是否斜体 */
-    Uint32 style_underline  :1;	/* 是否下划线 */
-    Uint32 quality_high     :1; /* 是否高质量 */
-    Uint32 transparent      :1; /* 是否透明 */
-    Uint32 UnusedBits       :7;
-    Uint32 size             :16;/* 字体大小 */
-    SDL_Color   crBack;         /* 背景色 */
-    SDL_Color   crText;         /* 前景色 */
-} SDL_TextStatus;
 
 typedef struct {
     Uint8   type;
@@ -58,11 +40,30 @@ typedef struct {
 
 typedef union {
     Uint8               type;
-    SDL_TextStatus      text;
     SDL_WidgetStatus    widget;
 } SDL_Status;
 
 /* Layout enumerations */
+typedef enum {
+       SDL_LAYOUT_UNKNOWN = 0,	    /* Unused (do not remove) */
+       SDL_LAYOUT_BOX
+} SDL_LayoutType;
+
+typedef enum {
+       SDL_DOCK_MIN = 0,	    /* Unused (do not remove) */
+       SDL_DOCK_FIXED,
+       SDL_DOCK_FILL
+} SDL_DockType;
+
+typedef struct {
+    Uint8   type;
+    Uint8   dock;
+} SDL_BoxLayoutObject;
+
+typedef union {
+    Uint8                   type;
+    SDL_BoxLayoutObject     box;
+} SDL_LayoutObject;
 
 // @brief 设置类
 class SDL_Setting

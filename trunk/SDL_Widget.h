@@ -44,11 +44,16 @@ public:
     /// @param evnet 事件信息
  	virtual bool HandleEvent(const SDL_Event *event);
 
+    ///
+    virtual SDL_LayoutObject * GetLayout();
+    virtual void SetLayout( SDL_LayoutObject * );
+
 public:
     virtual void SetClientObject( SDL_Glyph * pg );
 
 protected:
     SDL_Widget();
+    SDL_Widget( SDL_Glyph * );
     virtual ~SDL_Widget();
 
     virtual void GetClientRect( SDL_Rect *rc );
@@ -57,6 +62,7 @@ protected:
     /// @param screen	屏幕Surface
     virtual void DrawWidget( SDL_Surface * screen ) {}
 
+// 事件
     virtual void OnMouseEnter() {}
     virtual void OnMouseLeave() {}
 
@@ -66,6 +72,8 @@ protected:
 
     /// 客户对象，允许是图元或布局
     SDL_Glyph *         m_pg;
+
+    SDL_LayoutObject *  m_pLayout;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

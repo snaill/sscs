@@ -23,13 +23,32 @@
 SDL_Widget::SDL_Widget() : m_pg( 0 )
 {
     memset( &m_aStatus, 0x00, sizeof( SDL_WidgetStatus ) );
-    m_aStatus.type = SDL_WIDGETSTATUS;
+    m_aStatus.type = SDL_STATUS_WIDGET;
+    m_pLayout = NULL;
+}
+
+SDL_Widget::SDL_Widget( SDL_Glyph * pg )
+{
+    SetClientObject( pg );
 }
 
 SDL_Widget::~SDL_Widget()
 {
     if ( m_pg )
         m_pg->Release();
+
+    if ( m_pLayout )
+        delete m_pLayout;
+}
+
+SDL_LayoutObject * SDL_Widget::GetLayout()
+{
+    return m_pLayout;
+}
+
+void SDL_Widget::SetLayout( SDL_LayoutObject * pObj )
+{
+    m_pLayout = pObj;
 }
 
 void SDL_Widget::SetClientObject( SDL_Glyph * pg )
