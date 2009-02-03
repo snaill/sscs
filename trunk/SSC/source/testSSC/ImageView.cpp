@@ -9,12 +9,12 @@ CImageView::CImageView(void)
 
 	SDL_ImageView * imageView = new SDL_ImageView();
 	imageView->SetLayoutProperty( SDL_BorderLayout::fill );
-	imageView->Load( "E:\\AppEngine\\sscs\\SSC\\bin\\win32\\test.bmp" );
+	imageView->Load( "test.bmp" );
 
 	//
 	SDL_Toolbar	*	toolbar = new SDL_Toolbar();
 	SDL_ImageList * imgList = new SDL_ImageList();
-	imgList->Create( 48, SDL_LoadBMP("E:\\AppEngine\\sscs\\SSC\\bin\\win32\\test.bmp"), crMask );
+	imgList->Create( 48, SDL_LoadBMP("test.bmp"), crMask );
 	toolbar->SetImageList( imgList );
 	toolbar->AddItem( "ToolButton1", 0 );
 	toolbar->AddItem( "ToolButton2", 0 );

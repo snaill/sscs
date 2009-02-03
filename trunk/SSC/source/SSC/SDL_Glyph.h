@@ -36,6 +36,8 @@ public:
 
 	virtual bool IsShow()			{ return m_bShow;	}
 	virtual void Show( bool bShow ) { m_bShow = bShow;	}
+    virtual SDL_Glyph * GetParent(){ return m_pParent;	}
+    virtual void SetParent( SDL_Glyph * parent ){ m_pParent = parent; }
 
 // 方法
 public:
@@ -49,11 +51,12 @@ public:
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
-	SDL_Glyph()	: m_bShow( true )		{}
+	SDL_Glyph()	: m_bShow( true ), m_pParent(0)		{}
 
     virtual ~SDL_Glyph(){}
 
 protected:
+	SDL_Glyph *		m_pParent;
 	bool			m_bShow;
 };
 

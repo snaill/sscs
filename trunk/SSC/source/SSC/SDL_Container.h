@@ -68,6 +68,7 @@ public:
     virtual bool Add( SDL_Glyph * g )
     {
         assert( g );
+		g->SetParent( this );
         m_aChildren.push_back( g );
         return true;
     }

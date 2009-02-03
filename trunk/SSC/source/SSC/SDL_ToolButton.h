@@ -29,6 +29,9 @@
 class SDL_ToolButton : public SDL_Widget
 {
 public:
+	sigslot::signal1<SDL_ToolButton *>		click;
+
+public:
     SDL_ToolButton( const char * text, int iImage ) {
 		int len = strlen( text );
 		m_text = new char[ len + 1 ];
@@ -56,6 +59,7 @@ public:
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
+		click( this );
 		return true;
 	}
 

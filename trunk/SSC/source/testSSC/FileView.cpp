@@ -7,7 +7,7 @@ CFileView::CFileView(void)
 
 	SDL_ListBox	*	listbox = new SDL_ListBox( );
 	SDL_ImageList * imgList = new SDL_ImageList();
-	imgList->Create( 48, SDL_LoadBMP("E:\\AppEngine\\sscs\\SSC\\bin\\win32\\test.bmp"), crMask );
+	imgList->Create( 48, SDL_LoadBMP("test.bmp"), crMask );
 	listbox->SetImageList( imgList );
 
 	listbox->AddItem( "ÖÐ¹ú", "aaa", 0 );
@@ -29,24 +29,31 @@ CFileView::CFileView(void)
 	listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 
 	//
-	SDL_Toolbar	*	toolbar = new SDL_Toolbar();
+	m_toolbar = new SDL_Toolbar();
 //	SDL_ImageList * imgList2 = new SDL_ImageList();
 //	imgList2->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp") );
 //	toolbar->SetContent( listbox );
-	toolbar->SetImageList( (SDL_ImageList *)imgList->GetObj() );
-	toolbar->AddItem( "ToolButton1", 0 );
-	toolbar->AddItem( "ToolButton2", 0 );
-	toolbar->AddItem( "ToolButton3", 0 );
-	toolbar->AddItem( "ToolButton4", 0 );
-	toolbar->SetLayoutProperty( SDL_BorderLayout::north );
+	m_toolbar->SetImageList( (SDL_ImageList *)imgList->GetObj() );
+	m_toolbar->AddItem( "ToolButton1", 0 );
+	m_toolbar->AddItem( "ToolButton2", 0 );
+	m_toolbar->AddItem( "ToolButton3", 0 );
+	m_toolbar->AddItem( "ToolButton4", 0 );
+	m_toolbar->SetLayoutProperty( SDL_BorderLayout::north );
+
+	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
 
 	//
 	m_this = new SDL_Widget();
 	m_this->SetLayout( new SDL_BorderLayout() );
-	m_this->Add( toolbar );
+	m_this->Add( m_toolbar );
 	m_this->Add( listbox );
 }
 
 CFileView::~CFileView(void)
 {
+}
+
+void CFileView::OnToolButtonClick( int index, SDL_ToolButton * button )
+{
+	m_toolbar->Show( false );
 }
