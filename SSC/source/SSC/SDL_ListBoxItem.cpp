@@ -28,8 +28,8 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
-	TTF_Font *pFont = theme->GetFont( SDL_Theme::Text );
-	TTF_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
+	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
+	SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
 
 	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
@@ -56,36 +56,17 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	rect.w = m_sz.w - 8;
 	rect.h = m_sz.h * 2 / 3;
 	if ( m_text )
-		DrawText( screen, m_text, rect, pFontBig, color, false );
+		pFontBig->DrawText( screen, m_text, rect, color, -1, 0 );
 
 	rect.y = m_pt.y + rect.h;
 	rect.h = m_sz.h - rect.h;
 	if ( m_remark )
-		DrawText( screen, m_remark, rect, pFont, color, true );
+		pFont->DrawText( screen, m_remark, rect, color, -1, -1 );
 
 	//
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
 
     //关闭字体
-	theme->ReleaseFont( pFont );
-	theme->ReleaseFont( pFontBig );
-}
-
-void SDL_ListBoxItem::DrawText( SDL_Surface * screen, char * text, SDL_Rect rect, TTF_Font * pFont, SDL_Color color, bool bTop )
-{
-    SDL_Surface  *pTextSurface = TTF_RenderText_Blended( pFont, text, color );
-
-    // 绘制到屏幕缓存
-    SDL_Rect  rc;
-    rc.w = pTextSurface->w;
-    rc.h = pTextSurface->h;
-
-    rc.x = rect.x;
-	rc.y = bTop ? rect.y : rect.y + ( rect.h - rc.h ) / 2;
-
-    //将内存(显示环境中的)数据拷贝到当前显示设备环境
-    SDL_BlitSurface( pTextSurface, 0, screen, &rc );
-
-    //释放内存显示环境
-    SDL_FreeSurface( pTextSurface );
+	pFont->Release();
+	pFontBig->Release();
 }

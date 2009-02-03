@@ -82,9 +82,6 @@ public:
 	}
 
 protected:
-	void DrawText( SDL_Surface * screen, char * text, SDL_Rect rect, TTF_Font * pFont, SDL_Color color, bool bTop );
-
-protected:
 	char *				m_text;
 	char *				m_remark;
 	int					m_image;
