@@ -159,7 +159,7 @@
 				Name="ImageView"
 				>
 				<File
-					RelativePath="..\..\source\Core\ImageView\SDL_ImageView.cpp"
+					RelativePath="..\..\source\SSC\ImageView\SDL_ImageView.cpp"
 					>
 				</File>
 			</Filter>
@@ -233,11 +233,11 @@
 				Name="ImageView"
 				>
 				<File
-					RelativePath="..\..\source\Core\ImageView\Commands.h"
+					RelativePath="..\..\source\SSC\ImageView\Commands.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Core\ImageView\SDL_ImageView.h"
+					RelativePath="..\..\source\SSC\ImageView\SDL_ImageView.h"
 					>
 				</File>
 			</Filter>

@@ -7,7 +7,7 @@ CFileView::CFileView(void)
 
 	SDL_ListBox	*	listbox = new SDL_ListBox( );
 	SDL_ImageList * imgList = new SDL_ImageList();
-	imgList->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp"), crMask );
+	imgList->Create( 48, SDL_LoadBMP("E:\\AppEngine\\sscs\\SSC\\bin\\win32\\test.bmp"), crMask );
 	listbox->SetImageList( imgList );
 
 	listbox->AddItem( "ÖÐ¹ú", "aaa", 0 );

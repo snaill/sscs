@@ -3,7 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SSC", "SSC.vcproj", "{501031A9-C9BD-4C11-BBC5-3EF9012B9FF1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BookStar", "testSSC.vcproj", "{8A80C2A9-2C04-442C-8DDF-5BAB432A177F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testSSC", "testSSC.vcproj", "{8A80C2A9-2C04-442C-8DDF-5BAB432A177F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{501031A9-C9BD-4C11-BBC5-3EF9012B9FF1} = {501031A9-C9BD-4C11-BBC5-3EF9012B9FF1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
