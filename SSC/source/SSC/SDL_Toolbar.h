@@ -28,6 +28,9 @@
 /// @brief 控件类的基类
 class SDL_Toolbar : public SDL_Widget
 {
+public:
+	sigslot::signal2<int, SDL_ToolButton *>		click;
+
 // 基本属性
 public:
 	SDL_Toolbar()		{
@@ -58,7 +61,8 @@ public:
 	{
 		SDL_ToolButton * pItem = new SDL_ToolButton( text, iImage );
 		pItem->SetImageList( m_imgList );
-		
+		pItem->click.connect( this, &SDL_Toolbar::OnButtonClicked );
+
 		Add( pItem );
 		return pItem;
 	}
@@ -73,6 +77,10 @@ protected:
     virtual void DrawWidget( SDL_Surface * screen ) { 
 		SDL_Rect	rc = GetBounds();
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+	}
+
+	void OnButtonClicked( SDL_ToolButton * button ) {
+		click( GetItemID( button ), button );
 	}
 
 protected:
