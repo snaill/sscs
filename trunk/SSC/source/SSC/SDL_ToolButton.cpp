@@ -22,12 +22,40 @@
 #include "SDL_Screen.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_Size SDL_ToolButton::GetPreferedSize()	
+{
+	SDL_Size	sz;
+	sz.w = 0;
+	sz.h = 0;
+	if ( m_imgList )
+	{
+		SDL_Size	szImage = m_imgList->GetImageSize();
+		sz.w = szImage.w;
+		sz.h += szImage.h + 4;
+	}
+
+	if ( m_text )
+	{
+		int	 w, h;
+		SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+		TTF_Font *pFont = theme->GetFont( SDL_Theme::Text );
+		TTF_SizeText( pFont, m_text, &w, &h );
+		if ( sz.w < w )
+			sz.w = w;
+		sz.h += h;	
+		theme->ReleaseFont( pFont );
+	}
+
+	sz.w += 4 + 4;
+	sz.h += 4 + 4;
+	return sz;
+}
+
 void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
 	TTF_Font *pFont = theme->GetFont( SDL_Theme::Text );
-	TTF_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
 
 	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
@@ -37,7 +65,11 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 
 	//
 	if ( m_imgList )
+	{
+		SDL_Size	szImage = m_imgList->GetImageSize();
 		m_imgList->Draw( m_image, screen, m_pt.x + ( m_sz.w - 48 ) / 2, m_pt.y + 4 );
+	}
+
 	//
 	SDL_Rect	rect;
 	rect.x = m_pt.x;
@@ -45,14 +77,13 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 	rect.w = m_sz.w;
 	rect.h = m_sz.h - 4 - 52;
 	if ( m_text )
-		DrawText( screen, m_text, rect, pFont, crSelect, true );
+		DrawText( screen, m_text, rect, pFont, crSelect, false );
 
 	//
 	vlineRGBA( screen, m_pt.x + m_sz.w - 1, m_pt.y, m_pt.y + m_sz.h - 1, 128, 128, 128, 100 ); 
 
     //关闭字体
 	theme->ReleaseFont( pFont );
-	theme->ReleaseFont( pFontBig );
 }
 
 void SDL_ToolButton::DrawText( SDL_Surface * screen, char * text, SDL_Rect rect, TTF_Font * pFont, SDL_Color color, bool bTop )

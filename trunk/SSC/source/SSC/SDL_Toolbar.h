@@ -42,10 +42,16 @@ public:
 	virtual const char * GetType()				{ return "toolbar"; }
 
 	virtual SDL_Size GetPreferedSize()	{
-		//if ( GetLayout() )
-		//	return GetLayout()->GetPreferedSize();
+		SDL_Size	sz( 0, 0 );
+		for ( int i = 0; i < GetCount(); i ++ )
+		{
+			SDL_Size size = GetItem(i)->GetPreferedSize();
+			sz.w += size.w;
+			if ( sz.h < size.h )
+				sz.h = size.h;
+		}
 
-		return SDL_Size( 65, 80 );
+		return sz;
 	}
 public:
 	SDL_ToolButton * AddItem( const char * text, int iImage )
