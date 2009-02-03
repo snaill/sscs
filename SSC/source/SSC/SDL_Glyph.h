@@ -34,28 +34,8 @@ public:
     /// @param h 返回的矩形宽度
     virtual SDL_Size GetPreferedSize() = 0;
 
-
-  //  /// @brief 获取图元所在区域
-  //  /// @param lprc 返回的矩形位置
-  //  virtual SDL_Rect GetBounds()
-  //  {
-		//SDL_Rect	rc;
-		//rc.x = m_x;
-		//rc.y = m_y;
-		//rc.w = m_w;
-		//rc.h = m_h;
-		//return rc;
-  //  }
-
-  //  /// @brief 设置图元所在区域
-  //  /// @param lprc 欲设置矩形位置
-  //  virtual void SetBounds( const SDL_Rect * lprc )
-  //  {
-		//m_x = lprc->x;
-		//m_y = lprc->y;
-		//m_w = lprc->w;
-		//m_h = lprc->h;
-  //  }
+	virtual bool IsShow()			{ return m_bShow;	}
+	virtual void Show( bool bShow ) { m_bShow = bShow;	}
 
 // 方法
 public:
@@ -63,26 +43,18 @@ public:
     /// @param screen	屏幕Surface
     virtual void Draw( SDL_Surface * screen ) = 0;
 
-    ///// @brief 测试相应点是否在图元范围内
-    ///// @param x 屏幕坐标x
-    ///// @param y 屏幕坐标y
-    //virtual bool HitTest( int x, int y )
-    //{
-    //    if ( ( x < m_x || x > x + m_w ) || ( y < m_y || y > m_y + m_h ) )
-    //        return false;
-
-    //    return true;
-    //}
-
     /// @brief 发送事件
     /// @param evnet 事件信息
 	virtual bool HandleEvent(const SDL_Event *event, bool * bDraw ) = 0;
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
-	SDL_Glyph()			{}
+	SDL_Glyph()	: m_bShow( true )		{}
 
     virtual ~SDL_Glyph(){}
+
+protected:
+	bool			m_bShow;
 };
 
 #endif //!SDL_GLYPH_H_INCLUDED

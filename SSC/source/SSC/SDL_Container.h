@@ -37,7 +37,11 @@ public:
 		SDL_SetClipRect( screen, &GetBounds() );
 
 		for ( size_t i = 0; i < GetCount(); i ++ )
-			GetItem(i)->Draw( screen );
+		{
+			SDL_Glyph * pItem = GetItem(i);
+			if ( pItem->IsShow() )
+				pItem->Draw( screen );
+		}
 
 		SDL_SetClipRect( screen, &rcOld );
     }
@@ -47,10 +51,14 @@ public:
  	virtual bool HandleEvent(const SDL_Event *event, bool * bDraw)
 	{
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-            if ( (*pos)->HandleEvent( event, bDraw ) )
-                return true;
-
-	    return false;
+		{
+			if ( (*pos)->IsShow() )
+			{
+				if ( (*pos)->HandleEvent( event, bDraw ) )
+					return true;
+			}
+		}
+		return false;
 	}
 
 

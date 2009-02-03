@@ -29,7 +29,7 @@
 class SDL_Widget : public SDL_Container, public sigslot::has_slots<>
 {
 public:
-	SDL_Widget() : m_pLayout(NULL), m_nLayoutProperty(0) {}
+	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_pParent(0) {}
 
 	~SDL_Widget() {
 		if ( m_pLayout )
@@ -87,12 +87,30 @@ public:
 
 		return false;
 	}
+
+	virtual void Show( bool bShow ) { 
+		if ( m_bShow == bShow )
+			return;
+
+		if ( GetParent() )
+			GetParent()->RecalcLayout();
+
+		m_bShow = bShow;
+	}
+
 public:
-    ///
+	virtual void RecalcLayout()	{ 
+		if ( GetLayout() )
+			GetLayout()->Update( this, &GetBounds() );
+	}
+
+	///
     virtual SDL_Layout * GetLayout(){ return m_pLayout;	}
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
     virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
     virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
+    virtual SDL_Widget * GetParent(){ return m_pParent;	}
+    virtual void SetParent( SDL_Widget * parent ){ m_pParent = parent; }
 
 protected:
     /// @brief 绘制当前图元
@@ -110,6 +128,7 @@ protected:
     /// 客户对象，允许是图元或布局
 	SDL_Layout *	m_pLayout;
 	int				m_nLayoutProperty;
+	SDL_Widget *	m_pParent;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED
