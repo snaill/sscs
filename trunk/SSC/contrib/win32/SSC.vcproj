@@ -210,6 +210,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\source\SSC\SDL_Font.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\SSC\SDL_Glyph.h"
 				>
 			</File>

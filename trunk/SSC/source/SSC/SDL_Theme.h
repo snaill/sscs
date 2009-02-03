@@ -21,8 +21,8 @@
 #ifndef SDL_THEME_H_INCLUDED
 #define SDL_THEME_H_INCLUDED
 
-#include <SDL_ttf.h>
 #include "SDL_Object.h"
+#include "SDL_Font.h"
 
 // @brief …Ë÷√¿‡
 class SDL_Theme : public SDL_Object
@@ -37,7 +37,7 @@ public:
 public:
 	virtual SDL_Color GetColor( int nParam ) = 0;
 	virtual int GetValue( int nParam ) = 0;
-	virtual TTF_Font * GetFont( int nParam ) = 0;
+	virtual SDL_Font * GetFont( int nParam ) = 0;
 	virtual void ReleaseFont( TTF_Font * font ) = 0;
 };
 
@@ -73,25 +73,14 @@ public:
 		return 0;
 	}
 
-	TTF_Font * GetFont( int nParam )	{
-	    TTF_Font *pFont = 0;
+	SDL_Font * GetFont( int nParam )	{
 		switch ( nParam )
 		{
-		case Text:
-			pFont = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 12 );
-			TTF_SetFontStyle( pFont, TTF_STYLE_NORMAL );
-			break;
-		case BigText:
-			pFont = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 24 );
-			TTF_SetFontStyle( pFont, TTF_STYLE_NORMAL );
-			break;
+		case Text: return new SDL_Font( "C:\\Windows\\Fonts\\arial.ttf", 12 );
+		case BigText:return new SDL_Font( "C:\\Windows\\Fonts\\arial.ttf", 24 );
 		}
 
-		return pFont;
-	}
-
-	void ReleaseFont( TTF_Font * font )	{
-		TTF_CloseFont( font );
+		return 0;
 	}
 };
 
