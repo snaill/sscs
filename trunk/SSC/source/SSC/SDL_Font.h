@@ -45,9 +45,9 @@ public:
 	}
 
 	SDL_Size GetTextSize( const char * text )	{
-		SDL_Size	sz;
-		TTF_SizeText( m_pFont, text, (int *)&sz.w, (int *)&sz.h );
-		return sz;
+		int w, h;
+		TTF_SizeText( m_pFont, text, &w, &h );
+		return SDL_Size( w, h );
 	}
 
 	bool DrawText( SDL_Surface * screen, const char * text, SDL_Rect rc, SDL_Color color, int align = 0, int valign = 0, bool bHighQuality = true )	{

@@ -194,10 +194,6 @@
 					RelativePath="..\..\source\SSC\SDL_Image.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Text.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -282,10 +278,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ImageList.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Text.h"
 					>
 				</File>
 			</Filter>
