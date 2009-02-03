@@ -22,10 +22,39 @@
 #include "SDL_Screen.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_Size SDL_ListBoxItem::GetPreferedSize()	
+{	
+	SDL_Size	sz( 0, 0 ), szImage( 0, 0 ), szFont( 0, 0 );
+	sz.w = 0;
+	sz.h = 0;
+	if ( m_imgList )
+		szImage = m_imgList->GetImageSize();
+
+	if ( m_text )
+	{
+		SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
+		szFont = pFontBig->GetTextSize( m_text );
+		pFontBig->Release();
+
+		if ( m_remark )
+		{
+			SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
+			SDL_Size szTemp = pFont->GetTextSize( m_remark );
+			if ( szFont.w < szTemp.w )
+				szFont.w = szTemp.w;
+			szFont.h += 4 + szTemp.h;
+			pFont->Release();
+		}
+	}
+
+	sz.w += 4 + szImage.w + szFont.w + 4;
+	sz.h = 4 + max( szImage.h, szFont.h ) + 4;
+	return sz;
+}
+
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   
 {
-	bool bSelected = m_check;
-
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
 	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
@@ -37,7 +66,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-	if ( bSelected )
+	if ( m_check )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 	else
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
@@ -50,18 +79,29 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	}
 
 	//
-	SDL_Rect	rect;
-	rect.x = x;
-	rect.y = m_pt.y;
-	rect.w = m_sz.w - 8;
-	rect.h = m_sz.h * 2 / 3;
 	if ( m_text )
-		pFontBig->DrawText( screen, m_text, rect, color, -1, 0 );
+	{
+		SDL_Rect	rect;
+		if ( m_remark )
+		{
+			rect.x = x;
+			rect.y = m_pt.y + 4;
+			rect.w = m_sz.w;
+			rect.h = m_sz.h;
+			pFontBig->DrawText( screen, m_text, rect, color, -1, -1 );
 
-	rect.y = m_pt.y + rect.h;
-	rect.h = m_sz.h - rect.h;
-	if ( m_remark )
-		pFont->DrawText( screen, m_remark, rect, color, -1, -1 );
+			rect.y += pFontBig->GetTextSize( m_text ).h + 4;
+			pFont->DrawText( screen, m_remark, rect, color, -1, -1 );
+		}
+		else
+		{
+			rect.x = x;
+			rect.y = m_pt.y;
+			rect.w = m_pt.x + m_sz.w - x;
+			rect.h = m_sz.h;
+			pFontBig->DrawText( screen, m_text, rect, color, -1, 0 );
+		}
+	}
 
 	//
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 

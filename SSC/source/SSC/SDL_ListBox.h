@@ -42,17 +42,18 @@ public:
 
 	virtual const char * GetType()				{ return "listbox"; }
 
-	//virtual void Draw( SDL_Surface * screen )
-	//{
-	//	SDL_Rect	rcOld;
-	//	SDL_GetClipRect( screen, &rcOld );
-	//	SDL_SetClipRect( screen, &GetBounds() );
+	virtual SDL_Size GetPreferedSize()	{
+		SDL_Size	sz( 0, 0 );
+		for ( int i = 0; i < GetCount(); i ++ )
+		{
+			SDL_Size size = GetItem(i)->GetPreferedSize();
+			sz.h += size.h;
+			if ( sz.w < size.w )
+				sz.w = size.w;
+		}
 
-	//	DrawWidget( screen );
-	//	SDL_Container::Draw( screen );
-
-	//	SDL_SetClipRect( screen, &rcOld );
-	//}
+		return sz;
+	}
 public:
 	SDL_ListBoxItem * AddItem( const char * text, const char * remark, int iImage )
 	{

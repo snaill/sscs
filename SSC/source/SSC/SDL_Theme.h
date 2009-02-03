@@ -38,7 +38,6 @@ public:
 	virtual SDL_Color GetColor( int nParam ) = 0;
 	virtual int GetValue( int nParam ) = 0;
 	virtual SDL_Font * GetFont( int nParam ) = 0;
-	virtual void ReleaseFont( TTF_Font * font ) = 0;
 };
 
 class SDL_DefaultTheme : public SDL_Theme

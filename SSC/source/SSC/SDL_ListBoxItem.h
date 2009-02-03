@@ -58,9 +58,7 @@ public:
 
 	virtual const char * GetType()	{ return "listboxitem"; }
 
-	virtual SDL_Size GetPreferedSize()	{	
-		return SDL_Size( 0, 65 );
-	}
+	virtual SDL_Size GetPreferedSize();
 
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
