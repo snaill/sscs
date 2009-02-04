@@ -77,11 +77,26 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 	rect.h = m_sz.h - 4 - 52;
 	if ( m_text )
 		pFont->DrawText( screen, m_text, rect, crSelect );
-	//	DrawText( screen, m_text, rect, pFont, crSelect, false );
+
+	//关闭字体
+	pFont->Release();
 
 	//
-	vlineRGBA( screen, m_pt.x + m_sz.w - 1, m_pt.y + 4, m_pt.y + m_sz.h - 4, 128, 128, 128, 100 ); 
+	if ( m_bHover )
+	{
+		SDL_Rect	rc2;
+		rc2.x = m_pt.x + 2;
+		rc2.y = m_pt.y + 2;
+		rc2.w = m_sz.w - 4;
+		rc2.h = m_sz.h - 4;
 
-    //关闭字体
-	pFont->Release();
+		SDL_Color	cr1, cr2;
+		cr1.r = cr1.g = cr1.b = 0;
+		cr2.r = cr2.g = cr2.b = 192;
+
+		if ( m_bMouseButtonDown )
+            Draw3DRect( screen, rc2, cr1, cr2);
+		else 
+            Draw3DRect( screen, rc2, cr2, cr1);
+	}
 }
