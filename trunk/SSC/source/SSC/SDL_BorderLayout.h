@@ -46,11 +46,12 @@ public:
 		SDL_Rect	rc = *lprc;
 		for ( int i = 0; i < pContainer->GetCount(); i ++ )
 		{
-			SDL_Widget * pItem = (SDL_Widget *)pContainer->GetItem(i);
 			if ( rc.w == 0 || rc.h == 0 )
-			{
 				continue;
-			}
+
+			SDL_Widget * pItem = (SDL_Widget *)pContainer->GetItem(i);
+			if ( !pItem->IsShow() )
+				continue;
 
 			SDL_Size	sz = pItem->GetPreferedSize();
 			SDL_Rect	rcItem;

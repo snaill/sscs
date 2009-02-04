@@ -92,16 +92,24 @@ public:
 		if ( m_bShow == bShow )
 			return;
 
+		m_bShow = bShow;
 		if ( GetParent() )
 			( ( SDL_Widget * )GetParent() )->RecalcLayout();
-
-		m_bShow = bShow;
 	}
 
 public:
 	virtual void RecalcLayout()	{ 
-		if ( GetLayout() )
-			GetLayout()->Update( this, &GetBounds() );
+		if ( !GetLayout() )
+			return;
+
+		GetLayout()->Update( this, &GetBounds() );
+		RedrawWidget();
+	}
+
+	virtual void RedrawWidget()	{
+		SDL_Event	event;
+		event.type = SDL_VIDEOEXPOSE;
+		SDL_PushEvent( &event );
 	}
 
 	///
