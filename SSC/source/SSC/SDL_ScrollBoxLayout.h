@@ -46,6 +46,9 @@ public:
 		for ( size_t i = 0; i < pContainer->GetCount(); i ++ )
 		{
 			SDL_Glyph * pItem = pContainer->GetItem(i);
+			if ( !pItem->IsShow() )
+				continue;
+
 			SDL_Size	size = pItem->GetPreferedSize();
 			rcItem.h = size.h;
 			pItem->SetBounds( &rcItem );

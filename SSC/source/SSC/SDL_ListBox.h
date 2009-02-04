@@ -74,11 +74,7 @@ protected:
 
 	void OnItemSelected( SDL_ListBoxItem * pItem ) {
 		SelectItem( GetItemID( pItem ) );
-
-		SDL_Event	event;
-		event.type = SDL_VIDEOEXPOSE;
-
-		SDL_PushEvent( &event );
+		RedrawWidget();		
 	}
 
 	virtual bool OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw ) {

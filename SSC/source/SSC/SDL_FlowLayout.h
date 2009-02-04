@@ -46,19 +46,15 @@ public:
 		for ( size_t i = 0; i < pContainer->GetCount(); i++ )
 		{
 			SDL_Glyph * pItem = pContainer->GetItem( i );
+			if ( !pItem->IsShow() )
+				continue;
+
 			SDL_Size size = pItem->GetPreferedSize();
-			//if ( size.width < w )
-			{
-				rcItem.x = x;
-				rcItem.y = y;
-				rcItem.w = size.w;
-				rcItem.h = size.h;
-				pItem->SetBounds( &rcItem );
-			}
-			//else
-			//{
-			//	
-			//}
+			rcItem.x = x;
+			rcItem.y = y;
+			rcItem.w = size.w;
+			rcItem.h = size.h;
+			pItem->SetBounds( &rcItem );
 			x += size.w;
 		}
     }
