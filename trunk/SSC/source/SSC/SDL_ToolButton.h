@@ -40,6 +40,7 @@ public:
 
 		m_imgList = 0;
 		m_image = iImage;
+		m_bMouseButtonDown = false;
     }
 
     virtual ~SDL_ToolButton()					{
@@ -55,11 +56,35 @@ public:
     /// @param screen	ÆÁÄ»Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
+		SDL_Widget::OnMouseEnter( motion, bDraw );
+		*bDraw = true;
+		return true;	
+	}
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
+		SDL_Widget::OnMouseLeave( motion, bDraw );
+		*bDraw = true;
+		return true;	
+	}
+
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
-		click( this );
+		m_bMouseButtonDown = true;
+		*bDraw = true;
+		return true;
+	}
+
+	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )	{
+		if ( IsIn( button->x, button->y ) )
+			click( this );
+
+		if ( m_bMouseButtonDown )
+		{
+			m_bMouseButtonDown = false;
+			*bDraw = true;
+		}
 		return true;
 	}
 
@@ -72,6 +97,7 @@ protected:
 	char *		m_text;
 	int			m_image;
 	SDL_ImageList *		m_imgList;
+	bool		m_bMouseButtonDown;
 };
 
 #endif //!SDL_TOOLBUTTON_H_INCLUDED

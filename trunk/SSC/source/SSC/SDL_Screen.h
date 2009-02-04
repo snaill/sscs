@@ -117,7 +117,17 @@ public:
 			default:
 			{
 				bool bDraw = false;
-				SDL_Widget::HandleEvent( event, &bDraw );
+				switch ( event->type )	{
+					case SDL_MOUSEBUTTONDOWN:
+					case SDL_MOUSEBUTTONUP:
+					case SDL_MOUSEMOTION:
+						SDL_Widget::HandleMouseEvent( event, &bDraw );
+						break;
+					case SDL_KEYDOWN:
+					case SDL_KEYUP:
+						SDL_Widget::HandleKeyEvent( event, &bDraw );
+						break;
+				}
 				if ( bDraw )
 					Draw( m_screen );
 			}

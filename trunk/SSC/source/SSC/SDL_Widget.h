@@ -29,7 +29,7 @@
 class SDL_Widget : public SDL_Container, public sigslot::has_slots<>
 {
 public:
-	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0) {}
+	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false) {}
 
 	~SDL_Widget() {
 		if ( m_pLayout )
@@ -73,16 +73,41 @@ public:
 		SDL_SetClipRect( screen, &rcOld );
 	}
 
- 	virtual bool HandleEvent(const SDL_Event *event, bool * bDraw){
-		if ( SDL_Container::HandleEvent(event, bDraw ) )
+ 	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
+		bool bHandled = false;
+		switch ( event->type )
+		{
+			case SDL_MOUSEBUTTONUP: 
+				bHandled = OnMouseUp( &event->button, bDraw );
+				break;
+			case SDL_MOUSEBUTTONDOWN: 
+				bHandled = OnMouseDown( &event->button, bDraw );
+				break;
+			case SDL_MOUSEMOTION:		
+				if ( IsIn( event->motion.x, event->motion.y ) )
+				{
+					if ( m_bHover )
+						bHandled = OnMouseMove( &event->motion, bDraw );
+					else
+						bHandled = OnMouseEnter( &event->motion, bDraw );
+				}
+				else
+					if ( m_bHover )
+						bHandled = OnMouseLeave( &event->motion, bDraw );
+				break;
+		}
+
+		if ( bHandled )
 			return true;
 
+		return SDL_Container::HandleMouseEvent(event, bDraw );
+	}
+
+ 	virtual bool HandleKeyEvent(const SDL_Event *event, bool * bDraw){
 		switch ( event->type )
 		{
 			case SDL_KEYDOWN:			return OnKeyDown( &event->key, bDraw );
 			case SDL_KEYUP:				return OnKeyUp( &event->key, bDraw );
-			case SDL_MOUSEBUTTONDOWN:	return OnMouseDown( &event->button, bDraw );
-			case SDL_MOUSEMOTION:		return OnMouseMove( &event->motion, bDraw );
 		}
 
 		return false;
@@ -122,8 +147,11 @@ protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen ) {}
+    void Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTopLeft, SDL_Color clrBottomRight );
 
 // 事件
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_bHover = true; return false;	}
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_bHover = false; return false;	}
 	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )	{ return false;	}
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{ return false;	}
 	virtual bool OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ return false;	}
@@ -134,6 +162,7 @@ protected:
     /// 客户对象，允许是图元或布局
 	SDL_Layout *	m_pLayout;
 	int				m_nLayoutProperty;
+	bool			m_bHover;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

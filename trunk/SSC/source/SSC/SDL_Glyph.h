@@ -47,7 +47,9 @@ public:
 
     /// @brief 发送事件
     /// @param evnet 事件信息
-	virtual bool HandleEvent(const SDL_Event *event, bool * bDraw ) = 0;
+	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw ) = 0;
+
+	virtual bool HandleKeyEvent(const SDL_Event *event, bool * bDraw ) = 0;
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建

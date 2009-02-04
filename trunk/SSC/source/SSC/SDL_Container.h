@@ -48,19 +48,15 @@ public:
 
     /// @brief 发送事件
     /// @param evnet 事件信息
- 	virtual bool HandleEvent(const SDL_Event *event, bool * bDraw)
+ 	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw)
 	{
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
 			if ( (*pos)->IsShow() )
-			{
-				if ( (*pos)->HandleEvent( event, bDraw ) )
-					return true;
-			}
+				(*pos)->HandleMouseEvent( event, bDraw );
 		}
 		return false;
 	}
-
 
 // 子图元操作
 public:

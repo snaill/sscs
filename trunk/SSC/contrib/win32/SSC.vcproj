@@ -186,6 +186,10 @@
 					RelativePath="..\..\source\SSC\SDL_ToolButton.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Widget.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Simple"
