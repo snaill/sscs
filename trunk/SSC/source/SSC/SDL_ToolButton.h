@@ -57,8 +57,11 @@ public:
 	virtual void DrawWidget( SDL_Surface * screen );
 
 	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseEnter( motion, bDraw );
-		*bDraw = true;
+		if ( !( motion->state && !m_bMouseButtonDown ) )
+		{
+			SDL_Widget::OnMouseEnter( motion, bDraw );
+			*bDraw = true;
+		}
 		return true;	
 	}
 	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
