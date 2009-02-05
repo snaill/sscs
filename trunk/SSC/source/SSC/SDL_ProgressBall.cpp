@@ -22,8 +22,9 @@
 #include <SDL_gfxPrimitives.h>
 
 /// 进度条的高度
-#define BALL_SIZE		8
-
+#define BALL_SIZE		9
+/// ball半径
+#define BALL_RAD		4
 /// ball间距			
 #define BALL_SPACE		2
 
@@ -33,17 +34,6 @@ SDL_ProgressBall::SDL_ProgressBall()
 
 SDL_ProgressBall::~SDL_ProgressBall(void)
 {
-}
-
-void SDL_ProgressBall::SetBounds( const SDL_Rect  * lpsz )
-{
-	SDL_Rect	rc;
-	rc.x = lpsz->x;
-	rc.y = lpsz->y + lpsz->h - BALL_SIZE;
-	rc.w = lpsz->w;
-	rc.h = BALL_SIZE;
-
-	SDL_Glyph::SetBounds( &rc );
 }
 
 SDL_Size SDL_ProgressBall::GetPreferedSize()
@@ -59,20 +49,20 @@ void SDL_ProgressBall::DrawWidget( SDL_Surface * screen )
 	SDL_FillRect( screen, &rc, SDL_MapRGB( screen->format, 64, 64, 64 ) );
 
 	///进度显示
-	rc.x += ( rc.w - BALL_SIZE * 3 - BALL_SPACE * 2 ) / 2 + BALL_SIZE / 2;
-	rc.y += ( rc.h - BALL_SIZE ) / 2 + BALL_SIZE / 2;
+	rc.x += ( rc.w - BALL_SIZE * 3 - BALL_SPACE * 2 ) / 2 + BALL_RAD;
+	rc.y += ( rc.h - BALL_SIZE ) / 2 + BALL_RAD;
 	rc.w = BALL_SIZE;
 	rc.h = BALL_SIZE;
 
-	filledCircleRGBA( screen, rc.x, rc.y, BALL_SIZE / 2, 0, 255, 0, 255 );
+	filledCircleRGBA( screen, rc.x, rc.y, BALL_RAD, 0, 255, 0, 255 );
 	if ( GetPos() > 98)
 	{
 		rc.x += BALL_SIZE + BALL_SPACE;
-		filledCircleRGBA( screen, rc.x, rc.y, BALL_SIZE / 2, 0, 0, 255, 255 );
+		filledCircleRGBA( screen, rc.x, rc.y, BALL_RAD, 0, 0, 255, 255 );
 		if ( GetPos() > 99 )
 		{
 			rc.x += BALL_SIZE + BALL_SPACE;
-			filledCircleRGBA( screen, rc.x, rc.y, BALL_SIZE / 2, 255, 0, 0, 255 );
+			filledCircleRGBA( screen, rc.x, rc.y, BALL_RAD, 255, 0, 0, 255 );
 		}
 	}
 }

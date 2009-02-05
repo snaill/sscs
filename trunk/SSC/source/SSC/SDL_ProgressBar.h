@@ -39,10 +39,6 @@ public:
 	/// @param lprc 返回的矩形位置
 	SDL_Size GetPreferedSize();
 
-	/// @brief 设置修饰器图元矩形，包括客户图元的矩形范围，所以同时更新客户图元的矩形
-	/// @param lpsz 图元矩形指针
-	virtual void SetBounds( const SDL_Rect  * lpsz );
-
 	inline int GetPos()				{ return m_nPos;				}
 	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
 
