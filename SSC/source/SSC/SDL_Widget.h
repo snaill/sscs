@@ -142,6 +142,7 @@ public:
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
     virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
     virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
+	virtual SDL_Glyph * SetFocus();
 
 protected:
     /// @brief 绘制当前图元

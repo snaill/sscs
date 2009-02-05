@@ -22,11 +22,12 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	SDL_Screen * screen = SDL_Screen::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
+	screen->SetTheme( new SDL_DefaultTheme() );
+
 	CFileView	fileView;
 	CImageView	imageView;
 
-	SDL_Screen * screen = SDL_Screen::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
-	screen->SetTheme( new SDL_DefaultTheme() );
 	screen->Add( fileView );
 //	screen->Add( imageView );
 	screen->Draw(0);

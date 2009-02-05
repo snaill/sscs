@@ -74,7 +74,8 @@ protected:
 
 	void OnItemSelected( SDL_ListBoxItem * pItem ) {
 		SelectItem( GetItemID( pItem ) );
-		RedrawWidget();		
+		SetFocus();
+		RedrawWidget();	
 	}
 
 	virtual bool OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw ) {

@@ -63,6 +63,9 @@ CFileView::CFileView(void)
 	m_this->Add( m_toolbar );
 	m_this->Add( progress );
 	m_this->Add( listbox );
+
+	listbox->SetFocus();
+
 }
 
 CFileView::~CFileView(void)
