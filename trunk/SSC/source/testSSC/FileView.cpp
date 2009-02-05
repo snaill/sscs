@@ -43,9 +43,25 @@ CFileView::CFileView(void)
 	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
 
 	//
+	SDL_ProgressBar * progressBar = new SDL_ProgressBar();
+	progressBar->SetLayoutProperty( SDL_BorderLayout::fill );
+	progressBar->SetPos( 27 );
+
+	SDL_ProgressBall * progressBall = new SDL_ProgressBall();
+	progressBall->SetLayoutProperty( SDL_BorderLayout::east );
+	progressBall->SetPos( 100 );
+
+	SDL_Widget * progress = new SDL_Widget();
+	progress->SetLayoutProperty( SDL_BorderLayout::south );
+	progress->SetLayout( new SDL_BorderLayout() );
+	progress->Add( progressBall );
+	progress->Add( progressBar );
+
+	//
 	m_this = new SDL_Widget();
 	m_this->SetLayout( new SDL_BorderLayout() );
 	m_this->Add( m_toolbar );
+	m_this->Add( progress );
 	m_this->Add( listbox );
 }
 

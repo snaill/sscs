@@ -20,20 +20,17 @@
 
 #pragma once
 
-#include "SDL_Widget.h"
+#include "SDL_ProgressBar.h"
 
 /// @brief 进度条处理类，包括文档进度及当前的翻页进度
-class SDL_ProgressBar : public SDL_Widget
+class SDL_ProgressBall : public SDL_ProgressBar
 {
-protected:
-	int			m_nPos;
-
 public:
-	SDL_ProgressBar( );
-	virtual ~SDL_ProgressBar(void);
+	SDL_ProgressBall( );
+	virtual ~SDL_ProgressBall(void);
 
 	//
-	virtual const char * GetType()			{ return "progressbar";	}
+	virtual const char * GetType()			{ return "progressball";	}
 
 	/// @brief 获取装饰器除去客户图元以后的矩形位置
 	/// @param lprc 返回的矩形位置
@@ -43,10 +40,6 @@ public:
 	/// @param lpsz 图元矩形指针
 	virtual void SetBounds( const SDL_Rect  * lpsz );
 
-	inline int GetPos()				{ return m_nPos;				}
-	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
-
-	void HitTest( POINT pt, int &nCommand, int &nPos );
 protected:
 	virtual void DrawWidget( SDL_Surface * screen );
 };

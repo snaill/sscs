@@ -179,6 +179,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\SSC\SDL_ProgressBall.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBar.cpp"
 					>
 				</File>
@@ -294,6 +298,10 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ListBoxItem.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ProgressBall.h"
 					>
 				</File>
 				<File

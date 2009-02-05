@@ -46,9 +46,7 @@ public:
 		m_h = lprc->h;
     }
 
-	virtual SDL_Size GetPreferedSize(){		
-		return SDL_Size( 32, 32 );
-	}
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer ) = 0;
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
