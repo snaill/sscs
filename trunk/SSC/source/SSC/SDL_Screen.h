@@ -125,7 +125,8 @@ public:
 						break;
 					case SDL_KEYDOWN:
 					case SDL_KEYUP:
-						SDL_Widget::HandleKeyEvent( event, &bDraw );
+						if ( GetFocusGlyph() )
+							GetFocusGlyph()->HandleKeyEvent( event, &bDraw );
 						break;
 				}
 				if ( bDraw )
@@ -136,8 +137,10 @@ public:
 		return true;
 	}
 
-	SDL_Theme * GetTheme()				{ return m_theme;	}
-	void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
+	inline SDL_Theme * GetTheme()				{ return m_theme;	}
+	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
+	inline SDL_Glyph * GetFocusGlyph()				{ return m_curGlyph;	}
+	inline void SetFocusGlyph( SDL_Glyph * pFocus )	{ m_curGlyph = pFocus;	}
 
 protected:
 	SDL_Screen( int width, int height, int bpp, int videoFlag )  
@@ -148,6 +151,7 @@ protected:
 		m_bpp = bpp;
 		m_videoFlag = videoFlag;
 		m_degree = 0;
+		m_curGlyph = 0;
 		m_screen = SDL_SetVideoMode( width, height, bpp, videoFlag );
 		SetLayout( new SDL_CardLayout() );
 	}
@@ -159,13 +163,13 @@ protected:
 		 TTF_Quit();
 	}
 
-	virtual void DrawWidget( SDL_Surface * screen )	{}
 protected:
 	SDL_Surface *	m_screen;
 	SDL_Theme *		m_theme;
 	int				m_videoFlag;
 	int				m_bpp;
 	int				m_degree;
+	SDL_Glyph *		m_curGlyph;
 
 protected:
 	static SDL_Screen * m_this;
