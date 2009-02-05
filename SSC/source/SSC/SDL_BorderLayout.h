@@ -40,8 +40,35 @@ public:
 // 方法
 public:
 	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
-		//!!!!!
-		return SDL_Size( 0, 0 );
+		SDL_Size	sz;
+		for ( int i = pContainer->GetCount() - 1; i >= 0; i -- )
+		{	
+			SDL_Widget * pItem = (SDL_Widget *)pContainer->GetItem(i);
+			if ( !pItem->IsShow() )
+				continue;
+
+			SDL_Size	szItem = pItem->GetPreferedSize();
+			switch ( pItem->GetLayoutProperty() )
+			{
+			case north: 
+			case south:
+				if ( szItem.w > sz.w )
+					sz.w = szItem.w;
+				sz.h += szItem.h;
+				break;
+			case west:
+			case east:
+				sz.w += szItem.w;
+				if ( szItem.h > sz.h )
+					sz.h = szItem.h;
+				break;
+			case fill:
+				sz.w += szItem.w;
+				sz.h += szItem.h;
+			}
+		}
+
+		return sz;
 	}
 
     /// @brief 设置图元所在区域

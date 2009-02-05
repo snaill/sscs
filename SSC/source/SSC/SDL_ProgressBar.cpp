@@ -35,17 +35,6 @@ SDL_ProgressBar::~SDL_ProgressBar(void)
 {
 }
 
-void SDL_ProgressBar::SetBounds( const SDL_Rect  * lpsz )
-{
-	SDL_Rect	rc;
-	rc.x = lpsz->x;
-	rc.y = lpsz->y + lpsz->h - BAR_HEIGHT;
-	rc.w = lpsz->w;
-	rc.h = BAR_HEIGHT;
-
-	SDL_Glyph::SetBounds( &rc );
-}
-
 void SDL_ProgressBar::HitTest( POINT pt, int &nCommand, int &nPos )
 {
 	//if ( pt.x >= m_rc.left && pt.x < m_rc.left + 5 + 4 )
@@ -82,7 +71,8 @@ void SDL_ProgressBar::DrawWidget( SDL_Surface * screen )
 	int offset = rc.w * m_nPos / 100;
 	hlineRGBA( screen, rc.x, rc.x + offset, rc.y, 128, 128, 128, 255 );
 	hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 1, 192, 192, 192, 255 );
-	hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 2, 255, 255, 255, 255 );
-	hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 3, 255, 255, 255, 255 );
-	hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 4, 192, 192, 192, 255 );
+	boxRGBA( screen, rc.x, rc.y + 2, rc.x + offset, rc.y + rc.h - 2, 255, 255, 255, 255 );
+	//hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 2, 255, 255, 255, 255 );
+	//hlineRGBA( screen, rc.x, rc.x + offset, rc.y + 3, 255, 255, 255, 255 );
+	hlineRGBA( screen, rc.x, rc.x + offset, rc.y + rc.h - 1, 192, 192, 192, 255 );
 }
