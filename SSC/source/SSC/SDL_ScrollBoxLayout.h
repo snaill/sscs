@@ -35,6 +35,11 @@ public:
 
 	virtual const char * GetType()				{ return "scrollboxlayout"; }
 
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+		//!!!!!
+		return SDL_Size( 0, 0 );
+	}
+
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {

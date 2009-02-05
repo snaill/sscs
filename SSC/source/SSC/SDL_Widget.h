@@ -45,9 +45,9 @@ public:
     /// @param h 返回的矩形宽度
 	virtual SDL_Size GetPreferedSize()	{
 		if ( GetLayout() )
-			return GetLayout()->GetPreferedSize();
+			return GetLayout()->GetPreferedSize( this );
 
-		return SDL_Size( 32, 32 );
+		return SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
