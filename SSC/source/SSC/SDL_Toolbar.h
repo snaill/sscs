@@ -60,7 +60,7 @@ public:
 		return sz;
 	}
 public:
-	SDL_ToolButton * AddItem( const char * text, int iImage )
+	SDL_ToolButton * AddItem( const wchar_t * text, int iImage )
 	{
 		SDL_ToolButton * pItem = new SDL_ToolButton( text, iImage );
 		pItem->SetImageList( m_imgList );

@@ -16,10 +16,10 @@ CImageView::CImageView(void)
 	SDL_ImageList * imgList = new SDL_ImageList();
 	imgList->Create( 48, SDL_LoadBMP("test.bmp"), crMask );
 	toolbar->SetImageList( imgList );
-	toolbar->AddItem( "ToolButton1", 0 );
-	toolbar->AddItem( "ToolButton2", 0 );
-	toolbar->AddItem( "ToolButton3", 0 );
-	toolbar->AddItem( "ToolButton4", 0 );
+	toolbar->AddItem( L"ToolButton1", 0 );
+	toolbar->AddItem( L"ToolButton2", 0 );
+	toolbar->AddItem( L"ToolButton3", 0 );
+	toolbar->AddItem( L"ToolButton4", 0 );
 	toolbar->SetLayoutProperty( SDL_BorderLayout::north );
 
 	//

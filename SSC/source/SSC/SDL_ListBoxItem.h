@@ -32,15 +32,15 @@ public:
 	sigslot::signal1<SDL_ListBoxItem *>		select;
 
 public:
-    SDL_ListBoxItem( const char * text, const char * remark, int iImage ) {
-		int len = strlen( text );
-		m_text = new char[ len + 1 ];
-		strcpy( m_text, text );
+    SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, int iImage ) {
+		int len = wcslen( text );
+		m_text = new wchar_t[ len + 1 ];
+		wcscpy( m_text, text );
 		m_text[ len ] = '\0';
 
-		len = strlen( remark );
-		m_remark = new char[ len + 1 ];
-		strcpy( m_remark, remark );
+		len = wcslen( remark );
+		m_remark = new wchar_t[ len + 1 ];
+		wcscpy( m_remark, remark );
 		m_remark[ len ] = '\0';
 
 		m_check = false;
@@ -80,8 +80,8 @@ public:
 	}
 
 protected:
-	char *				m_text;
-	char *				m_remark;
+	wchar_t *				m_text;
+	wchar_t *				m_remark;
 	int					m_image;
 	bool				m_check;
 	SDL_ImageList *		m_imgList;

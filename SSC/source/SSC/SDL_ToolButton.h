@@ -32,10 +32,10 @@ public:
 	sigslot::signal1<SDL_ToolButton *>		click;
 
 public:
-    SDL_ToolButton( const char * text, int iImage ) {
-		int len = strlen( text );
-		m_text = new char[ len + 1 ];
-		strcpy( m_text, text );
+    SDL_ToolButton( const wchar_t * text, int iImage ) {
+		int len = wcslen( text );
+		m_text = new wchar_t[ len + 1 ];
+		wcscpy( m_text, text );
 		m_text[ len ] = '\0';
 
 		m_imgList = 0;
@@ -97,10 +97,10 @@ public:
 	}
 
 protected:
-	char *		m_text;
-	int			m_image;
+	wchar_t *			m_text;
+	int					m_image;
 	SDL_ImageList *		m_imgList;
-	bool		m_bMouseButtonDown;
+	bool				m_bMouseButtonDown;
 };
 
 #endif //!SDL_TOOLBUTTON_H_INCLUDED
