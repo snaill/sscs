@@ -22,6 +22,7 @@
 #define SDL_CONTAINER_H_INCLUDED
 
 #include "SDL_Glyph.h"
+#include "Iterator.h"
 
 /// @brief 所有界面布局的基类，并提供对布局内对象的访问
 class SDL_Container : public SDL_Glyph
@@ -36,12 +37,13 @@ public:
 		SDL_GetClipRect( screen, &rcOld );
 		SDL_SetClipRect( screen, &GetBounds() );
 
-		for ( size_t i = 0; i < GetCount(); i ++ )
+		Iterator * pos = GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = GetItem(i);
-			if ( pItem->IsShow() )
-				pItem->Draw( screen );
+			SDL_Glyph * pItem = pos->GetCurrentItem();
+			pItem->Draw( screen );
 		}
+		pos->Release();
 
 		SDL_SetClipRect( screen, &rcOld );
     }
@@ -85,6 +87,13 @@ public:
            (*pos)->Release();
         m_aChildren.clear();
     }
+
+	Iterator * GetIterator( bool r = false )	{
+		if ( !r )
+			return new SDL_Iterator( &m_aChildren );
+		else
+			return new SDL_IteratorR( &m_aChildren );
+	}
 
     /// 获取子图元个数
     virtual size_t	GetCount()

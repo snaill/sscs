@@ -29,7 +29,7 @@
 class SDL_Toolbar : public SDL_Widget
 {
 public:
-	sigslot::signal2<int, SDL_ToolButton *>		click;
+	sigslot::signal1<SDL_ToolButton *>		click;
 
 // »ù±¾ÊôÐÔ
 public:
@@ -46,13 +46,16 @@ public:
 
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
-		for ( int i = 0; i < GetCount(); i ++ )
+		
+		Iterator * pos = GetIterator(true);
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Size size = GetItem(i)->GetPreferedSize();
+			SDL_Size size = pos->GetCurrentItem()->GetPreferedSize();
 			sz.w += size.w;
 			if ( sz.h < size.h )
 				sz.h = size.h;
 		}
+		pos->Release();
 
 		return sz;
 	}
@@ -80,7 +83,7 @@ protected:
 	}
 
 	void OnButtonClicked( SDL_ToolButton * button ) {
-		click( GetItemID( button ), button );
+		click( button );
 	}
 
 protected:

@@ -28,7 +28,7 @@ class SDL_CardLayout : public SDL_Layout
 {
 // 基本属性
 public:
-	SDL_CardLayout() : m_nActiveItem(0)  	{ }
+	SDL_CardLayout() : m_pActiveItem(0)  	{ }
     virtual ~SDL_CardLayout()				{ }
 
 	virtual const char * GetType()				{ return "cardlayout"; }
@@ -36,24 +36,23 @@ public:
 // 方法
 public:
 	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
-		SDL_Glyph * p = pContainer->GetItem( m_nActiveItem );
-		return p ? p->GetPreferedSize() : SDL_Size( 0, 0 );
+		return m_pActiveItem ? m_pActiveItem->GetPreferedSize() : SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc )
     {
-		if ( m_nActiveItem >= (int)pContainer->GetCount() )
-			return;
-		
-		SDL_Glyph * p = pContainer->GetItem( m_nActiveItem );
-		if ( p )
-			p->SetBounds( lprc );
+		if ( m_pActiveItem )
+			m_pActiveItem->SetBounds( lprc );
     }
 
+public:
+	SDL_Glyph *	GetActiveItem()						{ return m_pActiveItem;	}
+	void SetActiveItem( SDL_Glyph * pActiveItem )	{ m_pActiveItem = pActiveItem;	}
+
 protected:
-	int			m_nActiveItem;
+	SDL_Glyph *			m_pActiveItem;
 };
 
 #endif // SDL_CARDLAYOUT_H_INCLUDED

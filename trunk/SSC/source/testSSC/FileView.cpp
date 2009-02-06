@@ -72,7 +72,7 @@ CFileView::~CFileView(void)
 {
 }
 
-void CFileView::OnToolButtonClick( int index, SDL_ToolButton * button )
+void CFileView::OnToolButtonClick( SDL_ToolButton * button )
 {
 	m_toolbar->Show( false );
 }

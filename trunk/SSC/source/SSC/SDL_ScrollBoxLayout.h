@@ -48,18 +48,18 @@ public:
 		rcItem.x = lprc->x;
 		rcItem.y = lprc->y;
 		rcItem.w = lprc->w;
-		for ( size_t i = 0; i < pContainer->GetCount(); i ++ )
-		{
-			SDL_Glyph * pItem = pContainer->GetItem(i);
-			if ( !pItem->IsShow() )
-				continue;
 
+		Iterator * pos = pContainer->GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		{
+			SDL_Glyph * pItem = pos->GetCurrentItem();
 			SDL_Size	size = pItem->GetPreferedSize();
 			rcItem.h = size.h;
 			pItem->SetBounds( &rcItem );
 
 			rcItem.y += rcItem.h;
 		}
+		pos->Release();
 
 		//
 		SDL_Layout::SetBounds( lprc );
@@ -67,92 +67,43 @@ public:
 
 public:
 	void Scroll( int nValue, SDL_Container * pContainer )	{
-		for ( size_t i = 0; i < pContainer->GetCount(); i ++ )
+		Iterator * pos = pContainer->GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Rect	rc = pContainer->GetItem(i)->GetBounds();
+			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Rect	rc = pItem->GetBounds();
 			rc.y += nValue;
-			pContainer->GetItem(i)->SetBounds(&rc);
+			pItem->SetBounds(&rc);
 		}
+		pos->Release();
 	}
 
-	int GetTopIndex( SDL_Container * pContainer )	{
-		for ( size_t i = 0; i < pContainer->GetCount(); i ++ )
+	SDL_Glyph * GetTop( SDL_Container * pContainer )	{
+		Iterator * pos = pContainer->GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Rect	rc = pContainer->GetItem(i)->GetBounds();
+			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y + rc.h > m_y )
-				return i;
+				return pItem;
 		}	
+		pos->Release();
 
-		return -1;
+		return 0;
 	}
 
-	int GetBottomIndex( SDL_Container * pContainer )	{
-		for ( int i = pContainer->GetCount() - 1; i >= 0 ; i -- )
+	SDL_Glyph * GetBottom( SDL_Container * pContainer )	{
+		Iterator * pos = pContainer->GetIterator(true);
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Rect	rc = pContainer->GetItem(i)->GetBounds();
+			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y < m_y + m_h )
-				return i;
+				return pItem;
 		}		
-
-		return -1;
+		pos->Release();
+		return 0;
 	}	
-//
-//	void ShowItem( int index, SDL_Container * pContainer, const SDL_Rect * lprc  )	{
-//		if ( index > m_top && index < m_bottom )
-//			return;
-//		
-//		if ( index <= m_top )
-//			SetTop( index, pContainer, lprc );
-//
-//		if ( index >= m_bottom )
-//			SetBottom( index, pContainer, lprc );
-//	}
-//
-//protected:
-//	Uint16	GetTop()			{ return m_top; }
-//	void	SetTop( Uint16 top, SDL_Container * pContainer, const SDL_Rect * lprc )	{ 
-//		if ( m_top == top || top >= pContainer->GetCount() )
-//			return;
-//
-//		SDL_Rect	rect;
-//		int			h = 0;
-//		for ( int i = top; i < pContainer->GetCount() && h < lprc->h; i++ )
-//		{
-//			SDL_Size	size = pContainer->GetItem(i)->GetPreferedSize();
-//			rect.x = 0;
-//			rect.w = lprc->w;
-//			rect.y = lprc->y + h;
-//			pContainer->GetItem(i)->SetBounds( &rect );
-//			h += rect.h;
-//			m_bottom = i;
-//		}
-//
-//		m_top = top;
-//	}
-//
-//	Uint16	GetBottom()					{ return m_bottom; }
-//	void	SetBottom(Uint16 bottom, SDL_Container * pContainer, const SDL_Rect * lprc )	{ 
-//		if ( m_bottom == bottom || bottom >= pContainer->GetCount() )
-//			return;
-//
-//		SDL_Rect	rect;
-//		int			h = lprc->h;
-//		for ( int i = bottom; i >= 0 && h > 0; i-- )
-//		{
-//			SDL_Size	size = pContainer->GetItem(i)->GetPreferedSize();
-//			rect.x = 0;
-//			rect.w = lprc->w;
-//			h -= rect.h;
-//			rect.y = lprc->y + h;
-//			pContainer->GetItem(i)->SetBounds( &rect );
-//			m_top = i;
-//		}
-//
-//		if ( h > 0 )
-//			SetTop( 0, pContainer, lprc );
-//
-//		m_bottom = bottom;
-//	}
 
 protected:
 	Uint16	m_top, m_bottom;
