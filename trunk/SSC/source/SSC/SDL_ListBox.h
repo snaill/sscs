@@ -58,7 +58,7 @@ public:
 		return sz;
 	}
 public:
-	SDL_ListBoxItem * AddItem( const char * text, const char * remark, int iImage )
+	SDL_ListBoxItem * AddItem( const wchar_t * text, const wchar_t * remark, int iImage )
 	{
 		SDL_ListBoxItem * pItem = new SDL_ListBoxItem( text, remark, iImage );
 		pItem->select.connect( this, &SDL_ListBox::OnItemSelected );

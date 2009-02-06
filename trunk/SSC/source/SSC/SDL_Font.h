@@ -44,20 +44,20 @@ public:
 		TTF_SetFontStyle( m_pFont, style );
 	}
 
-	SDL_Size GetTextSize( const char * text )	{
+	SDL_Size GetTextSize( const wchar_t * text )	{
 		int w, h;
-		TTF_SizeText( m_pFont, text, &w, &h );
+		TTF_SizeUNICODE( m_pFont, (const Uint16 *)text, &w, &h );
 		return SDL_Size( w, h );
 	}
 
-	bool DrawText( SDL_Surface * screen, const char * text, SDL_Rect rc, SDL_Color color, int align = 0, int valign = 0, bool bHighQuality = true )	{
+	bool DrawText( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, int align = 0, int valign = 0, bool bHighQuality = true )	{
 
 		//使用打开的字体,将字符串"画"到内存(显示环境)中
 		SDL_Surface  *pTextSurface = 0;
 		if ( bHighQuality )
-			pTextSurface = TTF_RenderText_Blended( m_pFont, text, color );
+			pTextSurface = TTF_RenderUNICODE_Blended( m_pFont, (const Uint16 *)text, color );
 		else
-			pTextSurface = TTF_RenderText_Solid( m_pFont, text, color );
+			pTextSurface = TTF_RenderUNICODE_Solid( m_pFont, (const Uint16 *)text, color );
 	
 		// 绘制到屏幕缓存
 		if ( !pTextSurface )
@@ -92,10 +92,10 @@ public:
 		return true;
 	}
 
-	bool DrawText( SDL_Surface * screen, const char * text, SDL_Rect rc, SDL_Color color, SDL_Color crBack, int align = 0, int valign = 0 )	{
+	bool DrawText( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, SDL_Color crBack, int align = 0, int valign = 0 )	{
 
 		//使用打开的字体,将字符串"画"到内存(显示环境)中
-		SDL_Surface  *pTextSurface = TTF_RenderText_Shaded( m_pFont, text, color, crBack );
+		SDL_Surface  *pTextSurface = TTF_RenderUNICODE_Shaded( m_pFont, (const Uint16 *)text, color, crBack );
 
 		// 绘制到屏幕缓存
 		if ( !pTextSurface )

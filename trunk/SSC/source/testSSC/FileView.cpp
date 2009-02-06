@@ -10,22 +10,22 @@ CFileView::CFileView(void)
 	imgList->Create( 48, SDL_LoadBMP("test.bmp"), crMask );
 	listbox->SetImageList( imgList );
 
-	listbox->AddItem( "中国", "aaa", 0 );
-	listbox->AddItem( "Test2", "bbbb", 1 );
-	listbox->AddItem( "Test3", "ccccc", 2 );
-	listbox->AddItem( "Test4", "ccccc", 3 );
-	listbox->AddItem( "Test5", "ccccc", 4 );
-	listbox->AddItem( "Test6", "ccccc", 5 );
-	listbox->AddItem( "Test7", "ccccc", 6 );
-	listbox->AddItem( "Test8", "ccccc", 7 );
-	listbox->AddItem( "Test9", "ccccc", 8 );
-	listbox->AddItem( "Test10", "ccccc", 9 );
-	listbox->AddItem( "Test11", "ccccc", 10 );
-	listbox->AddItem( "Test12", "ccccc", 11 );
-	listbox->AddItem( "Test13", "ccccc", 12 );
-	listbox->AddItem( "Test14", "ccccc", 13 );
-	listbox->AddItem( "Test15", "ccccc", 14 );
-	listbox->AddItem( "Test16", "ccccc", 15 );
+	listbox->AddItem( L"中国", L"aaa", 0 );
+	listbox->AddItem( L"Test2", L"bbbb", 1 );
+	listbox->AddItem( L"Test3", L"ccccc", 2 );
+	listbox->AddItem( L"Test4", L"ccccc", 3 );
+	listbox->AddItem( L"Test5", L"ccccc", 4 );
+	listbox->AddItem( L"Test6", L"ccccc", 5 );
+	listbox->AddItem( L"Test7", L"ccccc", 6 );
+	listbox->AddItem( L"Test8", L"ccccc", 7 );
+	listbox->AddItem( L"Test9", L"ccccc", 8 );
+	listbox->AddItem( L"Test10", L"ccccc", 9 );
+	listbox->AddItem( L"Test11", L"ccccc", 10 );
+	listbox->AddItem( L"Test12", L"ccccc", 11 );
+	listbox->AddItem( L"Test13", L"ccccc", 12 );
+	listbox->AddItem( L"Test14", L"ccccc", 13 );
+	listbox->AddItem( L"Test15", L"ccccc", 14 );
+	listbox->AddItem( L"Test16", L"ccccc", 15 );
 	listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 
 	//
@@ -34,10 +34,10 @@ CFileView::CFileView(void)
 //	imgList2->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp") );
 //	toolbar->SetContent( listbox );
 	m_toolbar->SetImageList( (SDL_ImageList *)imgList->GetObj() );
-	m_toolbar->AddItem( "ToolButton1", 0 );
-	m_toolbar->AddItem( "ToolButton2", 0 );
-	m_toolbar->AddItem( "ToolButton3", 0 );
-	m_toolbar->AddItem( "ToolButton4", 0 );
+	m_toolbar->AddItem( L"ToolButton1", 0 );
+	m_toolbar->AddItem( L"ToolButton2", 0 );
+	m_toolbar->AddItem( L"ToolButton3", 0 );
+	m_toolbar->AddItem( L"ToolButton4", 0 );
 	m_toolbar->SetLayoutProperty( SDL_BorderLayout::north );
 
 	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
