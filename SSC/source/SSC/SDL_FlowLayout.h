@@ -41,14 +41,13 @@ public:
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {
-		
 		int x = lprc->x, y = lprc->y, w = lprc->w, h = lprc->h;
 		SDL_Rect	rcItem;
-		for ( size_t i = 0; i < pContainer->GetCount(); i++ )
+
+		Iterator * pos = pContainer->GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = pContainer->GetItem( i );
-			if ( !pItem->IsShow() )
-				continue;
+			SDL_Glyph * pItem = pos->GetCurrentItem();
 
 			SDL_Size size = pItem->GetPreferedSize();
 			rcItem.x = x;
@@ -58,6 +57,7 @@ public:
 			pItem->SetBounds( &rcItem );
 			x += size.w;
 		}
+		pos->Release();
     }
 };
 

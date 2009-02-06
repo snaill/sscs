@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 	CImageView	imageView;
 
 	screen->Add( fileView );
+	((SDL_CardLayout *)screen->GetLayout())->SetActiveItem( fileView );
 //	screen->Add( imageView );
 	screen->Draw(0);
 

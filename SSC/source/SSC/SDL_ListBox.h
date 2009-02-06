@@ -31,7 +31,7 @@ class SDL_ListBox : public SDL_Widget
 // »ù±¾ÊôÐÔ
 public:
 	SDL_ListBox()		{
-		m_curIndex = -1;
+		m_curItem = 0;
 		m_pLayout = new SDL_ScrollBoxLayout();
 	}
 
@@ -44,13 +44,16 @@ public:
 
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
-		for ( int i = 0; i < GetCount(); i ++ )
+		
+		Iterator * pos = GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Size size = GetItem(i)->GetPreferedSize();
+			SDL_Size size = pos->GetCurrentItem()->GetPreferedSize();
 			sz.h += size.h;
 			if ( sz.w < size.w )
 				sz.w = size.w;
 		}
+		pos->Release();
 
 		return sz;
 	}
@@ -73,7 +76,7 @@ protected:
 	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return (SDL_ScrollBoxLayout *)GetLayout(); }
 
 	void OnItemSelected( SDL_ListBoxItem * pItem ) {
-		SelectItem( GetItemID( pItem ) );
+		SelectItem( pItem );
 		SetFocus();
 		RedrawWidget();	
 	}
@@ -82,28 +85,26 @@ protected:
 		switch ( key->keysym.sym )
 		{
 		case SDLK_UP:
-			if ( 0 != m_curIndex )
+			if ( !m_curItem )
+				SelectItem( ( SDL_ListBoxItem * )GetCurrentLayout()->GetBottom( this ) );
+			else
 			{
-				if ( 0 > m_curIndex )
-					SelectItem( GetCurrentLayout()->GetBottomIndex( this ) );
-				else
-				{
-					SelectItem( m_curIndex - 1 );
-				}
-				*bDraw = true;
+				SDL_ListBoxItem * pItem = ( SDL_ListBoxItem * )GetItem( GetItemID( m_curItem ) - 1 );
+				if ( pItem )
+					SelectItem( pItem );
 			}
+			*bDraw = true;
 			break;
 		case SDLK_DOWN:
-			if ( GetCount() - 1 != m_curIndex )
+			if ( !m_curItem )
+				SelectItem( ( SDL_ListBoxItem * )GetItem( 0 ) );
+			else
 			{
-				if ( 0 > m_curIndex )
-					SelectItem( 0 );
-				else
-				{
-					SelectItem( m_curIndex + 1 );
-				}
-				*bDraw = true;
+				SDL_ListBoxItem * pItem = ( SDL_ListBoxItem * )GetItem( GetItemID( m_curItem ) + 1 );
+				if ( pItem )
+					SelectItem( pItem );
 			}
+			*bDraw = true;
 			break;		
 		default:
 			return false;
@@ -116,21 +117,19 @@ protected:
     /// @param screen	ÆÁÄ»Surface
     virtual void DrawWidget( SDL_Surface * screen ){}
 
-	void SelectItem( int iItem )	{
-		if ( iItem == m_curIndex )
+	void SelectItem( SDL_ListBoxItem * pItem )	{
+		if ( pItem == m_curItem )
 			return;
 
-		SDL_ListBoxItem * pItem = ( SDL_ListBoxItem * )GetItem( m_curIndex );
-		if ( pItem )
-			pItem->SetCheck( false );
+		if ( m_curItem )
+			m_curItem->SetCheck( false );
 		
-		pItem = ( SDL_ListBoxItem * )GetItem( iItem );
 		if ( pItem )
 			pItem->SetCheck( true );
 
-		m_curIndex = iItem;
+		m_curItem = pItem;
 
-		SDL_Rect	rc = GetItem( iItem )->GetBounds();
+		SDL_Rect	rc = pItem->GetBounds();
 		if ( rc.y < m_pt.y )
 			GetCurrentLayout()->Scroll( m_pt.y - rc.y, this );
 		if ( rc.y + rc.h > m_pt.y + m_sz.h )
@@ -138,7 +137,7 @@ protected:
 	}
 
 protected:
-	Sint16				m_curIndex;
+	SDL_ListBoxItem *	m_curItem;
 	SDL_ImageList *		m_imgList;	
 };
 

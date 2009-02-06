@@ -12,7 +12,7 @@ public:
 		return m_this;
 	}
 
-	void OnToolButtonClick( int index, SDL_ToolButton * button );
+	void OnToolButtonClick( SDL_ToolButton * button );
 
 protected:
 	SDL_Widget *		m_this;
