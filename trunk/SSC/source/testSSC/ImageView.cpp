@@ -14,7 +14,7 @@ CImageView::CImageView(void)
 	//
 	SDL_Toolbar	*	toolbar = new SDL_Toolbar();
 	SDL_ImageList * imgList = new SDL_ImageList();
-	imgList->Create( 48, SDL_LoadBMP("test.bmp"), crMask );
+	imgList->CreateFromBitmap( 48, SDL_LoadBMP("test.bmp"), crMask );
 	toolbar->SetImageList( imgList );
 	toolbar->AddItem( L"ToolButton1", 0 );
 	toolbar->AddItem( L"ToolButton2", 0 );
