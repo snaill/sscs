@@ -35,7 +35,7 @@
 
 #include "SDL_ImageList.h"
 #include "SDL_BorderLayout.h"
-#include "SDL_Screen.h"
+#include "SDL_MainFrame.h"
 #include "SDL_ProgressBar.h"
 #include "SDL_ProgressBall.h"
 #include "SDL_ListBox.h"

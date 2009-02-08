@@ -19,7 +19,7 @@
  */
 
 #include "SDL_ToolButton.h"
-#include "SDL_Screen.h"
+#include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_Size SDL_ToolButton::GetPreferedSize()	
@@ -36,7 +36,7 @@ SDL_Size SDL_ToolButton::GetPreferedSize()
 
 	if ( m_text )
 	{
-		SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 		SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
 		SDL_Size	szFont = pFont->GetTextSize( m_text );
 		if ( sz.w < szFont.w )
@@ -53,7 +53,7 @@ SDL_Size SDL_ToolButton::GetPreferedSize()
 void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
-	SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
 
 	SDL_Color	color = theme->GetColor( SDL_Theme::Text );

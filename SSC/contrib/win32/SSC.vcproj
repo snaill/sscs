@@ -305,15 +305,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\SSC\SDL_MainFrame.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBall.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBar.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Screen.h"
 					>
 				</File>
 				<File
