@@ -19,7 +19,7 @@
  */
 
 #include "SDL_ListBoxItem.h"
-#include "SDL_Screen.h"
+#include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_Size SDL_ListBoxItem::GetPreferedSize()	
@@ -32,7 +32,7 @@ SDL_Size SDL_ListBoxItem::GetPreferedSize()
 
 	if ( m_text )
 	{
-		SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
 		szFont = pFontBig->GetTextSize( m_text );
 		pFontBig->Release();
@@ -56,7 +56,7 @@ SDL_Size SDL_ListBoxItem::GetPreferedSize()
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
-	SDL_Theme * theme = SDL_Screen::Get()->GetTheme();
+	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
 	SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
 

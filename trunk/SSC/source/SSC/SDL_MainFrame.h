@@ -18,8 +18,8 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_SCREEN_H_INCLUDED
-#define SDL_SCREEN_H_INCLUDED
+#ifndef SDL_MAINFRAME_H_INCLUDED
+#define SDL_MAINFRAME_H_INCLUDED
 
 #include "SDL_Widget.h"
 #include "SDL_CardLayout.h"
@@ -27,20 +27,20 @@
 #include <SDL_rotozoom.h>
 
 /// @brief 屏幕类负责管理页面Surface
-class SDL_Screen : public SDL_Widget
+class SDL_MainFrame : public SDL_Widget
 {
 // 基本属性
 public:
 	virtual const char * GetType()				{ return "screen"; }
 
-	static SDL_Screen * Create( int width, int height, int bpp, int videoFlag )	{
+	static SDL_MainFrame * Create( int width, int height, int bpp, int videoFlag )	{
 		if ( !m_this )
-			m_this = new SDL_Screen(width, height, bpp, videoFlag);
+			m_this = new SDL_MainFrame(width, height, bpp, videoFlag);
 
 		return m_this;
 	}
 
-	static SDL_Screen * Get()	{
+	static SDL_MainFrame * Get()	{
 		assert( m_this );
 		return m_this;
 	}
@@ -141,9 +141,15 @@ public:
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
 	inline SDL_Glyph * GetFocusGlyph()				{ return m_curGlyph;	}
 	inline void SetFocusGlyph( SDL_Glyph * pFocus )	{ m_curGlyph = pFocus;	}
+	void SetCaption( const char *title, const char *icon )	{
+		SDL_WM_SetCaption( title, icon );
+	}
+	void ToggleFullScreen()	{
+		SDL_WM_ToggleFullScreen( m_screen );
+	}
 
 protected:
-	SDL_Screen( int width, int height, int bpp, int videoFlag )  
+	SDL_MainFrame( int width, int height, int bpp, int videoFlag )  
 	{ 
 		TTF_Init();
 		SDL_EnableKeyRepeat( SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL );
@@ -156,7 +162,7 @@ protected:
 		SetLayout( new SDL_CardLayout() );
 	}
 
-	virtual ~SDL_Screen()	{
+	virtual ~SDL_MainFrame()	{
 		if ( m_screen && SDL_WasInit(SDL_INIT_VIDEO) )
 			SDL_FreeSurface( m_screen );
 
@@ -172,7 +178,7 @@ protected:
 	SDL_Glyph *		m_curGlyph;
 
 protected:
-	static SDL_Screen * m_this;
+	static SDL_MainFrame * m_this;
 };
 
-#endif // SDL_SCREEN_H_INCLUDED
+#endif // SDL_MAINFRAME_H_INCLUDED

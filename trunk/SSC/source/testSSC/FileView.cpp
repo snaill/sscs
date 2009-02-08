@@ -74,5 +74,6 @@ CFileView::~CFileView(void)
 
 void CFileView::OnToolButtonClick( SDL_ToolButton * button )
 {
-	m_toolbar->Show( false );
+	SDL_MainFrame::Get()->ToggleFullScreen();
+//	m_toolbar->Show( false );
 }

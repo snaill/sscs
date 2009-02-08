@@ -12,7 +12,7 @@
 #include "FileView.h"
 #include "ImageView.h"
 
-SDL_Screen * SDL_Screen::m_this = NULL;
+SDL_MainFrame * SDL_MainFrame::m_this = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	SDL_Screen * screen = SDL_Screen::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
+	SDL_MainFrame * screen = SDL_MainFrame::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
+	screen->SetCaption( "testSSC", "test.bmp" );
 	screen->SetTheme( new SDL_DefaultTheme() );
 
 	CFileView	fileView;
