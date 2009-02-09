@@ -21,9 +21,9 @@
 #ifndef SDL_LAYOUT_H_INCLUDED
 #define SDL_LAYOUT_H_INCLUDED
 
-#include "SDL_Glyph.h"
-#include "SDL_Container.h"
+#include "SDL_Object.h"
 
+class SDL_Widget;
 /// @brief 所有界面布局的基类，实现固定布局，即对内部控件不做处理
 class SDL_Layout : public SDL_Object
 {
@@ -46,11 +46,11 @@ public:
 		m_h = lprc->h;
     }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer ) = 0;
+	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer ) = 0;
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) = 0;
+    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc ) = 0;
 
 protected:
 	SDL_Layout() : m_x(0), m_y(0), m_w(0), m_h(0) {}

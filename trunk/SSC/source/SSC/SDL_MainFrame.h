@@ -139,8 +139,8 @@ public:
 
 	inline SDL_Theme * GetTheme()				{ return m_theme;	}
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
-	inline SDL_Glyph * GetFocusGlyph()				{ return m_curGlyph;	}
-	inline void SetFocusGlyph( SDL_Glyph * pFocus )	{ m_curGlyph = pFocus;	}
+	inline SDL_Widget * GetFocusGlyph()				{ return m_curGlyph;	}
+	inline void SetFocusGlyph( SDL_Widget * pFocus )	{ m_curGlyph = pFocus;	}
 	void SetCaption( const char *title, const char *icon )	{
 		SDL_WM_SetCaption( title, icon );
 	}
@@ -175,7 +175,7 @@ protected:
 	int				m_videoFlag;
 	int				m_bpp;
 	int				m_degree;
-	SDL_Glyph *		m_curGlyph;
+	SDL_Widget *		m_curGlyph;
 
 protected:
 	static SDL_MainFrame * m_this;

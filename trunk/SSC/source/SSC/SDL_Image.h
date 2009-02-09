@@ -21,9 +21,9 @@
 #ifndef SDL_IMAGE_H_INCLUDED
 #define SDL_IMAGE_H_INCLUDED
 
-#include "SDL_Glyph.h"
+#include "SDL_Widget.h"
 
-class SDL_Image :	public SDL_Glyph
+class SDL_Image :	public SDL_Widget
 {
 protected:
 	SDL_Surface	*	m_pBitmap;

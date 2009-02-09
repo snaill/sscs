@@ -21,21 +21,23 @@
 #ifndef SDL_WIDGET_H_INCLUDED
 #define SDL_WIDGET_H_INCLUDED
 
-#include "SDL_Container.h"
+#include "SDL_Object.h"
 #include "SDL_Layout.h"
 #include "sigslot.h"
+#include "Iterator.h"
 
 /// @brief 控件类的基类
-class SDL_Widget : public SDL_Container, public sigslot::has_slots<>
+class SDL_Widget : public SDL_Object, public SDL_BoundingBox, public sigslot::has_slots<>
 {
 public:
-	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false) {}
+	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bShow( true ), m_pParent(0)	 {}
 
 	~SDL_Widget() {
 		if ( m_pLayout )
 			m_pLayout->Release();
 				
 		disconnect_all();
+        Clear();
 	}
 
 	virtual const char * GetType() { return "widget"; }
@@ -56,7 +58,10 @@ public:
 		if ( GetLayout() )
 			GetLayout()->Update( this, lprc );
 		
-		SDL_Glyph::SetBounds( lprc );
+		m_pt.x = lprc->x;
+		m_pt.y = lprc->y;
+		m_sz.w = lprc->w;
+		m_sz.h = lprc->h;
 	}
 
     /// @brief 在制定区域绘制图元
@@ -68,7 +73,14 @@ public:
 		SDL_SetClipRect( screen, &And( rcOld ) );
 
 		DrawWidget( screen );
-		SDL_Container::Draw( screen );
+		Iterator * pos = GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		{
+			SDL_Widget * pItem = pos->GetCurrentItem();
+			pItem->Draw( screen );
+		}
+		pos->Release();
+
 
 		SDL_SetClipRect( screen, &rcOld );
 	}
@@ -100,7 +112,12 @@ public:
 		if ( bHandled )
 			return true;
 
-		return SDL_Container::HandleMouseEvent(event, bDraw );
+		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			if ( (*pos)->IsShow() )
+				bHandled =(*pos)->HandleMouseEvent( event, bDraw );
+		}
+		return bHandled;
 	}
 
  	virtual bool HandleKeyEvent(const SDL_Event *event, bool * bDraw){
@@ -113,14 +130,64 @@ public:
 		return false;
 	}
 
-	virtual void Show( bool bShow ) { 
-		if ( m_bShow == bShow )
-			return;
+// 子图元操作
+public:
+    /// 添加一个图元
+    virtual bool Add( SDL_Widget * g )
+    {
+        assert( g );
+		g->SetParent( this );
+        m_aChildren.push_back( g );
+        return true;
+    }
 
-		m_bShow = bShow;
-		if ( GetParent() )
-			( ( SDL_Widget * )GetParent() )->RecalcLayout();
+    /// 删除一个图元
+    virtual void Remove( SDL_Widget * g )
+    {
+        assert( g );
+        for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+            if ( g == *pos )
+                m_aChildren.erase( pos );
+    }
+
+    /// 清除所有子图元
+    virtual void Clear()
+    {
+        for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+           (*pos)->Release();
+        m_aChildren.clear();
+    }
+
+	Iterator * GetIterator( bool r = false )	{
+		if ( !r )
+			return new SDL_Iterator( &m_aChildren );
+		else
+			return new SDL_IteratorR( &m_aChildren );
 	}
+
+    /// 获取子图元个数
+    virtual size_t	GetCount()
+    {
+        return m_aChildren.size();
+    }
+
+    /// 获取对应下标的子图元
+    virtual SDL_Widget * GetItem( size_t index )
+    {
+		if ( index < 0 || index >= GetCount() )
+			return NULL;
+
+        return m_aChildren[index];
+    }
+
+    virtual int GetItemID( SDL_Widget * pItem )
+    {
+		for ( size_t i = 0; i < GetCount(); i ++ )
+			if ( pItem == m_aChildren[ i ] )
+				return i;
+
+		return -1;
+    }
 
 public:
 	virtual void RecalcLayout()	{ 
@@ -142,7 +209,18 @@ public:
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
     virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
     virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
-	virtual SDL_Glyph * SetFocus();
+	virtual SDL_Widget * SetFocus();
+	virtual bool IsShow()			{ return m_bShow;	}
+	virtual void Show( bool bShow ) { 
+		if ( m_bShow == bShow )
+			return;
+
+		m_bShow = bShow;
+		if ( GetParent() )
+			GetParent()->RecalcLayout();
+	}
+    virtual SDL_Widget * GetParent(){ return m_pParent;	}
+    virtual void SetParent( SDL_Widget * parent ){ m_pParent = parent; }
 
 protected:
     /// @brief 绘制当前图元
@@ -160,10 +238,14 @@ protected:
 	virtual bool OnKeyUp( const SDL_KeyboardEvent * key, bool * bDraw ) { return false;	}
 
 protected:
+    /// 子图元列表
+	std::vector<SDL_Widget *>	m_aChildren;
     /// 客户对象，允许是图元或布局
 	SDL_Layout *	m_pLayout;
+	SDL_Widget *	m_pParent;
 	int				m_nLayoutProperty;
 	bool			m_bHover;
+	bool			m_bShow;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

@@ -39,13 +39,13 @@ public:
 	
 // 方法
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
 		SDL_Size	sz;
 
 		Iterator * pos = pContainer->GetIterator(true);
 		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Widget * pItem = ( SDL_Widget * )pos->GetCurrentItem();
+			SDL_Widget * pItem = pos->GetCurrentItem();
 			SDL_Size	szItem = pItem->GetPreferedSize();
 			switch ( pItem->GetLayoutProperty() )
 			{
@@ -73,7 +73,7 @@ public:
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
     {
 		SDL_Rect	rc = *lprc;
 		Iterator * pos = pContainer->GetIterator();

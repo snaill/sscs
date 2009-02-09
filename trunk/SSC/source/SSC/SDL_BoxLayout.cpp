@@ -28,7 +28,7 @@ void SDL_HBoxLayout::SetBounds( const SDL_Rect * lprc )
 
     int xOff = lprc->x + ( lprc->w - w ) / 2;
     int yOff = lprc->y + ( lprc->h - h ) / 2;
-    //for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
     //{
     //    SDL_Rect    rect;
 
@@ -45,7 +45,7 @@ void SDL_HBoxLayout::GetMinSize( int * w, int * h )
 {
     int wSub, hSub;
     *w = *h = 0;
-    //for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
     //{
     //    //(*pos)->GetMinSize( &wSub, &hSub );
     //    //*w += wSub;
@@ -62,7 +62,7 @@ void SDL_VBoxLayout::SetBounds( const SDL_Rect * lprc )
 
     int xOff = lprc->x + ( lprc->w - w ) / 2;
     int yOff = lprc->y + ( lprc->h - h ) / 2;
-    //for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
     //{
     //    SDL_Rect    rect;
 
@@ -79,7 +79,7 @@ void SDL_VBoxLayout::GetMinSize( int * w, int * h )
 {
     int wSub, hSub;
     *w = *h = 0;
-    //for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
     //{
     //    //(*pos)->GetMinSize( &wSub, &hSub );
     //    // if ( *w < wSub )

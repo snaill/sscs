@@ -155,6 +155,14 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\source\SSC\Iterator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\SSC\SDL_Widget.cpp"
+				>
+			</File>
 			<Filter
 				Name="ImageView"
 				>
@@ -190,10 +198,6 @@
 					RelativePath="..\..\source\SSC\SDL_ToolButton.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Widget.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Simple"
@@ -214,15 +218,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\SSC\SDL_Container.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\SSC\SDL_Font.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\SSC\SDL_Glyph.h"
 				>
 			</File>
 			<File
@@ -235,6 +231,10 @@
 			</File>
 			<File
 				RelativePath="..\..\source\SSC\SDL_Theme.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\SSC\SDL_Widget.h"
 				>
 			</File>
 			<File
@@ -322,10 +322,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ToolButton.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Widget.h"
 					>
 				</File>
 			</Filter>

@@ -8,7 +8,7 @@ public:
 	CFileView(void);
 	~CFileView(void);
 
-	operator SDL_Glyph *() {
+	operator SDL_Widget *() {
 		return m_this;
 	}
 

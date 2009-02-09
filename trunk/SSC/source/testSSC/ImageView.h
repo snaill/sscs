@@ -8,7 +8,7 @@ public:
 	CImageView(void);
 	~CImageView(void);
 
-	operator SDL_Glyph *() {
+	operator SDL_Widget *() {
 		return m_this;
 	}
 
