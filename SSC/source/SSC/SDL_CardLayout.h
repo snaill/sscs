@@ -35,24 +35,24 @@ public:
 	
 // 方法
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
 		return m_pActiveItem ? m_pActiveItem->GetPreferedSize() : SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
     {
 		if ( m_pActiveItem )
 			m_pActiveItem->SetBounds( lprc );
     }
 
 public:
-	SDL_Glyph *	GetActiveItem()						{ return m_pActiveItem;	}
-	void SetActiveItem( SDL_Glyph * pActiveItem )	{ m_pActiveItem = pActiveItem;	}
+	SDL_Widget *	GetActiveItem()						{ return m_pActiveItem;	}
+	void SetActiveItem( SDL_Widget * pActiveItem )	{ m_pActiveItem = pActiveItem;	}
 
 protected:
-	SDL_Glyph *			m_pActiveItem;
+	SDL_Widget *			m_pActiveItem;
 };
 
 #endif // SDL_CARDLAYOUT_H_INCLUDED

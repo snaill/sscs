@@ -21,7 +21,7 @@
 #ifndef SDL_SCROLLBOXLAYOUT_H_INCLUDED
 #define SDL_SCROLLBOXLAYOUT_H_INCLUDED
 
-#include "SDL_Glyph.h"
+#include "SDL_Widget.h"
 
 /// @brief 所有界面布局的基类，实现固定布局
 class SDL_ScrollBoxLayout : public SDL_Layout
@@ -35,14 +35,14 @@ public:
 
 	virtual const char * GetType()				{ return "scrollboxlayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
 		//!!!!!
 		return SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {
+    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc ) {
 		//
 		SDL_Rect	rcItem;
 		rcItem.x = lprc->x;
@@ -52,7 +52,7 @@ public:
 		Iterator * pos = pContainer->GetIterator();
 		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos->GetCurrentItem();
 			SDL_Size	size = pItem->GetPreferedSize();
 			rcItem.h = size.h;
 			pItem->SetBounds( &rcItem );
@@ -66,11 +66,11 @@ public:
     }
 
 public:
-	void Scroll( int nValue, SDL_Container * pContainer )	{
+	void Scroll( int nValue, SDL_Widget * pContainer )	{
 		Iterator * pos = pContainer->GetIterator();
 		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos->GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			rc.y += nValue;
 			pItem->SetBounds(&rc);
@@ -78,11 +78,11 @@ public:
 		pos->Release();
 	}
 
-	SDL_Glyph * GetTop( SDL_Container * pContainer )	{
+	SDL_Widget * GetTop( SDL_Widget * pContainer )	{
 		Iterator * pos = pContainer->GetIterator();
 		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos->GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y + rc.h > m_y )
 				return pItem;
@@ -92,11 +92,11 @@ public:
 		return 0;
 	}
 
-	SDL_Glyph * GetBottom( SDL_Container * pContainer )	{
+	SDL_Widget * GetBottom( SDL_Widget * pContainer )	{
 		Iterator * pos = pContainer->GetIterator(true);
 		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			SDL_Glyph * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos->GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y < m_y + m_h )
 				return pItem;
