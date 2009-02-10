@@ -182,6 +182,14 @@
 			<Filter
 				Name="Widget"
 				>
+			</Filter>
+			<Filter
+				Name="Simple"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Image.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ListBoxItem.cpp"
 					>
@@ -196,14 +204,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ToolButton.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Simple"
-				>
-				<File
-					RelativePath="..\..\source\SSC\SDL_Image.cpp"
 					>
 				</File>
 			</Filter>
@@ -292,20 +292,8 @@
 					RelativePath="..\..\source\SSC\SDL_ImageList.h"
 					>
 				</File>
-			</Filter>
-			<Filter
-				Name="Widget"
-				>
-				<File
-					RelativePath="..\..\source\SSC\SDL_ListBox.h"
-					>
-				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ListBoxItem.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_MainFrame.h"
 					>
 				</File>
 				<File
@@ -317,11 +305,23 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
+					RelativePath="..\..\source\SSC\SDL_ToolButton.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Widget"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ListBox.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ToolButton.h"
+					RelativePath="..\..\source\SSC\SDL_MainFrame.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
 					>
 				</File>
 			</Filter>
