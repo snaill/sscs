@@ -13,6 +13,7 @@ CFileView::CFileView(void)
 	listbox->Add( new SDL_ListBoxItem( L"ÖÐ¹ú", L"aaa", ( SDL_ImageList * )imgList->GetObj(), 0 ) );
 	listbox->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test2", L"bbbb", ( SDL_ImageList * )imgList->GetObj(), 1 ) );
+	listbox->Add( new SDL_CheckBox( L"CheckBox1" ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test3", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 2 ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test4", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 3 ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test5", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 4 ) );

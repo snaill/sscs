@@ -187,6 +187,10 @@
 				Name="Simple"
 				>
 				<File
+					RelativePath="..\..\source\SSC\SDL_CheckBox.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_Image.cpp"
 					>
 				</File>
@@ -284,6 +288,10 @@
 			<Filter
 				Name="Simple"
 				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_CheckBox.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Image.h"
 					>

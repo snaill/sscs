@@ -38,6 +38,7 @@
 #include "SDL_MainFrame.h"
 #include "SDL_ProgressBar.h"
 #include "SDL_ProgressBall.h"
+#include "SDL_CheckBox.h"
 #include "SDL_ListBox.h"
 #include "SDL_Toolbar.h"
 #include "SDL_Theme.h"
