@@ -66,7 +66,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-	if ( GetCheck() )
+	if ( GetSelected() )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 	else
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );

@@ -55,7 +55,8 @@ public:
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
-		click( this );
+		if ( button->button == SDL_BUTTON_LEFT )
+			click( this );
 		return true;
 	}
 

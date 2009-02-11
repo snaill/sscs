@@ -53,8 +53,8 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen  )
 
 	rectangleRGBA( screen, x + 4, rc.y + ( rc.h - 13) / 2, x + 4 + 13, rc.y + ( rc.h - 13) / 2 + 13, 255, 255, 255, a ); 
 	if ( GetCheck() ) {
-		lineRGBA( screen, x + 4 + 2, rc.y + ( rc.h - 13) / 2 + 2, x + 4 + 13 - 2, rc.y + ( rc.h - 13) / 2 + 13 - 2, 255, 255, 255, a ); 
-		lineRGBA( screen, x + 4 + 13 - 2, rc.y + ( rc.h - 13) / 2 + 2, x + 4 + 2, rc.y + ( rc.h - 13) / 2 + 13 - 2, 255, 255, 255, a ); 
+		lineRGBA( screen, x + 4 + 4, rc.y + ( rc.h - 13) / 2 + 4, x + 4 + 13 - 4, rc.y + ( rc.h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
+		lineRGBA( screen, x + 4 + 13 - 4, rc.y + ( rc.h - 13) / 2 + 4, x + 4 + 4, rc.y + ( rc.h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
 	}
 	x += 4 + 13 + 4;
 

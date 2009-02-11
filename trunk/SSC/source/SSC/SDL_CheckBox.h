@@ -43,11 +43,23 @@ public:
     /// @param screen	ÆÁÄ»Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
+		SDL_Widget::OnMouseEnter( motion, bDraw );
+		*bDraw = true;
+		return true;	
+	}
+
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
+		SDL_Widget::OnMouseLeave( motion, bDraw );
+		*bDraw = true;
+		return true;	
+	}
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
-		click( this );
+		SetCheck( !GetCheck() );
+		*bDraw = true;
 		return true;
 	}
 
