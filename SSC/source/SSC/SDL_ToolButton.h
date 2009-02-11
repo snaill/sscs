@@ -29,23 +29,17 @@
 class SDL_ToolButton : public SDL_Widget
 {
 public:
-	sigslot::signal1<SDL_ToolButton *>		click;
-
-public:
-    SDL_ToolButton( const wchar_t * text, int iImage ) {
-		int len = wcslen( text );
-		m_text = new wchar_t[ len + 1 ];
-		wcscpy( m_text, text );
-		m_text[ len ] = '\0';
-
-		m_imgList = 0;
+    SDL_ToolButton( const wchar_t * text, SDL_ImageList * imgList, int iImage ) {
+		if ( text )
+			m_text = text;
+		m_imgList = imgList;
 		m_image = iImage;
 		m_bMouseButtonDown = false;
     }
 
-    virtual ~SDL_ToolButton()					{
-	    if ( m_text )
-			delete[] m_text;
+    virtual ~SDL_ToolButton()	{
+		if ( m_imgList )
+			m_imgList->Release();
 	}
 
 	virtual const char * GetType()	{ return "listboxitem"; }
@@ -91,13 +85,8 @@ public:
 		return true;
 	}
 
-public:
-	void SetImageList( SDL_ImageList * imgList )	{
-		m_imgList = imgList;
-	}
-
 protected:
-	wchar_t *			m_text;
+	std::wstring 		m_text;
 	int					m_image;
 	SDL_ImageList *		m_imgList;
 	bool				m_bMouseButtonDown;

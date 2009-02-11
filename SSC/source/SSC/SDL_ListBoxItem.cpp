@@ -30,17 +30,17 @@ SDL_Size SDL_ListBoxItem::GetPreferedSize()
 	if ( m_imgList )
 		szImage = m_imgList->GetImageSize();
 
-	if ( m_text )
+	if ( m_text.size() > 0 )
 	{
 		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
-		szFont = pFontBig->GetTextSize( m_text );
+		szFont = pFontBig->GetTextSize( m_text.c_str() );
 		pFontBig->Release();
 
-		if ( m_remark )
+		if ( m_remark.size() > 0 )
 		{
 			SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-			SDL_Size szTemp = pFont->GetTextSize( m_remark );
+			SDL_Size szTemp = pFont->GetTextSize( m_remark.c_str() );
 			if ( szFont.w < szTemp.w )
 				szFont.w = szTemp.w;
 			szFont.h += 4 + szTemp.h;
@@ -66,7 +66,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-	if ( m_check )
+	if ( GetCheck() )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 	else
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
@@ -79,19 +79,19 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	}
 
 	//
-	if ( m_text )
+	if ( m_text.size() > 0 )
 	{
 		SDL_Rect	rect;
-		if ( m_remark )
+		if ( m_remark.size() > 0 )
 		{
 			rect.x = x;
 			rect.y = m_pt.y + 4;
 			rect.w = m_sz.w;
 			rect.h = m_sz.h;
-			pFontBig->DrawText( screen, m_text, rect, color, -1, -1 );
+			pFontBig->DrawText( screen, m_text.c_str(), rect, color, -1, -1 );
 
-			rect.y += pFontBig->GetTextSize( m_text ).h + 4;
-			pFont->DrawText( screen, m_remark, rect, color, -1, -1 );
+			rect.y += pFontBig->GetTextSize( m_text.c_str() ).h + 4;
+			pFont->DrawText( screen, m_remark.c_str(), rect, color, -1, -1 );
 		}
 		else
 		{
@@ -99,7 +99,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 			rect.y = m_pt.y;
 			rect.w = m_pt.x + m_sz.w - x;
 			rect.h = m_sz.h;
-			pFontBig->DrawText( screen, m_text, rect, color, -1, 0 );
+			pFontBig->DrawText( screen, m_text.c_str(), rect, color, -1, 0 );
 		}
 	}
 

@@ -8,24 +8,25 @@ CFileView::CFileView(void)
 	SDL_ListBox	*	listbox = new SDL_ListBox( );
 	SDL_ImageList * imgList = new SDL_ImageList();
 	imgList->CreateFromBitmap( 48, SDL_LoadBMP("test.bmp"), crMask );
-	listbox->SetImageList( imgList );
+//	listbox->SetImageList( imgList );
 
-	listbox->AddItem( L"中国", L"aaa", 0 );
-	listbox->AddItem( L"Test2", L"bbbb", 1 );
-	listbox->AddItem( L"Test3", L"ccccc", 2 );
-	listbox->AddItem( L"Test4", L"ccccc", 3 );
-	listbox->AddItem( L"Test5", L"ccccc", 4 );
-	listbox->AddItem( L"Test6", L"ccccc", 5 );
-	listbox->AddItem( L"Test7", L"ccccc", 6 );
-	listbox->AddItem( L"Test8", L"ccccc", 7 );
-	listbox->AddItem( L"Test9", L"ccccc", 8 );
-	listbox->AddItem( L"Test10", L"ccccc", 9 );
-	listbox->AddItem( L"Test11", L"ccccc", 10 );
-	listbox->AddItem( L"Test12", L"ccccc", 11 );
-	listbox->AddItem( L"Test13", L"ccccc", 12 );
-	listbox->AddItem( L"Test14", L"ccccc", 13 );
-	listbox->AddItem( L"Test15", L"ccccc", 14 );
-	listbox->AddItem( L"Test16", L"ccccc", 15 );
+	listbox->Add( new SDL_ListBoxItem( L"中国", L"aaa", ( SDL_ImageList * )imgList->GetObj(), 0 ) );
+	listbox->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test2", L"bbbb", ( SDL_ImageList * )imgList->GetObj(), 1 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test3", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 2 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test4", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 3 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test5", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 4 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test6", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 5 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test7", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 6 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test8", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 7 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test9", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 8 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test10", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 9 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test11", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 10 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test12", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 11 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test13", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 12 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test14", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 13 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test15", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 14 ) );
+	listbox->Add( new SDL_ListBoxItem( L"Test16", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 15 ) );
 	listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 
 	//
@@ -33,11 +34,10 @@ CFileView::CFileView(void)
 //	SDL_ImageList * imgList2 = new SDL_ImageList();
 //	imgList2->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp") );
 //	toolbar->SetContent( listbox );
-	m_toolbar->SetImageList( (SDL_ImageList *)imgList->GetObj() );
-	m_toolbar->AddItem( L"ToolButton1", 0 );
-	m_toolbar->AddItem( L"ToolButton2", 0 );
-	m_toolbar->AddItem( L"ToolButton3", 0 );
-	m_toolbar->AddItem( L"ToolButton4", 0 );
+	m_toolbar->Add( new SDL_ToolButton( L"ToolButton1", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	m_toolbar->Add( new SDL_ToolButton( L"ToolButton2", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	m_toolbar->Add( new SDL_ToolButton( L"ToolButton3", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	m_toolbar->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
 	m_toolbar->SetLayoutProperty( SDL_BorderLayout::north );
 
 	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
@@ -72,7 +72,7 @@ CFileView::~CFileView(void)
 {
 }
 
-void CFileView::OnToolButtonClick( SDL_ToolButton * button )
+void CFileView::OnToolButtonClick( SDL_Widget * button )
 {
 	SDL_MainFrame::Get()->ToggleFullScreen();
 //	m_toolbar->Show( false );
