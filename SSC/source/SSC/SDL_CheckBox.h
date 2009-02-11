@@ -18,30 +18,22 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_LISTBOXITEM_H_INCLUDED
-#define SDL_LISTBOXITEM_H_INCLUDED
+#ifndef SDL_CHECKBOX_H_INCLUDED
+#define SDL_CHECKBOX_H_INCLUDED
 
 #include "SDL_Widget.h"
-#include "SDL_ImageList.h"
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ListBoxItem : public SDL_Widget
+class SDL_CheckBox : public SDL_Widget
 {
 public:
-    SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) {
+    SDL_CheckBox( const wchar_t * text ) {
 		if ( text )
 			m_text = text;
-		if ( remark )
-			m_remark = remark;
-		m_imgList = imgList;
-		m_image = iImage;
     }
 
-    virtual ~SDL_ListBoxItem()					{
-	    if ( m_imgList )
-			m_imgList->Release();
-	}
+    virtual ~SDL_CheckBox()				 {}
 
 	virtual const char * GetType()	{ return "listboxitem"; }
 
@@ -61,9 +53,6 @@ public:
 
 protected:
 	std::wstring		m_text;
-	std::wstring		m_remark;
-	int					m_image;
-	SDL_ImageList *		m_imgList;
 };
 
-#endif //!SDL_LISTBOXITEM_H_INCLUDED
+#endif //!SDL_CHECKBOX_H_INCLUDED
