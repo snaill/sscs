@@ -33,7 +33,8 @@ public:
 	sigslot::signal1<SDL_Widget *>		click;
 
 public:
-	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), m_pParent(0), m_bCheck( false )	 {}
+	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), 
+		m_pParent(0), m_bCheck( false ), m_bSelected( false ) {}
 
 	~SDL_Widget() {
 		if ( m_pLayout )
@@ -90,6 +91,15 @@ public:
 
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
 		bool bHandled = false;
+		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			if ( (*pos)->GetVisible() )
+				bHandled =(*pos)->HandleMouseEvent( event, bDraw );
+		}
+
+		if ( bHandled )
+			return true;
+
 		switch ( event->type )
 		{
 			case SDL_MOUSEBUTTONUP: 
@@ -112,14 +122,6 @@ public:
 				break;
 		}
 
-		if ( bHandled )
-			return true;
-
-		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-		{
-			if ( (*pos)->GetVisible() )
-				bHandled =(*pos)->HandleMouseEvent( event, bDraw );
-		}
 		return bHandled;
 	}
 
@@ -233,6 +235,8 @@ public:
 	}
 	bool GetCheck()					{ return m_bCheck;		}
 	void SetCheck( bool bCheck )	{ m_bCheck = bCheck;	}
+	bool GetSelected()				{ return m_bSelected;		}
+	void SetSelected( bool bSelected )	{ m_bSelected = bSelected;	}
 	bool GetHover()					{ return m_bHover;		}
 	void SetHover( bool bHover )	{ m_bHover = bHover;	}
 
@@ -261,6 +265,7 @@ protected:
 	bool			m_bHover;
 	bool			m_bVisible;
 	bool			m_bCheck;
+	bool			m_bSelected;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

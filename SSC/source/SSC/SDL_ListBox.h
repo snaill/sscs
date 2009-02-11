@@ -113,10 +113,10 @@ protected:
 			return;
 
 		if ( m_curItem )
-			m_curItem->SetCheck( false );
+			m_curItem->SetSelected( false );
 		
 		if ( pItem )
-			pItem->SetCheck( true );
+			pItem->SetSelected( true );
 
 		m_curItem = pItem;
 
