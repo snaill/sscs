@@ -30,7 +30,10 @@
 class SDL_Widget : public SDL_Object, public SDL_BoundingBox, public sigslot::has_slots<>
 {
 public:
-	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bShow( true ), m_pParent(0)	 {}
+	sigslot::signal1<SDL_Widget *>		click;
+
+public:
+	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), m_pParent(0), m_bCheck( false )	 {}
 
 	~SDL_Widget() {
 		if ( m_pLayout )
@@ -114,7 +117,7 @@ public:
 
 		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
-			if ( (*pos)->IsShow() )
+			if ( (*pos)->GetVisible() )
 				bHandled =(*pos)->HandleMouseEvent( event, bDraw );
 		}
 		return bHandled;
@@ -146,8 +149,12 @@ public:
     {
         assert( g );
         for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-            if ( g == *pos )
+		{
+			if ( g == *pos ) {
+				(*pos)->click.disconnect( this );
                 m_aChildren.erase( pos );
+			}
+		}
     }
 
     /// 清除所有子图元
@@ -209,18 +216,25 @@ public:
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
     virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
     virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
+    virtual SDL_Widget * GetParent(){ return m_pParent;	}
+    virtual void SetParent( SDL_Widget * parent ){ m_pParent = parent; }
+
 	virtual SDL_Widget * SetFocus();
-	virtual bool IsShow()			{ return m_bShow;	}
-	virtual void Show( bool bShow ) { 
-		if ( m_bShow == bShow )
+
+public:
+	bool GetVisible()			{ return m_bVisible;	}
+	void SetVisible( bool bVisible ) { 
+		if ( m_bVisible == bVisible )
 			return;
 
-		m_bShow = bShow;
+		m_bVisible = bVisible;
 		if ( GetParent() )
 			GetParent()->RecalcLayout();
 	}
-    virtual SDL_Widget * GetParent(){ return m_pParent;	}
-    virtual void SetParent( SDL_Widget * parent ){ m_pParent = parent; }
+	bool GetCheck()					{ return m_bCheck;		}
+	void SetCheck( bool bCheck )	{ m_bCheck = bCheck;	}
+	bool GetHover()					{ return m_bHover;		}
+	void SetHover( bool bHover )	{ m_bHover = bHover;	}
 
 protected:
     /// @brief 绘制当前图元
@@ -245,7 +259,8 @@ protected:
 	SDL_Widget *	m_pParent;
 	int				m_nLayoutProperty;
 	bool			m_bHover;
-	bool			m_bShow;
+	bool			m_bVisible;
+	bool			m_bCheck;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

@@ -10,7 +10,7 @@ SDL_Iterator::SDL_Iterator( std::vector<SDL_Widget *> * vector )
 void SDL_Iterator::First()	
 {
 	m_pos = m_vector->begin();
-	if ( !IsDone() && !GetCurrentItem()->IsShow() )
+	if ( !IsDone() && !GetCurrentItem()->GetVisible() )
 		Next();
 }
 
@@ -19,7 +19,7 @@ void SDL_Iterator::Next()
 	m_pos ++;
 	while ( !IsDone() )
 	{
-		if ( GetCurrentItem()->IsShow() )
+		if ( GetCurrentItem()->GetVisible() )
 			break;
 		m_pos ++;
 	}
@@ -46,7 +46,7 @@ SDL_IteratorR::SDL_IteratorR( std::vector<SDL_Widget *> * vector )	{
 void SDL_IteratorR::First()	
 {
 	m_pos = m_vector->rbegin();
-	if ( !IsDone() && !GetCurrentItem()->IsShow() )
+	if ( !IsDone() && !GetCurrentItem()->GetVisible() )
 		Next();
 }
 
@@ -55,7 +55,7 @@ void SDL_IteratorR::Next()
 	m_pos ++;
 	while ( !IsDone() )
 	{
-		if ( GetCurrentItem()->IsShow() )
+		if ( GetCurrentItem()->GetVisible() )
 			break;
 		m_pos ++;
 	}

@@ -35,10 +35,7 @@ public:
 		m_pLayout = new SDL_ScrollBoxLayout();
 	}
 
-	virtual ~SDL_ListBox()	{
-		if ( m_imgList )
-			delete m_imgList;
-	}
+	virtual ~SDL_ListBox()	{}
 
 	virtual const char * GetType()				{ return "listbox"; }
 
@@ -57,25 +54,19 @@ public:
 
 		return sz;
 	}
-public:
-	SDL_ListBoxItem * AddItem( const wchar_t * text, const wchar_t * remark, int iImage )
-	{
-		SDL_ListBoxItem * pItem = new SDL_ListBoxItem( text, remark, iImage );
-		pItem->select.connect( this, &SDL_ListBox::OnItemSelected );
-		pItem->SetImageList( m_imgList );
-		
-		Add( pItem );
-		return pItem;
-	}
 
-	void SetImageList( SDL_ImageList * imgList )	{
-		m_imgList = imgList;
-	}
+	///
+	virtual bool Add( SDL_Widget * g )
+    {
+        assert( g );
+		g->click.connect( this, &SDL_ListBox::OnItemSelected );
+		return SDL_Widget::Add( g );
+    }
 
 protected:
 	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return (SDL_ScrollBoxLayout *)GetLayout(); }
 
-	void OnItemSelected( SDL_ListBoxItem * pItem ) {
+	void OnItemSelected( SDL_Widget * pItem ) {
 		SelectItem( pItem );
 		SetFocus();
 		RedrawWidget();	
@@ -86,10 +77,10 @@ protected:
 		{
 		case SDLK_UP:
 			if ( !m_curItem )
-				SelectItem( ( SDL_ListBoxItem * )GetCurrentLayout()->GetBottom( this ) );
+				SelectItem( GetCurrentLayout()->GetBottom( this ) );
 			else
 			{
-				SDL_ListBoxItem * pItem = ( SDL_ListBoxItem * )GetItem( GetItemID( m_curItem ) - 1 );
+				SDL_Widget * pItem = GetItem( GetItemID( m_curItem ) - 1 );
 				if ( pItem )
 					SelectItem( pItem );
 			}
@@ -97,10 +88,10 @@ protected:
 			break;
 		case SDLK_DOWN:
 			if ( !m_curItem )
-				SelectItem( ( SDL_ListBoxItem * )GetItem( 0 ) );
+				SelectItem( GetItem( 0 ) );
 			else
 			{
-				SDL_ListBoxItem * pItem = ( SDL_ListBoxItem * )GetItem( GetItemID( m_curItem ) + 1 );
+				SDL_Widget * pItem = GetItem( GetItemID( m_curItem ) + 1 );
 				if ( pItem )
 					SelectItem( pItem );
 			}
@@ -117,7 +108,7 @@ protected:
     /// @param screen	ÆÁÄ»Surface
     virtual void DrawWidget( SDL_Surface * screen ){}
 
-	void SelectItem( SDL_ListBoxItem * pItem )	{
+	void SelectItem( SDL_Widget * pItem )	{
 		if ( pItem == m_curItem )
 			return;
 
@@ -137,8 +128,7 @@ protected:
 	}
 
 protected:
-	SDL_ListBoxItem *	m_curItem;
-	SDL_ImageList *		m_imgList;	
+	SDL_Widget *	m_curItem;
 };
 
 #endif // SDL_LISTBOX_H_INCLUDED

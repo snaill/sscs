@@ -28,19 +28,13 @@
 /// @brief 控件类的基类
 class SDL_Toolbar : public SDL_Widget
 {
-public:
-	sigslot::signal1<SDL_ToolButton *>		click;
-
 // 基本属性
 public:
 	SDL_Toolbar()		{
 		m_pLayout = new SDL_FlowLayout();
 	}
 
-	virtual ~SDL_Toolbar()	{
-		if ( m_imgList )
-			m_imgList->Release();
-	}
+	virtual ~SDL_Toolbar()	{}
 
 	virtual const char * GetType()				{ return "toolbar"; }
 
@@ -59,20 +53,13 @@ public:
 
 		return sz;
 	}
-public:
-	SDL_ToolButton * AddItem( const wchar_t * text, int iImage )
-	{
-		SDL_ToolButton * pItem = new SDL_ToolButton( text, iImage );
-		pItem->SetImageList( m_imgList );
-		pItem->click.connect( this, &SDL_Toolbar::OnButtonClicked );
 
-		Add( pItem );
-		return pItem;
-	}
-
-	void SetImageList( SDL_ImageList * imgList )	{
-		m_imgList = imgList;
-	}
+	virtual bool Add( SDL_Widget * g )
+    {
+        assert( g );
+		g->click.connect( this, &SDL_Toolbar::OnButtonClicked );
+		return SDL_Widget::Add( g );
+    }
 
 protected:
     /// @brief 绘制当前图元
@@ -82,12 +69,9 @@ protected:
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 	}
 
-	void OnButtonClicked( SDL_ToolButton * button ) {
+	void OnButtonClicked( SDL_Widget * button ) {
 		click( button );
 	}
-
-protected:
-	SDL_ImageList *		m_imgList;	
 };
 
 #endif // SDL_TOOLBAR_H_INCLUDED

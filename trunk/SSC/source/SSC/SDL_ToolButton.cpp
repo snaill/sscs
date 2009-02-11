@@ -34,11 +34,11 @@ SDL_Size SDL_ToolButton::GetPreferedSize()
 		sz.h += szImage.h + 4;
 	}
 
-	if ( m_text )
+	if ( m_text.size() > 0 )
 	{
 		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 		SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-		SDL_Size	szFont = pFont->GetTextSize( m_text );
+		SDL_Size	szFont = pFont->GetTextSize( m_text.c_str() );
 		if ( sz.w < szFont.w )
 			sz.w = szFont.w;
 		sz.h += szFont.h;	
@@ -75,14 +75,14 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 	rect.y = m_pt.y + 4 + 52 ;
 	rect.w = m_sz.w;
 	rect.h = m_sz.h - 4 - 52;
-	if ( m_text )
-		pFont->DrawText( screen, m_text, rect, crSelect );
+	if ( m_text.size() )
+		pFont->DrawText( screen, m_text.c_str(), rect, crSelect );
 
 	//¹Ø±Õ×ÖÌå
 	pFont->Release();
 
 	//
-	if ( m_bHover )
+	if ( GetHover() )
 	{
 		SDL_Rect	rc2;
 		rc2.x = m_pt.x + 2;

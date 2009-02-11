@@ -29,31 +29,18 @@
 class SDL_ListBoxItem : public SDL_Widget
 {
 public:
-	sigslot::signal1<SDL_ListBoxItem *>		select;
-
-public:
-    SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, int iImage ) {
-		int len = wcslen( text );
-		m_text = new wchar_t[ len + 1 ];
-		wcscpy( m_text, text );
-		m_text[ len ] = '\0';
-
-		len = wcslen( remark );
-		m_remark = new wchar_t[ len + 1 ];
-		wcscpy( m_remark, remark );
-		m_remark[ len ] = '\0';
-
-		m_check = false;
-		m_imgList = 0;
+    SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) {
+		if ( text )
+			m_text = text;
+		if ( remark )
+			m_remark = remark;
+		m_imgList = imgList;
 		m_image = iImage;
     }
 
     virtual ~SDL_ListBoxItem()					{
-	    if ( m_text )
-			delete[] m_text;
-
-		if ( m_remark )
-			delete[] m_remark;
+	    if ( m_imgList )
+			m_imgList->Release();
 	}
 
 	virtual const char * GetType()	{ return "listboxitem"; }
@@ -68,22 +55,16 @@ public:
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
-		select( this );
+		click( this );
 		return true;
 	}
 
 public:
-	bool GetCheck()				{ return m_check;	}
-	void SetCheck( bool check ) { m_check = check;	}
-	void SetImageList( SDL_ImageList * imgList )	{
-		m_imgList = imgList;
-	}
 
 protected:
-	wchar_t *				m_text;
-	wchar_t *				m_remark;
+	std::wstring		m_text;
+	std::wstring		m_remark;
 	int					m_image;
-	bool				m_check;
 	SDL_ImageList *		m_imgList;
 };
 
