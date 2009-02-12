@@ -22,43 +22,41 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
-SDL_Size SDL_ListBoxItem::GetPreferedSize()	
-{	
-	SDL_Size	sz( 0, 0 ), szImage( 0, 0 ), szFont( 0, 0 );
-	sz.w = 0;
-	sz.h = 0;
-	if ( m_imgList )
-		szImage = m_imgList->GetImageSize();
-
-	if ( m_text.size() > 0 )
-	{
-		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
-		szFont = pFontBig->GetTextSize( m_text.c_str() );
-		pFontBig->Release();
-
-		if ( m_remark.size() > 0 )
-		{
-			SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-			SDL_Size szTemp = pFont->GetTextSize( m_remark.c_str() );
-			if ( szFont.w < szTemp.w )
-				szFont.w = szTemp.w;
-			szFont.h += 4 + szTemp.h;
-			pFont->Release();
-		}
-	}
-
-	sz.w += 4 + szImage.w + szFont.w + 4;
-	sz.h = 4 + max( szImage.h, szFont.h ) + 4;
-	return sz;
-}
+//SDL_Size SDL_ListBoxItem::GetPreferedSize()	
+//{	
+//	SDL_Size	sz( 0, 0 ), szImage( 0, 0 ), szFont( 0, 0 );
+//	sz.w = 0;
+//	sz.h = 0;
+//	if ( m_imgList )
+//		szImage = m_imgList->GetImageSize();
+//
+//	if ( m_text.size() > 0 )
+//	{
+//		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+//		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
+//		szFont = pFontBig->GetTextSize( m_text.c_str() );
+//		pFontBig->Release();
+//
+//		if ( m_remark.size() > 0 )
+//		{
+//			SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
+//			SDL_Size szTemp = pFont->GetTextSize( m_remark.c_str() );
+//			if ( szFont.w < szTemp.w )
+//				szFont.w = szTemp.w;
+//			szFont.h += 4 + szTemp.h;
+//			pFont->Release();
+//		}
+//	}
+//
+//	sz.w += 4 + szImage.w + szFont.w + 4;
+//	sz.h = 4 + max( szImage.h, szFont.h ) + 4;
+//	return sz;
+//}
 
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-	SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
 
 	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
@@ -71,42 +69,5 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	else
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
 
-	//
-	if ( m_imgList ) {
-		SDL_Size sz = m_imgList->GetImageSize();
-		m_imgList->Draw( m_image, screen, x + 4, m_pt.y + ( m_sz.h - sz.h ) / 2 );
-		x += 4 + sz.w + 4;
-	}
-
-	//
-	if ( m_text.size() > 0 )
-	{
-		SDL_Rect	rect;
-		if ( m_remark.size() > 0 )
-		{
-			rect.x = x;
-			rect.y = m_pt.y + 4;
-			rect.w = m_sz.w;
-			rect.h = m_sz.h;
-			pFontBig->DrawText( screen, m_text.c_str(), rect, color, -1, -1 );
-
-			rect.y += pFontBig->GetTextSize( m_text.c_str() ).h + 4;
-			pFont->DrawText( screen, m_remark.c_str(), rect, color, -1, -1 );
-		}
-		else
-		{
-			rect.x = x;
-			rect.y = m_pt.y;
-			rect.w = m_pt.x + m_sz.w - x;
-			rect.h = m_sz.h;
-			pFontBig->DrawText( screen, m_text.c_str(), rect, color, -1, 0 );
-		}
-	}
-
-	//
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
-
-    //关闭字体
-	pFont->Release();
-	pFontBig->Release();
 }

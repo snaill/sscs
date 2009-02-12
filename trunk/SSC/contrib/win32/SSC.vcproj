@@ -195,6 +195,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\SSC\SDL_Label.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_ListBoxItem.cpp"
 					>
 				</File>
@@ -298,6 +302,10 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ImageList.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Label.h"
 					>
 				</File>
 				<File

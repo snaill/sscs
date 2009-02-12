@@ -19,39 +19,56 @@
  */
 
 #include "SDL_Image.h"
+#include "SDL_ImageList.h"
 
-SDL_Image::SDL_Image( const char * bmp )
+SDL_Image::SDL_Image( SDL_ImageList * imgList, int iImage )
 {
-    m_pBitmap = SDL_LoadBMP( bmp );
+    m_pBitmap = 0;
+	m_imgList = imgList;
+	m_iImage = iImage;
 }
 
 SDL_Image::~SDL_Image(void)
 {
     if ( m_pBitmap )
         SDL_FreeSurface( m_pBitmap );
+    if ( m_imgList )
+		m_imgList->Release();
 }
 
 SDL_Size SDL_Image::GetPreferedSize()
 {
-	if ( !m_pBitmap )
+	if ( m_pBitmap )
 	{
-		return SDL_Size(0, 0);
+		return SDL_Size( m_pBitmap->w, m_pBitmap->h );
 	}
 	else
 	{
-		return SDL_Size( m_pBitmap->w, m_pBitmap->h );
+		return m_imgList->GetImageSize();
 	}
 }
 
 void SDL_Image::Draw( SDL_Surface * screen )
 {
-	if ( m_pBitmap )
+	SDL_Rect	rect = GetBounds();
+	if ( m_pBitmap ) 
 	{
-		SDL_Rect	rc = GetBounds();
-        SDL_Rect    rcOldClip;
-        SDL_GetClipRect( screen, &rcOldClip );
-        SDL_SetClipRect( screen, &rc );
-        SDL_BlitSurface(m_pBitmap, 0, screen, &rc);
-	    SDL_SetClipRect( screen, &rcOldClip );
+		if ( m_pBitmap->w < rect.w )
+			rect.x += ( rect.w - m_pBitmap->w ) / 2;
+		if ( m_pBitmap->h < rect.h )
+			rect.y += ( rect.h - m_pBitmap->w ) / 2;
+		rect.w = m_pBitmap->w;
+		rect.h = m_pBitmap->h;
+		SDL_BlitSurface( m_pBitmap, 0, screen, &rect );
+	}
+	else
+	{
+		SDL_Size sz = m_imgList->GetImageSize();
+		if ( sz.w < rect.w )
+			rect.x += ( rect.w - sz.w ) / 2;
+		if ( sz.h < rect.h )
+			rect.y += ( rect.h - sz.h ) / 2;
+
+		m_imgList->Draw( m_iImage, screen, rect.x, rect.y );
 	}
 }
