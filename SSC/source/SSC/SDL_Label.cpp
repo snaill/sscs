@@ -18,27 +18,38 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_IMAGE_H_INCLUDED
-#define SDL_IMAGE_H_INCLUDED
+#include "SDL_Label.h"
+#include "SDL_MainFrame.h"
+#include <SDL_gfxPrimitives.h>
 
-#include "SDL_Widget.h"
+SDL_Size SDL_Label::GetPreferedSize()	
+{	
+	SDL_Size	szFont( 0, 0 );
 
-class SDL_ImageList;
-class SDL_Image :	public SDL_Widget
+	if ( m_text.size() > 0 )
+	{
+		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+		SDL_Font *pFontBig = theme->GetFont( m_nFont );
+		szFont = pFontBig->GetTextSize( m_text.c_str() );
+		pFontBig->Release();
+	}
+
+	return szFont;
+}
+
+void SDL_Label::DrawWidget( SDL_Surface * screen  )   
 {
-public:
-	SDL_Image( SDL_ImageList * imgList, int iImage );
-	virtual ~SDL_Image(void);
+	if ( m_text.size() > 0 )
+	{
+		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+		SDL_Font *pFontBig = theme->GetFont( m_nFont );
+		SDL_Color	color = theme->GetColor( m_nColor );
 
-	virtual const char * GetType()				{ return "image"; }
+		SDL_Rect	rect = GetBounds();
+		pFontBig->DrawText( screen, m_text.c_str(), rect, color, m_align, m_valign );
+   
+		//¹Ø±Õ×ÖÌå
+		pFontBig->Release();
+	}
 
-	virtual SDL_Size GetPreferedSize();
-	virtual void Draw( SDL_Surface * screen );
-
-protected:
-	SDL_Surface	*		m_pBitmap;
-	SDL_ImageList *		m_imgList;
-	int					m_iImage;
-};
-
-#endif //!SDL_IMAGE_H_INCLUDED
+}

@@ -59,13 +59,13 @@ public:
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void SetBounds( const SDL_Rect * lprc ){
-		if ( GetLayout() )
-			GetLayout()->Update( this, lprc );
-		
 		m_pt.x = lprc->x;
 		m_pt.y = lprc->y;
 		m_sz.w = lprc->w;
 		m_sz.h = lprc->h;
+
+		if ( GetLayout() )
+			GetLayout()->Update( this, lprc );
 	}
 
     /// @brief 在制定区域绘制图元

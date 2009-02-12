@@ -23,6 +23,9 @@
 
 #include "SDL_Widget.h"
 #include "SDL_ImageList.h"
+#include "SDL_Label.h"
+#include "SDL_Image.h"
+#include "SDL_BorderLayout.h"
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
@@ -30,22 +33,26 @@ class SDL_ListBoxItem : public SDL_Widget
 {
 public:
     SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) {
-		if ( text )
-			m_text = text;
-		if ( remark )
-			m_remark = remark;
-		m_imgList = imgList;
-		m_image = iImage;
+		SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
+		textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
+
+		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
+		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
+
+		SDL_Image * img = new SDL_Image( imgList, iImage );
+		img->SetLayoutProperty( SDL_BorderLayout::west );
+
+		Add( img );
+		Add( remarkLabel );
+		Add( textLabel );
+
+		SetLayout( new SDL_BorderLayout() );
     }
 
-    virtual ~SDL_ListBoxItem()					{
-	    if ( m_imgList )
-			m_imgList->Release();
-	}
+    virtual ~SDL_ListBoxItem()		{}
 
 	virtual const char * GetType()	{ return "listboxitem"; }
-
-	virtual SDL_Size GetPreferedSize();
+	//virtual SDL_Size GetPreferedSize();
 
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
@@ -59,12 +66,6 @@ public:
 			click( this );
 		return true;
 	}
-
-protected:
-	std::wstring		m_text;
-	std::wstring		m_remark;
-	int					m_image;
-	SDL_ImageList *		m_imgList;
 };
 
 #endif //!SDL_LISTBOXITEM_H_INCLUDED

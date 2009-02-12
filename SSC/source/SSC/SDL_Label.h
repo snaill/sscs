@@ -18,24 +18,30 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_CHECKBOX_H_INCLUDED
-#define SDL_CHECKBOX_H_INCLUDED
+#ifndef SDL_LABEL_H_INCLUDED
+#define SDL_LABEL_H_INCLUDED
 
 #include "SDL_Widget.h"
+#include "SDL_Theme.h"
 #include <SDL_ttf.h>
 
-/// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_CheckBox : public SDL_Widget
+/// @brief 
+class SDL_Label : public SDL_Widget
 {
 public:
-    SDL_CheckBox( const wchar_t * text ) {
+    SDL_Label( const wchar_t * text, int nFont = SDL_Theme::Text, 
+			  int nColor = SDL_Theme::Text, int align = 0, int valign = 0 ) {
 		if ( text )
 			m_text = text;
+		m_nFont = nFont;
+		m_nColor = nColor;
+		m_align = align;
+		m_valign = valign;
     }
 
-    virtual ~SDL_CheckBox()				 {}
+    virtual ~SDL_Label()				 {}
 
-	virtual const char * GetType()	{ return "checkbox"; }
+	virtual const char * GetType()	{ return "label"; }
 
 	virtual SDL_Size GetPreferedSize();
 
@@ -43,28 +49,12 @@ public:
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
-	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseEnter( motion, bDraw );
-		*bDraw = true;
-		return true;	
-	}
-
-	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseLeave( motion, bDraw );
-		*bDraw = true;
-		return true;	
-	}
-	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-		if ( !IsIn( button->x, button->y ) )
-			return false;
-
-		SetCheck( !GetCheck() );
-		*bDraw = true;
-		return true;
-	}
-
 protected:
 	std::wstring		m_text;
+	int 				m_nFont;
+	int 				m_nColor;
+	int					m_align;
+	int 				m_valign;
 };
 
-#endif //!SDL_CHECKBOX_H_INCLUDED
+#endif //!SDL_LABEL_H_INCLUDED
