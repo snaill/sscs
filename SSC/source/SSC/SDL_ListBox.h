@@ -28,6 +28,9 @@
 /// @brief 控件类的基类
 class SDL_ListBox : public SDL_Widget
 {
+public:
+	sigslot::signal1<SDL_Widget *>		select;
+
 // 基本属性
 public:
 	SDL_ListBox()		{
@@ -69,6 +72,7 @@ protected:
 	void OnItemSelected( SDL_Widget * pItem ) {
 		SelectItem( pItem );
 		SetFocus();
+		select( pItem );
 		RedrawWidget();	
 	}
 

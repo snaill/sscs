@@ -295,7 +295,7 @@ public:
 			ptDelta.x = GetOrigPoint()->x - pArgs->x;
 			ptDelta.y = GetOrigPoint()->y - pArgs->y;
 
-			IParameterService * pSrv = ( IParameterService * )_ServiceMgr->GetService( SERVICE_PARAMETER );
+			IParameterService * pSrv = ( IParameterService * )CServiceManger::Get()->GetService( SERVICE_PARAMETER );
 			int		nMinMove = pSrv->GetDWORD( Parameter::MinImageMove );	
 
 			if (abs(ptDelta.x) > nMinMove || abs(ptDelta.y) > nMinMove )
@@ -347,7 +347,7 @@ public:
 		aScreen.RealToVirtual( pArgs->KeyCode ); 
 		
 		//
-		IParameterService * pSrv = ( IParameterService * )_ServiceMgr->GetService( SERVICE_PARAMETER );
+		IParameterService * pSrv = ( IParameterService * )CServiceManger::Get()->GetService( SERVICE_PARAMETER );
 		int		nMinMove = pSrv->GetDWORD( Parameter::MinImageMove );	
 		switch ( pArgs->KeyCode )
 		{
