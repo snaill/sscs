@@ -26,10 +26,11 @@ class SDL_Iterator : public Iterator
 {
 protected:
 	std::vector<SDL_Widget *>::iterator	m_pos;
-	std::vector<SDL_Widget *> *			m_vector;
+	std::vector<SDL_Widget *>			m_vector;
 
 public:
-	SDL_Iterator( std::vector<SDL_Widget *> * vector );
+	SDL_Iterator( const std::vector<SDL_Widget *> * vector );
+	~SDL_Iterator( );
 
 	virtual void First();
 
@@ -44,10 +45,11 @@ class SDL_IteratorR : public Iterator
 {
 protected:
 	std::vector<SDL_Widget *>::reverse_iterator	m_pos;
-	std::vector<SDL_Widget *> *					m_vector;
+	std::vector<SDL_Widget *>					m_vector;
 
 public:
-	SDL_IteratorR( std::vector<SDL_Widget *> * vector );
+	SDL_IteratorR( const std::vector<SDL_Widget *> * vector );
+	~SDL_IteratorR( );
 
 	virtual void First();
 	virtual void Next();

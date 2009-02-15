@@ -33,17 +33,22 @@ class SDL_ListBoxItem : public SDL_Widget
 {
 public:
     SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) {
+		if ( imgList )
+		{
+			SDL_Image * img = new SDL_Image( imgList, iImage );
+			img->SetLayoutProperty( SDL_BorderLayout::west );
+			Add( img );
+		}
+
+		if ( remark )
+		{
+			SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
+			remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
+			Add( remarkLabel );
+		}
+
 		SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
 		textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
-
-		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
-		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
-
-		SDL_Image * img = new SDL_Image( imgList, iImage );
-		img->SetLayoutProperty( SDL_BorderLayout::west );
-
-		Add( img );
-		Add( remarkLabel );
 		Add( textLabel );
 
 		SetLayout( new SDL_BorderLayout() );

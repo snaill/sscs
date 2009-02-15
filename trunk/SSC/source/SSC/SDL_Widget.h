@@ -90,16 +90,17 @@ public:
 	}
 
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
-		bool bHandled = false;
-		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		Iterator * pos = GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
 		{
-			if ( (*pos)->GetVisible() )
-				bHandled =(*pos)->HandleMouseEvent( event, bDraw );
+			SDL_Widget * pItem = pos->GetCurrentItem();
+			if ( pItem->GetVisible() )
+				if ( pItem->HandleMouseEvent( event, bDraw ) )
+					return true;
 		}
+		pos->Release();
 
-		if ( bHandled )
-			return true;
-
+		bool bHandled = false;
 		switch ( event->type )
 		{
 			case SDL_MOUSEBUTTONUP: 

@@ -42,10 +42,12 @@ SDL_Size SDL_Image::GetPreferedSize()
 	{
 		return SDL_Size( m_pBitmap->w, m_pBitmap->h );
 	}
-	else
+	else if ( m_imgList )
 	{
 		return m_imgList->GetImageSize();
 	}
+
+	return SDL_Size( 0, 0 );
 }
 
 void SDL_Image::Draw( SDL_Surface * screen )
