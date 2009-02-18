@@ -27,6 +27,7 @@ class SDL_ImageList;
 class SDL_Image :	public SDL_Widget
 {
 public:
+	SDL_Image( SDL_Surface * surface );
 	SDL_Image( SDL_ImageList * imgList, int iImage );
 	virtual ~SDL_Image(void);
 

@@ -21,6 +21,12 @@
 #include "SDL_Image.h"
 #include "SDL_ImageList.h"
 
+SDL_Image::SDL_Image( SDL_Surface * surface )
+{
+    m_pBitmap = surface;
+	m_imgList = 0;
+}
+
 SDL_Image::SDL_Image( SDL_ImageList * imgList, int iImage )
 {
     m_pBitmap = 0;
