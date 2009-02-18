@@ -44,25 +44,29 @@ CFileView::CFileView(void)
 	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
 
 	//
-	SDL_ProgressBar * progressBar = new SDL_ProgressBar();
-	progressBar->SetLayoutProperty( SDL_BorderLayout::fill );
-	progressBar->SetPos( 27 );
+	//SDL_ProgressBar * progressBar = new SDL_ProgressBar();
+	//progressBar->SetLayoutProperty( SDL_BorderLayout::fill );
+	//progressBar->SetPos( 27 );
 
-	SDL_ProgressBall * progressBall = new SDL_ProgressBall();
-	progressBall->SetLayoutProperty( SDL_BorderLayout::east );
-	progressBall->SetPos( 100 );
+	//SDL_ProgressBall * progressBall = new SDL_ProgressBall();
+	//progressBall->SetLayoutProperty( SDL_BorderLayout::east );
+	//progressBall->SetPos( 100 );
 
-	SDL_Widget * progress = new SDL_Widget();
-	progress->SetLayoutProperty( SDL_BorderLayout::south );
-	progress->SetLayout( new SDL_BorderLayout() );
-	progress->Add( progressBall );
-	progress->Add( progressBar );
+	//SDL_Widget * progress = new SDL_Widget();
+	//progress->SetLayoutProperty( SDL_BorderLayout::south );
+	//progress->SetLayout( new SDL_BorderLayout() );
+	//progress->Add( progressBall );
+	//progress->Add( progressBar );
+
+	SDL_ActionMenu * menu = new SDL_ActionMenu( new SDL_ToolButton( L"ToolButton1", (SDL_ImageList *)imgList->GetObj(), 0 ), new SDL_ToolButton( L"ToolButton2", (SDL_ImageList *)imgList->GetObj(), 1 ) );
+	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
 	m_this = new SDL_Widget();
 	m_this->SetLayout( new SDL_BorderLayout() );
 	m_this->Add( m_toolbar );
-	m_this->Add( progress );
+//	m_this->Add( progress );
+	m_this->Add( menu );
 	m_this->Add( listbox );
 
 	listbox->SetFocus();

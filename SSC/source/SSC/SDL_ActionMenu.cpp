@@ -18,30 +18,22 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_SIMPLECONTROLS_H_INCLUDED
-#define SDL_SIMPLECONTROLS_H_INCLUDED
-
-#ifdef __cplusplus
-    #include <cstdlib>
-#else
-    #include <stdlib.h>
-#endif
-
-#ifdef __APPLE__
-    #include <SDL/SDL.h>
-#else
-    #include <SDL.h>
-#endif
-
-#include "SDL_ImageList.h"
-#include "SDL_BorderLayout.h"
-#include "SDL_MainFrame.h"
-#include "SDL_ProgressBar.h"
-#include "SDL_ProgressBall.h"
-#include "SDL_CheckBox.h"
-#include "SDL_ListBox.h"
 #include "SDL_ActionMenu.h"
-#include "SDL_Toolbar.h"
-#include "SDL_Theme.h"
+#include "SDL_MainFrame.h"
+#include <SDL_gfxPrimitives.h>
 
-#endif // SDL_SIMPLECONTROLS_H_INCLUDED
+void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )   
+{
+    //打开字体文件并设置字体大小
+	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+
+	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
+	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
+
+	SDL_Rect	rc = GetBounds();
+	int			x = m_pt.x;
+
+	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+
+	rectangleRGBA( screen, m_pt.x, m_pt.y, m_pt.x + m_sz.w - 1, m_pt.y + m_sz.h - 1, 0, 0, 0, 100 ); 
+}
