@@ -19,72 +19,78 @@
  */
 
 #include "SDL_BoxLayout.h"
+#include "SDL_Widget.h"
 
 /* SDL_HBoxLayout member function */
-void SDL_HBoxLayout::SetBounds( const SDL_Rect * lprc )
+SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
 {
-    int w, h;
-    GetMinSize( &w, &h );
+	SDL_Size	sz(0, 0);
+	int			nCount = 0;
 
-    int xOff = lprc->x + ( lprc->w - w ) / 2;
-    int yOff = lprc->y + ( lprc->h - h ) / 2;
-    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-    //{
-    //    SDL_Rect    rect;
+	Iterator * pos = pContainer->GetIterator(true);
+	for ( pos->First(); !pos->IsDone(); pos->Next() )
+	{
+		SDL_Widget * pItem = pos->GetCurrentItem();
+		SDL_Size	szItem = pItem->GetPreferedSize();
+		sz.w = max( sz.w, szItem.w );
+		sz.h = max( sz.h, szItem.h );
+		nCount ++;
+	}
+	pos->Release();
 
-    //    //(*pos)->GetMinSize( ( int * )&rect.w, ( int * )&rect.h );
-    //    //rect.x = xOff;
-    //    //rect.y = yOff + ( h - rect.h ) / 2;
-    //    //(*pos)->SetBounds( &rect );
-
-    //    xOff += rect.w;
-    //}
+	sz.w *= nCount;
+	return sz;
 }
 
-void SDL_HBoxLayout::GetMinSize( int * w, int * h )
+void SDL_HBoxLayout::Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
 {
-    int wSub, hSub;
-    *w = *h = 0;
-    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-    //{
-    //    //(*pos)->GetMinSize( &wSub, &hSub );
-    //    //*w += wSub;
-    //    //if ( *h < hSub )
-    //    //    *h = hSub;
-    //}
+	int nCount = pContainer->GetCount();
+	SDL_Rect	rc = *lprc;
+	rc.w = rc.w / nCount;
+
+	Iterator * pos = pContainer->GetIterator(true);
+	for ( pos->First(); !pos->IsDone(); pos->Next() )
+	{
+		SDL_Widget * pItem = pos->GetCurrentItem();
+		pItem->SetBounds( &rc );
+		rc.x += rc.w;
+	}
+	pos->Release();
 }
 
 /* SDL_VBoxLayout member function */
-void SDL_VBoxLayout::SetBounds( const SDL_Rect * lprc )
+SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
 {
-    int w, h;
-    GetMinSize( &w, &h );
+	SDL_Size	sz(0, 0);
+	int			nCount = 0;
 
-    int xOff = lprc->x + ( lprc->w - w ) / 2;
-    int yOff = lprc->y + ( lprc->h - h ) / 2;
-    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-    //{
-    //    SDL_Rect    rect;
+	Iterator * pos = pContainer->GetIterator(true);
+	for ( pos->First(); !pos->IsDone(); pos->Next() )
+	{
+		SDL_Widget * pItem = pos->GetCurrentItem();
+		SDL_Size	szItem = pItem->GetPreferedSize();
+		sz.w = max( sz.w, szItem.w );
+		sz.h = max( sz.h, szItem.h );
+		nCount ++;
+	}
+	pos->Release();
 
-    //    //(*pos)->GetMinSize( ( int * )&rect.w, ( int * )&rect.h );
-    //    //rect.x = xOff + ( w - rect.w ) / 2;
-    //    //rect.y = yOff;
-    //    //(*pos)->SetBounds( &rect );
-
-    //    yOff += rect.h;
-    //}
+	sz.h *= nCount;
+	return sz;
 }
 
-void SDL_VBoxLayout::GetMinSize( int * w, int * h )
+void SDL_VBoxLayout::Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
 {
-    int wSub, hSub;
-    *w = *h = 0;
-    //for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-    //{
-    //    //(*pos)->GetMinSize( &wSub, &hSub );
-    //    // if ( *w < wSub )
-    //    //    *w = wSub;
-    //    *h += hSub;
-    //}
-}
+	int nCount = pContainer->GetCount();
+	SDL_Rect	rc = *lprc;
+	rc.h = rc.h / nCount;
 
+	Iterator * pos = pContainer->GetIterator(true);
+	for ( pos->First(); !pos->IsDone(); pos->Next() )
+	{
+		SDL_Widget * pItem = pos->GetCurrentItem();
+		pItem->SetBounds( &rc );
+		rc.y += rc.h;
+	}
+	pos->Release();	
+}

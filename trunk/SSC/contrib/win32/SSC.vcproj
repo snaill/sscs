@@ -182,6 +182,10 @@
 			<Filter
 				Name="Widget"
 				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ActionMenu.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Simple"
@@ -305,6 +309,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\SSC\SDL_ImageMap.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_Label.h"
 					>
 				</File>
@@ -328,6 +336,10 @@
 			<Filter
 				Name="Widget"
 				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ActionMenu.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ListBox.h"
 					>
