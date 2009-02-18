@@ -27,7 +27,7 @@ SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
 	SDL_Size	sz(0, 0);
 	int			nCount = 0;
 
-	Iterator * pos = pContainer->GetIterator(true);
+	Iterator * pos = pContainer->GetIterator();
 	for ( pos->First(); !pos->IsDone(); pos->Next() )
 	{
 		SDL_Widget * pItem = pos->GetCurrentItem();
@@ -48,7 +48,7 @@ void SDL_HBoxLayout::Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
 	SDL_Rect	rc = *lprc;
 	rc.w = rc.w / nCount;
 
-	Iterator * pos = pContainer->GetIterator(true);
+	Iterator * pos = pContainer->GetIterator();
 	for ( pos->First(); !pos->IsDone(); pos->Next() )
 	{
 		SDL_Widget * pItem = pos->GetCurrentItem();

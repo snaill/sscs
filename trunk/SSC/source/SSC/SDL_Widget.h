@@ -74,7 +74,12 @@ public:
 	{
 		SDL_Rect	rcOld;
 		SDL_GetClipRect( screen, &rcOld );
-		SDL_SetClipRect( screen, &And( rcOld ) );
+
+		SDL_Rect	rcClip = And( rcOld );
+		if ( !rcClip.w || !rcClip.h )
+			return;
+
+		SDL_SetClipRect( screen, &rcClip );
 
 		DrawWidget( screen );
 		Iterator * pos = GetIterator();

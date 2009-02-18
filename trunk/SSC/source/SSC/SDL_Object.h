@@ -24,6 +24,10 @@
 #include <assert.h>
 #include <vector>
 #include <SDL.h>
+#include <stdlib.h>
+
+#define   MAX(a,   b)     (((a)   >   (b))   ?   (a)   :   (b))
+#define   MIN(a,   b)     (((a)   <   (b))   ?   (a)   :   (b))
 
 class SDL_Size
 {
@@ -99,16 +103,13 @@ public:
 
 	virtual SDL_Rect And( SDL_Rect	rc )	{
 		SDL_Rect	rcRet = GetBounds();
-		if ( rcRet.x < rc.x )
-			rcRet.x = rc.x;
-		if ( rcRet.y < rc.y )
-			rcRet.y = rc.y;
-		if ( rcRet.x + rcRet.w > rc.x + rc.w )
-			rcRet.w = rc.x + rc.w - rcRet.x;
-		if ( rcRet.y + rcRet.h > rc.y + rc.h )
-			rcRet.h = rc.y + rc.h - rcRet.y;
+		rcRet.x = MAX( m_pt.x, rc.x );
+		rcRet.y = MAX( m_pt.y, rc.y );
+		rcRet.w = MIN( m_pt.x + m_sz.w, rc.x + rc.w ) < rcRet.x ? 0 : MIN( m_pt.x + m_sz.w, rc.x + rc.w ) - rcRet.x;
+		rcRet.h = MIN( m_pt.y + m_sz.h, rc.y + rc.h ) < rcRet.y ? 0 : MIN( m_pt.y + m_sz.h, rc.y + rc.h ) - rcRet.y;
 		return rcRet;
 	}
+
 };
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
