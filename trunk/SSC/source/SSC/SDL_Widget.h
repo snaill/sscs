@@ -26,12 +26,16 @@
 #include "sigslot.h"
 #include "Iterator.h"
 
+struct SDL_WidgetStatus {
+	long			lParam;
+	long			m_bHover : 1;
+	long			m_bVisible : 1;
+	long			m_bCheck : 1;
+	long			m_bSelected : 1;
+};
 /// @brief 控件类的基类
 class SDL_Widget : public SDL_Object, public SDL_BoundingBox, public sigslot::has_slots<>
 {
-public:
-	sigslot::signal1<SDL_Widget *>		click;
-
 public:
 	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), 
 		m_pParent(0), m_bCheck( false ), m_bSelected( false ) {}
@@ -159,7 +163,6 @@ public:
         for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
 			if ( g == *pos ) {
-				(*pos)->click.disconnect( this );
                 m_aChildren.erase( pos );
 			}
 		}

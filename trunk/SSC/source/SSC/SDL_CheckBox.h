@@ -35,7 +35,7 @@ public:
 
     virtual ~SDL_CheckBox()				 {}
 
-	virtual const char * GetType()	{ return "checkbox"; }
+	virtual const char * GetType()	{ return "SDL_CheckBox"; }
 
 	virtual SDL_Size GetPreferedSize();
 

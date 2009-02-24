@@ -41,7 +41,7 @@ CFileView::CFileView(void)
 	m_toolbar->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
 	m_toolbar->SetLayoutProperty( SDL_BorderLayout::north );
 
-	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
+//	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
 
 	//
 	//SDL_ProgressBar * progressBar = new SDL_ProgressBar();
