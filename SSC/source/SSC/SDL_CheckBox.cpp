@@ -49,7 +49,7 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen  )
 
 	//
 	int			x = m_pt.x;
-	int			a = GetHover() ? 255 : 100;
+	int			a = GetHover() || GetCheck() ? 255 : 100;
 
 	rectangleRGBA( screen, x + 4, rc.y + ( rc.h - 13) / 2, x + 4 + 13, rc.y + ( rc.h - 13) / 2 + 13, 255, 255, 255, a ); 
 	if ( GetCheck() ) {

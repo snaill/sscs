@@ -40,7 +40,7 @@ public:
 
 	virtual ~SDL_ListBox()	{}
 
-	virtual const char * GetType()				{ return "listbox"; }
+	virtual const char * GetType()				{ return "SDL_ListBox"; }
 
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
@@ -58,22 +58,28 @@ public:
 		return sz;
 	}
 
-	///
-	virtual bool Add( SDL_Widget * g )
-    {
-        assert( g );
-		g->click.connect( this, &SDL_ListBox::OnItemSelected );
-		return SDL_Widget::Add( g );
-    }
-
 protected:
 	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return (SDL_ScrollBoxLayout *)GetLayout(); }
 
-	void OnItemSelected( SDL_Widget * pItem ) {
-		SelectItem( pItem );
-		SetFocus();
-		select( pItem );
-		RedrawWidget();	
+	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
+		if ( button->button != SDL_BUTTON_LEFT )
+			return false;
+
+		Iterator * pos = GetIterator();
+		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		{
+			SDL_Widget * pItem = pos->GetCurrentItem();
+			if ( !pItem->IsIn( button->x, button->y ) )
+				continue;
+
+			SelectItem( pItem );
+			SetFocus();
+			select( pItem );
+			*bDraw = true;	
+			return true;
+		}
+		pos->Release();
+		return false;
 	}
 
 	virtual bool OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw ) {

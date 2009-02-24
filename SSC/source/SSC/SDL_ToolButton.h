@@ -29,6 +29,9 @@
 class SDL_ToolButton : public SDL_Widget
 {
 public:
+	sigslot::signal1<SDL_Widget *>		click;
+
+public:
     SDL_ToolButton( const wchar_t * text, SDL_ImageList * imgList, int iImage ) {
 		if ( text )
 			m_text = text;

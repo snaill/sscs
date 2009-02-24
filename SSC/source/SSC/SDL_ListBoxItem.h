@@ -84,14 +84,14 @@ public:
     /// @param screen	ÆÁÄ»Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
-	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-		if ( !IsIn( button->x, button->y ) )
-			return false;
+	//virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
+	//	if ( !IsIn( button->x, button->y ) )
+	//		return false;
 
-		if ( button->button == SDL_BUTTON_LEFT )
-			click( this );
-		return true;
-	}
+	//	if ( button->button == SDL_BUTTON_LEFT )
+	//		click( this );
+	//	return false;
+	//}
 };
 
 #endif //!SDL_LISTBOXITEM_H_INCLUDED

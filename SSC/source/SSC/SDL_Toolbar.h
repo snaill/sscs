@@ -57,7 +57,7 @@ public:
 	virtual bool Add( SDL_Widget * g )
     {
         assert( g );
-		g->click.connect( this, &SDL_Toolbar::OnButtonClicked );
+//		g->click.connect( this, &SDL_Toolbar::OnButtonClicked );
 		return SDL_Widget::Add( g );
     }
 
@@ -70,7 +70,7 @@ protected:
 	}
 
 	void OnButtonClicked( SDL_Widget * button ) {
-		click( button );
+///		click( button );
 	}
 };
 
