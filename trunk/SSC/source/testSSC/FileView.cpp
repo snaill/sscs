@@ -11,7 +11,8 @@ CFileView::CFileView(void)
 //	listbox->SetImageList( imgList );
 
 	listbox->Add( new SDL_ListBoxItem( L"ÖÐ¹ú", L"aaa", ( SDL_ImageList * )imgList->GetObj(), 0 ) );
-	listbox->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	listbox->Add( new SDL_Button( new SDL_Label( L"ToolButton4" ), 
+		new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test2", L"bbbb", ( SDL_ImageList * )imgList->GetObj(), 1 ) );
 	listbox->Add( new SDL_CheckBox( L"CheckBox1" ) );
 	listbox->Add( new SDL_ListBoxItem( L"Test3", L"ccccc", ( SDL_ImageList * )imgList->GetObj(), 2 ) );
@@ -35,10 +36,10 @@ CFileView::CFileView(void)
 //	SDL_ImageList * imgList2 = new SDL_ImageList();
 //	imgList2->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp") );
 //	toolbar->SetContent( listbox );
-	m_toolbar->Add( new SDL_ToolButton( L"ToolButton1", (SDL_ImageList *)imgList->GetObj(), 0 ) );
-	m_toolbar->Add( new SDL_ToolButton( L"ToolButton2", (SDL_ImageList *)imgList->GetObj(), 0 ) );
-	m_toolbar->Add( new SDL_ToolButton( L"ToolButton3", (SDL_ImageList *)imgList->GetObj(), 0 ) );
-	m_toolbar->Add( new SDL_ToolButton( L"ToolButton4", (SDL_ImageList *)imgList->GetObj(), 0 ) );
+	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton1" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
+	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton2" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
+	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton3" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
+	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton4" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
 	m_toolbar->SetLayoutProperty( SDL_BorderLayout::north );
 
 //	m_toolbar->click.connect( this, &CFileView::OnToolButtonClick );
@@ -58,7 +59,8 @@ CFileView::CFileView(void)
 	//progress->Add( progressBall );
 	//progress->Add( progressBar );
 
-	SDL_ActionMenu * menu = new SDL_ActionMenu( new SDL_ToolButton( L"ToolButton1", (SDL_ImageList *)imgList->GetObj(), 0 ), new SDL_ToolButton( L"ToolButton2", (SDL_ImageList *)imgList->GetObj(), 1 ) );
+	SDL_ActionMenu * menu = new SDL_ActionMenu( new SDL_Button( new SDL_Label( L"ToolButton1" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ), 
+		new SDL_Button( new SDL_Label( L"ToolButton2" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 1 ) ) );
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//

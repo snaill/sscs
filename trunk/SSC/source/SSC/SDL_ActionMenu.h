@@ -24,7 +24,7 @@
 #include "SDL_Widget.h"
 #include "SDL_Image.h"
 #include "SDL_Label.h"
-#include "SDL_ToolButton.h"
+#include "SDL_Button.h"
 #include "SDL_BoxLayout.h"
 #include <SDL_ttf.h>
 
@@ -32,11 +32,11 @@
 class SDL_ActionMenu : public SDL_Widget
 {
 public:
-    SDL_ActionMenu( SDL_ToolButton * btn1, SDL_ToolButton * btn2 ) {
+    SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) {
 		if ( !btn1 )
-			btn1 = new SDL_ToolButton( 0, 0, 0 );
+			btn1 = new SDL_Button( 0, 0 );
 		if ( !btn2 )
-			btn2 = new SDL_ToolButton( 0, 0, 0 );
+			btn2 = new SDL_Button( 0, 0 );
 
 		Add( btn1 );
 		Add( btn2 );

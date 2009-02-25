@@ -260,6 +260,8 @@ public:
 	void SetSelected( bool bSelected )	{ m_bSelected = bSelected;	}
 	bool GetHover()					{ return m_bHover;		}
 	void SetHover( bool bHover )	{ m_bHover = bHover;	}
+	long GetParam()					{ return m_lParam;		}
+	void SetParam( long lParam )	{ m_lParam = lParam;	}
 
 protected:
     /// @brief 绘制当前图元
@@ -287,6 +289,7 @@ protected:
 	bool			m_bVisible;
 	bool			m_bCheck;
 	bool			m_bSelected;
+	long			m_lParam;
 };
 
 #endif // SDL_WIDGET_H_INCLUDED

@@ -18,39 +18,40 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#include "SDL_ToolButton.h"
+#include "SDL_Button.h"
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
-SDL_Size SDL_ToolButton::GetPreferedSize()	
+SDL_Size SDL_Button::GetPreferedSize()	
 {
-	SDL_Size	sz;
-	sz.w = 0;
-	sz.h = 0;
-	if ( m_imgList )
-	{
-		SDL_Size	szImage = m_imgList->GetImageSize();
-		sz.w = szImage.w;
-		sz.h += szImage.h + 4;
-	}
+	SDL_Size	sz = SDL_Widget::GetPreferedSize();
+	//sz.w = 0;
+	//sz.h = 0;
 
-	if ( m_text.size() > 0 )
-	{
-		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-		SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-		SDL_Size	szFont = pFont->GetTextSize( m_text.c_str() );
-		if ( sz.w < szFont.w )
-			sz.w = szFont.w;
-		sz.h += szFont.h;	
-		pFont->Release();
-	}
+	//if ( m_imgList )
+	//{
+	//	SDL_Size	szImage = m_imgList->GetImageSize();
+	//	sz.w = szImage.w;
+	//	sz.h += szImage.h + 4;
+	//}
+
+	//if ( m_text.size() > 0 )
+	//{
+	//	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+	//	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
+	//	SDL_Size	szFont = pFont->GetTextSize( m_text.c_str() );
+	//	if ( sz.w < szFont.w )
+	//		sz.w = szFont.w;
+	//	sz.h += szFont.h;	
+	//	pFont->Release();
+	//}
 
 	sz.w += 4 + 4;
 	sz.h += 4 + 4;
 	return sz;
 }
 
-void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )   
+void SDL_Button::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
@@ -62,24 +63,24 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 
-	//
-	if ( m_imgList )
-	{
-		SDL_Size	szImage = m_imgList->GetImageSize();
-		m_imgList->Draw( m_image, screen, m_pt.x + ( m_sz.w - 48 ) / 2, m_pt.y + 4 );
-	}
+	////
+	//if ( m_imgList )
+	//{
+	//	SDL_Size	szImage = m_imgList->GetImageSize();
+	//	m_imgList->Draw( m_image, screen, m_pt.x + ( m_sz.w - 48 ) / 2, m_pt.y + 4 );
+	//}
 
-	//
-	SDL_Rect	rect;
-	rect.x = m_pt.x;
-	rect.y = m_pt.y + 4 + 52 ;
-	rect.w = m_sz.w;
-	rect.h = m_sz.h - 4 - 52;
-	if ( m_text.size() )
-		pFont->DrawText( screen, m_text.c_str(), rect, crSelect );
+	////
+	//SDL_Rect	rect;
+	//rect.x = m_pt.x;
+	//rect.y = m_pt.y + 4 + 52 ;
+	//rect.w = m_sz.w;
+	//rect.h = m_sz.h - 4 - 52;
+	//if ( m_text.size() )
+	//	pFont->DrawText( screen, m_text.c_str(), rect, crSelect );
 
-	//关闭字体
-	pFont->Release();
+	////关闭字体
+	//pFont->Release();
 
 	//
 	if ( GetHover() )
@@ -94,7 +95,8 @@ void SDL_ToolButton::DrawWidget( SDL_Surface * screen  )
 		cr1.r = cr1.g = cr1.b = 0;
 		cr2.r = cr2.g = cr2.b = 192;
 
-		if ( m_bMouseButtonDown )
+		if ( SDL_BUTTON(1) == SDL_GetMouseState( 0, 0 ) )
+	//	if ( m_bMouseButtonDown )
             Draw3DRect( screen, rc2, cr1, cr2);
 		else 
             Draw3DRect( screen, rc2, cr2, cr1);
