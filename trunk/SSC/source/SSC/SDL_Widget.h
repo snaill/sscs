@@ -37,6 +37,10 @@ struct SDL_WidgetStatus {
 class SDL_Widget : public SDL_Object, public SDL_BoundingBox, public sigslot::has_slots<>
 {
 public:
+	sigslot::signal1<SDL_Widget *>		add;
+	sigslot::signal1<SDL_Widget *>		remove;
+
+public:
 	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), 
 		m_pParent(0), m_bCheck( false ), m_bSelected( false ) {}
 
@@ -153,6 +157,7 @@ public:
         assert( g );
 		g->SetParent( this );
         m_aChildren.push_back( g );
+		add( g );
         return true;
     }
 
@@ -164,6 +169,7 @@ public:
 		{
 			if ( g == *pos ) {
                 m_aChildren.erase( pos );
+				remove( g );
 			}
 		}
     }
@@ -172,7 +178,10 @@ public:
     virtual void Clear()
     {
         for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-           (*pos)->Release();
+		{
+			remove( *pos );
+			(*pos)->Release();
+		}
         m_aChildren.clear();
     }
 
