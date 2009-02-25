@@ -42,10 +42,11 @@ public:
 	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
 		SDL_Size	sz;
 
-		Iterator * pos = pContainer->GetIterator(true);
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos, true );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Size	szItem = pItem->GetPreferedSize();
 			switch ( pItem->GetLayoutProperty() )
 			{
@@ -66,7 +67,6 @@ public:
 				sz.h += szItem.h;
 			}
 		}
-		pos->Release();
 
 		return sz;
 	}
@@ -76,13 +76,14 @@ public:
     virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
     {
 		SDL_Rect	rc = *lprc;
-		Iterator * pos = pContainer->GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			if ( rc.w == 0 || rc.h == 0 )
 				continue;
 
-			SDL_Widget * pItem = (SDL_Widget *)pos->GetCurrentItem();
+			SDL_Widget * pItem = (SDL_Widget *)pos.GetCurrentItem();
 			SDL_Size	sz = pItem->GetPreferedSize();
 			SDL_Rect	rcItem;
 			switch ( pItem->GetLayoutProperty() )
@@ -126,7 +127,6 @@ public:
 			}
 			pItem->SetBounds( &rcItem );
 		}
-		pos->Release();
     }
 };
 

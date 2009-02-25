@@ -49,17 +49,17 @@ public:
 		rcItem.y = lprc->y;
 		rcItem.w = lprc->w;
 
-		Iterator * pos = pContainer->GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Size	size = pItem->GetPreferedSize();
 			rcItem.h = size.h;
 			pItem->SetBounds( &rcItem );
 
 			rcItem.y += rcItem.h;
 		}
-		pos->Release();
 
 		//
 		SDL_Layout::SetBounds( lprc );
@@ -67,41 +67,41 @@ public:
 
 public:
 	void Scroll( int nValue, SDL_Widget * pContainer )	{
-		Iterator * pos = pContainer->GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			rc.y += nValue;
 			pItem->SetBounds(&rc);
 		}
-		pos->Release();
 	}
 
 	SDL_Widget * GetTop( SDL_Widget * pContainer )	{
-		Iterator * pos = pContainer->GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y + rc.h > m_y )
 				return pItem;
 		}	
-		pos->Release();
 
 		return 0;
 	}
 
 	SDL_Widget * GetBottom( SDL_Widget * pContainer )	{
-		Iterator * pos = pContainer->GetIterator(true);
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos, true );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y < m_y + m_h )
 				return pItem;
 		}		
-		pos->Release();
 		return 0;
 	}	
 

@@ -45,15 +45,15 @@ public:
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
 		
-		Iterator * pos = GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Size size = pos->GetCurrentItem()->GetPreferedSize();
+			SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
 			sz.h += size.h;
 			if ( sz.w < size.w )
 				sz.w = size.w;
 		}
-		pos->Release();
 
 		return sz;
 	}
@@ -65,10 +65,11 @@ protected:
 		if ( button->button != SDL_BUTTON_LEFT )
 			return false;
 
-		Iterator * pos = GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			if ( !pItem->IsIn( button->x, button->y ) )
 				continue;
 
@@ -78,7 +79,6 @@ protected:
 			*bDraw = true;	
 			return true;
 		}
-		pos->Release();
 		return false;
 	}
 

@@ -41,15 +41,15 @@ public:
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
 		
-		Iterator * pos = GetIterator(true);
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		GetIterator( &pos, true );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Size size = pos->GetCurrentItem()->GetPreferedSize();
+			SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
 			sz.w += size.w;
 			if ( sz.h < size.h )
 				sz.h = size.h;
 		}
-		pos->Release();
 
 		return sz;
 	}

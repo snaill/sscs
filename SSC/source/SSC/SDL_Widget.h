@@ -24,7 +24,7 @@
 #include "SDL_Object.h"
 #include "SDL_Layout.h"
 #include "sigslot.h"
-#include "Iterator.h"
+#include "SDL_Iterator.h"
 
 struct SDL_WidgetStatus {
 	long			lParam;
@@ -86,28 +86,28 @@ public:
 		SDL_SetClipRect( screen, &rcClip );
 
 		DrawWidget( screen );
-		Iterator * pos = GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+
+		SDL_Iterator pos;
+		GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			pItem->Draw( screen );
 		}
-		pos->Release();
-
 
 		SDL_SetClipRect( screen, &rcOld );
 	}
 
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
-		Iterator * pos = GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 			if ( pItem->GetVisible() )
 				if ( pItem->HandleMouseEvent( event, bDraw ) )
 					return true;
 		}
-		pos->Release();
 
 		bool bHandled = false;
 		switch ( event->type )
@@ -176,11 +176,23 @@ public:
         m_aChildren.clear();
     }
 
-	Iterator * GetIterator( bool r = false )	{
+	void GetIterator( SDL_Iterator * iter, bool r = false )	{
 		if ( !r )
-			return new SDL_Iterator( &m_aChildren );
+		{
+	        for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+			{
+				if ( (*pos)->GetVisible() )
+					iter->Add( ( SDL_Widget * )(*pos)->GetObj() );
+			}
+		}
 		else
-			return new SDL_IteratorR( &m_aChildren );
+		{
+			for ( std::vector<SDL_Widget *>::reverse_iterator pos = m_aChildren.rbegin(); pos != m_aChildren.rend(); pos ++ )
+			{
+				if ( (*pos)->GetVisible() )
+					iter->Add( ( SDL_Widget * )(*pos)->GetObj() );
+			}
+		}
 	}
 
     /// 获取子图元个数
