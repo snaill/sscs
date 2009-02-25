@@ -44,10 +44,11 @@ public:
 		int x = lprc->x, y = lprc->y, w = lprc->w, h = lprc->h;
 		SDL_Rect	rcItem;
 
-		Iterator * pos = pContainer->GetIterator();
-		for ( pos->First(); !pos->IsDone(); pos->Next() )
+		SDL_Iterator pos; 
+		pContainer->GetIterator( &pos );
+		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos->GetCurrentItem();
+			SDL_Widget * pItem = pos.GetCurrentItem();
 
 			SDL_Size size = pItem->GetPreferedSize();
 			rcItem.x = x;
@@ -57,7 +58,6 @@ public:
 			pItem->SetBounds( &rcItem );
 			x += size.w;
 		}
-		pos->Release();
     }
 };
 
