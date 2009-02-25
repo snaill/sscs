@@ -39,7 +39,6 @@ public:
 		Add( text );
 
 		SetLayout( new SDL_HBoxLayout() );
-		m_bMouseButtonDown = false;
     }
 
     virtual ~SDL_Button()	{}
@@ -53,7 +52,7 @@ public:
 	virtual void DrawWidget( SDL_Surface * screen );
 
 	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		if ( !( motion->state && !m_bMouseButtonDown ) )
+		if ( !motion->state )
 		{
 			SDL_Widget::OnMouseEnter( motion, bDraw );
 			*bDraw = true;
@@ -70,7 +69,6 @@ public:
 		if ( !IsIn( button->x, button->y ) )
 			return false;
 
-		m_bMouseButtonDown = true;
 		*bDraw = true;
 		return true;
 	}
@@ -79,13 +77,9 @@ public:
 		if ( IsIn( button->x, button->y ) )
 			click( this );
 
-		m_bMouseButtonDown = false;
 		*bDraw = true;
 		return true;
 	}
-
-protected:
-	bool				m_bMouseButtonDown;
 };
 
 #endif //!SDL_BUTTON_H_INCLUDED
