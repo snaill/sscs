@@ -191,6 +191,10 @@
 				Name="Simple"
 				>
 				<File
+					RelativePath="..\..\source\SSC\SDL_Button.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_CheckBox.cpp"
 					>
 				</File>
@@ -212,10 +216,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBar.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_ToolButton.cpp"
 					>
 				</File>
 			</Filter>
@@ -297,6 +297,10 @@
 				Name="Simple"
 				>
 				<File
+					RelativePath="..\..\source\SSC\SDL_Button.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_CheckBox.h"
 					>
 				</File>
@@ -326,10 +330,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBar.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_ToolButton.h"
 					>
 				</File>
 			</Filter>

@@ -18,34 +18,33 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_TOOLBUTTON_H_INCLUDED
-#define SDL_TOOLBUTTON_H_INCLUDED
+#ifndef SDL_BUTTON_H_INCLUDED
+#define SDL_BUTTON_H_INCLUDED
 
 #include "SDL_Widget.h"
-#include "SDL_ImageList.h"
+#include "SDL_Label.h"
+#include "SDL_Image.h"
+#include "SDL_BoxLayout.h"
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ToolButton : public SDL_Widget
+class SDL_Button : public SDL_Widget
 {
 public:
 	sigslot::signal1<SDL_Widget *>		click;
 
 public:
-    SDL_ToolButton( const wchar_t * text, SDL_ImageList * imgList, int iImage ) {
-		if ( text )
-			m_text = text;
-		m_imgList = imgList;
-		m_image = iImage;
+    SDL_Button( SDL_Label * text, SDL_Image * image ) {
+		Add( image );
+		Add( text );
+
+		SetLayout( new SDL_HBoxLayout() );
 		m_bMouseButtonDown = false;
     }
 
-    virtual ~SDL_ToolButton()	{
-		if ( m_imgList )
-			m_imgList->Release();
-	}
+    virtual ~SDL_Button()	{}
 
-	virtual const char * GetType()	{ return "listboxitem"; }
+	virtual const char * GetType()	{ return "SDL_Button"; }
 
 	virtual SDL_Size GetPreferedSize();
 
@@ -80,19 +79,13 @@ public:
 		if ( IsIn( button->x, button->y ) )
 			click( this );
 
-		if ( m_bMouseButtonDown )
-		{
-			m_bMouseButtonDown = false;
-			*bDraw = true;
-		}
+		m_bMouseButtonDown = false;
+		*bDraw = true;
 		return true;
 	}
 
 protected:
-	std::wstring 		m_text;
-	int					m_image;
-	SDL_ImageList *		m_imgList;
 	bool				m_bMouseButtonDown;
 };
 
-#endif //!SDL_TOOLBUTTON_H_INCLUDED
+#endif //!SDL_BUTTON_H_INCLUDED

@@ -22,7 +22,7 @@
 #define SDL_TOOLBAR_H_INCLUDED
 
 #include "SDL_Widget.h"
-#include "SDL_ToolButton.h"
+#include "SDL_Button.h"
 #include "SDL_FlowLayout.h"
 
 /// @brief 控件类的基类
