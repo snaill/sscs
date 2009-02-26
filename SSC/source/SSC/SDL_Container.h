@@ -23,6 +23,7 @@
 
 #include "SDL_Glyph.h"
 #include "SDL_Layout.h"
+#include "SDL_Iterator.h"
 
 /// @brief 控件类的基类
 class SDL_Container : public SDL_Glyph
@@ -67,30 +68,27 @@ public:
 // 子图元操作
 public:
     /// 添加一个图元
-    virtual bool Add( SDL_Object * g )
+    virtual bool Add( SDL_Glyph * g )
     {
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add Start\n", GetType() );
 
 		assert( g );
-		g->SetParent( this );
         m_aChildren.push_back( g );
-		add( g );
 
  		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add End\n", GetType() );
        return true;
     }
 
     /// 删除一个图元
-    virtual void Remove( SDL_Object * g )
+    virtual void Remove( SDL_Glyph * g )
     {
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove Start\n", GetType() );
 
         assert( g );
-        for ( std::vector<SDL_Object *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
 			if ( g == *pos ) {
                 m_aChildren.erase( pos );
-				remove( g );
 			}
 		}
 
@@ -102,9 +100,8 @@ public:
     {
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear Start\n", GetType() );
 
-		for ( std::vector<SDL_Object *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
-			remove( *pos );
 			(*pos)->Release();
 		}
 		m_aChildren.clear();
@@ -112,24 +109,27 @@ public:
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear End\n", GetType() );
     }
 
-	//void GetIterator( SDL_Iterator * iter, bool r = false )	{
-	//	if ( !r )
-	//	{
-	//        for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-	//		{
-	//			if ( (*pos)->GetVisible() )
-	//				iter->Add( ( SDL_Widget * )(*pos)->GetObj() );
-	//		}
-	//	}
-	//	else
-	//	{
-	//		for ( std::vector<SDL_Widget *>::reverse_iterator pos = m_aChildren.rbegin(); pos != m_aChildren.rend(); pos ++ )
-	//		{
-	//			if ( (*pos)->GetVisible() )
-	//				iter->Add( ( SDL_Widget * )(*pos)->GetObj() );
-	//		}
-	//	}
-	//}
+	template < class T >	
+	void GetIterator( SDL_Iterator<T> * iter, bool r = false )	{
+		if ( !r )
+		{
+	        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+			{
+				T * pItem = dynamic_cast<T *>( *pos );
+				if ( pItem )
+					iter->Add( ( T * )pItem->GetObj() );
+			}
+		}
+		else
+		{
+			for ( std::vector<SDL_Glyph *>::reverse_iterator pos = m_aChildren.rbegin(); pos != m_aChildren.rend(); pos ++ )
+			{
+				T * pItem = dynamic_cast<T *>( *pos );
+				if ( pItem )
+					iter->Add( ( T * )pItem->GetObj() );
+			}
+		}
+	}
 
     /// 获取子图元个数
     virtual size_t	GetCount()
@@ -138,7 +138,7 @@ public:
     }
 
     /// 获取对应下标的子图元
-    virtual SDL_Widget * GetItem( size_t index )
+    virtual SDL_Glyph * GetItem( size_t index )
     {
 		if ( index < 0 || index >= GetCount() )
 			return NULL;
@@ -146,7 +146,7 @@ public:
         return m_aChildren[index];
     }
 
-    virtual int GetItemID( SDL_Widget * pItem )
+    virtual int GetItemID( SDL_Glyph * pItem )
     {
 		for ( size_t i = 0; i < GetCount(); i ++ )
 			if ( pItem == m_aChildren[ i ] )
@@ -173,28 +173,25 @@ public:
 	///
     virtual SDL_Layout * GetLayout(){ return m_pLayout;	}
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
-    virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
-    virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
 
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen ) {
-		SDL_Iterator pos;
-		GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos;
+		GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 			pItem->Draw( screen );
 		}
 	}
 
 protected:
     /// 子图元列表
-	std::vector<SDL_Object *>	m_aChildren;
+	std::vector<SDL_Glyph *>	m_aChildren;
     /// 客户对象，允许是图元或布局
 	SDL_Layout *	m_pLayout;
-	int				m_nLayoutProperty;
 };
 
 #endif // SDL_CONTAINER_H_INCLUDED

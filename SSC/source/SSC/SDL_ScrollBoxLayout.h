@@ -21,7 +21,7 @@
 #ifndef SDL_SCROLLBOXLAYOUT_H_INCLUDED
 #define SDL_SCROLLBOXLAYOUT_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Layout.h"
 
 /// @brief 所有界面布局的基类，实现固定布局
 class SDL_ScrollBoxLayout : public SDL_Layout
@@ -33,27 +33,27 @@ public:
 
     virtual ~SDL_ScrollBoxLayout()	  { }
 
-	virtual const char * GetType()				{ return "scrollboxlayout"; }
+	virtual const char * GetType()				{ return "SDL_ScrollBoxLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
 		//!!!!!
 		return SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc ) {
+    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {
 		//
 		SDL_Rect	rcItem;
 		rcItem.x = lprc->x;
 		rcItem.y = lprc->y;
 		rcItem.w = lprc->w;
 
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		pContainer->GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 			SDL_Size	size = pItem->GetPreferedSize();
 			rcItem.h = size.h;
 			pItem->SetBounds( &rcItem );
@@ -67,11 +67,11 @@ public:
 
 public:
 	void Scroll( int nValue, SDL_Widget * pContainer )	{
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		pContainer->GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			rc.y += nValue;
 			pItem->SetBounds(&rc);
@@ -79,13 +79,13 @@ public:
 	}
 
 	SDL_Widget * GetTop( SDL_Widget * pContainer )	{
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos );
+		SDL_Iterator<SDL_Widget> pos; 
+		pContainer->GetIterator<SDL_Widget>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
-			if ( rc.y + rc.h > m_y )
+			if ( rc.y + rc.h > m_pt.y )
 				return pItem;
 		}	
 
@@ -93,13 +93,13 @@ public:
 	}
 
 	SDL_Widget * GetBottom( SDL_Widget * pContainer )	{
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos, true );
+		SDL_Iterator<SDL_Widget> pos; 
+		pContainer->GetIterator<SDL_Widget>( &pos, true );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Widget * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
-			if ( rc.y < m_y + m_h )
+			if ( rc.y < m_pt.y + m_sz.h )
 				return pItem;
 		}		
 		return 0;

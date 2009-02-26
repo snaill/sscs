@@ -21,7 +21,7 @@
 #ifndef SDL_LISTBOXITEM_H_INCLUDED
 #define SDL_LISTBOXITEM_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Container.h"
 #include "SDL_ImageList.h"
 #include "SDL_Label.h"
 #include "SDL_Image.h"
@@ -29,10 +29,10 @@
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ListBoxItem : public SDL_Widget
+class SDL_ListBoxItem : public SDL_Container
 {
 public:
-	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image ) {
+	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image ) : m_bSelected( false ) {
 		if ( image )
 		{
 			image->SetLayoutProperty( SDL_BorderLayout::west );
@@ -53,7 +53,7 @@ public:
 		SetLayout( new SDL_BorderLayout() );
     }
 
-    SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) {
+	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) : m_bSelected( false ){
 		if ( imgList )
 		{
 			SDL_Image * img = new SDL_Image( imgList, iImage );
@@ -83,6 +83,15 @@ public:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen );
+
+	long GetParam()					{ return m_lParam;		}
+	void SetParam( long lParam )	{ m_lParam = lParam;	}
+	bool GetSelected()				{ return m_bSelected;		}
+	void SetSelected( bool bSelected )	{ m_bSelected = bSelected;	}
+
+protected:
+	long			m_lParam;
+	bool			m_bSelected;
 
 	//virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
 	//	if ( !IsIn( button->x, button->y ) )

@@ -29,7 +29,7 @@
 class SDL_ListBox : public SDL_Widget
 {
 public:
-	sigslot::signal1<SDL_Widget *>		select;
+	sigslot::signal1<SDL_ListBoxItem *>		select;
 
 // 基本属性
 public:
@@ -45,8 +45,8 @@ public:
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
 		
-		SDL_Iterator pos; 
-		GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
@@ -65,18 +65,22 @@ protected:
 		if ( button->button != SDL_BUTTON_LEFT )
 			return false;
 
-		SDL_Iterator pos; 
-		GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
-			if ( !pItem->IsIn( button->x, button->y ) )
+			SDL_Glyph * g = pos.GetCurrentItem();
+			if ( !g->IsIn( button->x, button->y ) )
 				continue;
 
-			SelectItem( pItem );
 			SetFocus();
-			select( pItem );
-			*bDraw = true;	
+
+			SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+			if ( pItem )
+			{
+				SelectItem( pItem );
+				*bDraw = true;	
+			}
 			return true;
 		}
 		return false;
@@ -90,7 +94,8 @@ protected:
 				SelectItem( GetCurrentLayout()->GetBottom( this ) );
 			else
 			{
-				SDL_Widget * pItem = GetItem( GetItemID( m_curItem ) - 1 );
+				SDL_Glyph * g =  GetItem( GetItemID( m_curItem ) - 1 );
+				SDL_Widget * pItem = dynamic_cast<SDL_Widget *>(g);
 				if ( pItem )
 					SelectItem( pItem );
 			}
@@ -98,10 +103,11 @@ protected:
 			break;
 		case SDLK_DOWN:
 			if ( !m_curItem )
-				SelectItem( GetItem( 0 ) );
+				SelectItem( dynamic_cast<SDL_Widget *>( GetItem( 0 ) ) );
 			else
 			{
-				SDL_Widget * pItem = GetItem( GetItemID( m_curItem ) + 1 );
+				SDL_Glyph * g =  GetItem( GetItemID( m_curItem ) + 1 );
+				SDL_Widget * pItem = dynamic_cast<SDL_Widget *>(g);
 				if ( pItem )
 					SelectItem( pItem );
 			}
@@ -116,19 +122,23 @@ protected:
 
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-    virtual void DrawWidget( SDL_Surface * screen ){}
+ //   virtual void DrawWidget( SDL_Surface * screen ){}
 
-	void SelectItem( SDL_Widget * pItem )	{
-		if ( pItem == m_curItem )
+	void SelectItem( SDL_Glyph * g )	{
+		if ( g == m_curItem )
 			return;
 
-		if ( m_curItem )
-			m_curItem->SetSelected( false );
+		SDL_ListBoxItem * pCurItem = dynamic_cast<SDL_ListBoxItem *>(m_curItem);
+		if ( pCurItem )
+			pCurItem->SetSelected( false );
 		
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>(g);
 		if ( pItem )
 			pItem->SetSelected( true );
 
-		m_curItem = pItem;
+		m_curItem = g;
+		if ( pItem )
+			select( pItem );
 
 		SDL_Rect	rc = pItem->GetBounds();
 		if ( rc.y < m_pt.y )
@@ -138,7 +148,7 @@ protected:
 	}
 
 protected:
-	SDL_Widget *	m_curItem;
+	SDL_Glyph *	m_curItem;
 };
 
 #endif // SDL_LISTBOX_H_INCLUDED

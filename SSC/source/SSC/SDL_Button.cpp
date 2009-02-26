@@ -63,24 +63,8 @@ void SDL_Button::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 
-	////
-	//if ( m_imgList )
-	//{
-	//	SDL_Size	szImage = m_imgList->GetImageSize();
-	//	m_imgList->Draw( m_image, screen, m_pt.x + ( m_sz.w - 48 ) / 2, m_pt.y + 4 );
-	//}
-
-	////
-	//SDL_Rect	rect;
-	//rect.x = m_pt.x;
-	//rect.y = m_pt.y + 4 + 52 ;
-	//rect.w = m_sz.w;
-	//rect.h = m_sz.h - 4 - 52;
-	//if ( m_text.size() )
-	//	pFont->DrawText( screen, m_text.c_str(), rect, crSelect );
-
-	////¹Ø±Õ×ÖÌå
-	//pFont->Release();
+	//
+	SDL_Widget::DrawWidget( screen );
 
 	//
 	if ( GetHover() )

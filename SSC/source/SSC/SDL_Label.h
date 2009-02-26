@@ -22,11 +22,12 @@
 #define SDL_LABEL_H_INCLUDED
 
 #include "SDL_Widget.h"
+#include "SDL_Glyph.h"
 #include "SDL_Theme.h"
 #include <SDL_ttf.h>
 
 /// @brief 
-class SDL_Label : public SDL_Widget
+class SDL_Label : public SDL_Glyph
 {
 public:
     SDL_Label( const wchar_t * text, int nFont = SDL_Theme::Text, 

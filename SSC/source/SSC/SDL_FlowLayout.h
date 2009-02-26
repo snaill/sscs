@@ -31,24 +31,24 @@ public:
 
     virtual ~SDL_FlowLayout()	  { }
 
-	virtual const char * GetType()				{ return "flowlayout"; }
+	virtual const char * GetType()				{ return "SDL_FlowLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
 		//!!!!!
 		return SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc ) {
+    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {
 		int x = lprc->x, y = lprc->y, w = lprc->w, h = lprc->h;
 		SDL_Rect	rcItem;
 
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		pContainer->GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 
 			SDL_Size size = pItem->GetPreferedSize();
 			rcItem.x = x;

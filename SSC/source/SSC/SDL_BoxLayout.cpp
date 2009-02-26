@@ -22,16 +22,16 @@
 #include "SDL_Widget.h"
 
 /* SDL_HBoxLayout member function */
-SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
+SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Container * pContainer )
 {
 	SDL_Size	sz(0, 0);
 	int			nCount = 0;
 
-	SDL_Iterator pos;
-	pContainer->GetIterator( &pos );
+	SDL_Iterator<SDL_Glyph> pos;
+	pContainer->GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = pos.GetCurrentItem();
+		SDL_Glyph * pItem = pos.GetCurrentItem();
 		SDL_Size	szItem = pItem->GetPreferedSize();
 		sz.w = max( sz.w, szItem.w );
 		sz.h = max( sz.h, szItem.h );
@@ -42,32 +42,33 @@ SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
 	return sz;
 }
 
-void SDL_HBoxLayout::Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
+void SDL_HBoxLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
 {
 	int nCount = pContainer->GetCount();
 	SDL_Rect	rc = *lprc;
 	rc.w = rc.w / nCount;
 
-	SDL_Iterator pos; 
-	pContainer->GetIterator( &pos );
+	SDL_Iterator<SDL_Glyph> pos; 
+	pContainer->GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = pos.GetCurrentItem();
+		SDL_Glyph * pItem = pos.GetCurrentItem();
 		pItem->SetBounds( &rc );
 		rc.x += rc.w;
 	}
 }
 
 /* SDL_VBoxLayout member function */
-SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
+SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Container * pContainer )
 {
 	SDL_Size	sz(0, 0);
 	int			nCount = 0;
 
-	SDL_Iterator pos; pContainer->GetIterator( &pos, true );
+	SDL_Iterator<SDL_Glyph> pos; 
+	pContainer->GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = pos.GetCurrentItem();
+		SDL_Glyph * pItem = pos.GetCurrentItem();
 		SDL_Size	szItem = pItem->GetPreferedSize();
 		sz.w = max( sz.w, szItem.w );
 		sz.h = max( sz.h, szItem.h );
@@ -78,17 +79,17 @@ SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Widget * pContainer )
 	return sz;
 }
 
-void SDL_VBoxLayout::Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
+void SDL_VBoxLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
 {
 	int nCount = pContainer->GetCount();
 	SDL_Rect	rc = *lprc;
 	rc.h = rc.h / nCount;
 
-	SDL_Iterator pos; 
-	pContainer->GetIterator( &pos, true );
+	SDL_Iterator<SDL_Glyph> pos; 
+	pContainer->GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = pos.GetCurrentItem();
+		SDL_Glyph * pItem = pos.GetCurrentItem();
 		pItem->SetBounds( &rc );
 		rc.y += rc.h;
 	}

@@ -1,21 +1,20 @@
 #include "SDL_Iterator.h"
-#include "SDL_Widget.h"
 
-SDL_Iterator::SDL_Iterator()	
+SDL_Iterator<T>::SDL_Iterator()	
 {
 }
 
-SDL_Iterator::~SDL_Iterator()
+SDL_Iterator<T>::~SDL_Iterator()
 {
 	Clear();
 }
 
-void SDL_Iterator::First()	
+void SDL_Iterator<T>::First()	
 {
 	m_pos = m_vector.begin();
 }
 
-void SDL_Iterator::Next()		
+void SDL_Iterator<T>::Next()		
 {
 	if ( !IsDone() )
 		m_pos ++;
@@ -26,12 +25,12 @@ bool SDL_Iterator::IsDone()
 	return m_pos == m_vector.end(); 		
 }
 
-SDL_Widget * SDL_Iterator::GetCurrentItem() 
+T * SDL_Iterator::GetCurrentItem() 
 {
 	return IsDone() ? 0 : *m_pos;
 }
 
-void SDL_Iterator::Add( SDL_Widget * p )
+void SDL_Iterator::Add( T * p )
 {
 	m_vector.push_back( p );
 }

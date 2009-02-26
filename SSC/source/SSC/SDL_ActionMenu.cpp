@@ -36,4 +36,6 @@ void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )
 	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 
 	rectangleRGBA( screen, m_pt.x, m_pt.y, m_pt.x + m_sz.w - 1, m_pt.y + m_sz.h - 1, 0, 0, 0, 100 ); 
+
+	SDL_Widget::DrawWidget( screen );
 }
