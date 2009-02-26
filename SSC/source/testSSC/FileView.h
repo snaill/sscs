@@ -13,8 +13,12 @@ public:
 	}
 
 	void OnToolButtonClick( SDL_Widget * button );
+	void OnItemSelected( SDL_Widget * button );
 
 protected:
 	SDL_Widget *		m_this;
 	SDL_Toolbar	*		m_toolbar;
+	SDL_ListBox	*		m_listbox;
+	SDL_ImageList *		m_imgList;
+	int					m_nClick;
 };

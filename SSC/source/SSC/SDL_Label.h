@@ -41,7 +41,7 @@ public:
 
     virtual ~SDL_Label()				 {}
 
-	virtual const char * GetType()	{ return "label"; }
+	virtual const char * GetType()	{ return "SDL_Label"; }
 
 	virtual SDL_Size GetPreferedSize();
 
