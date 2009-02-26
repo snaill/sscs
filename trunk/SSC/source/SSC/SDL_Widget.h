@@ -34,7 +34,7 @@ struct SDL_WidgetStatus {
 	long			m_bSelected : 1;
 };
 /// @brief 控件类的基类
-class SDL_Widget : public SDL_Object, public SDL_BoundingBox, public sigslot::has_slots<>
+class SDL_Widget : public SDL_Object, public SDL_BoundingBox
 {
 public:
 	sigslot::signal1<SDL_Widget *>		add;
@@ -50,7 +50,6 @@ public:
 		if ( m_pLayout )
 			m_pLayout->Release();
 				
-		disconnect_all();
         Clear();
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::~%s End\n", GetType(), GetType() );
 	}
