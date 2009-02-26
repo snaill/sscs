@@ -226,7 +226,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\..\source\SSC\SDL_Container.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\SSC\SDL_Font.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\SSC\SDL_Glyph.h"
 				>
 			</File>
 			<File
