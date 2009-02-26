@@ -35,18 +35,18 @@ public:
 	SDL_BorderLayout()		  	{ }
     virtual ~SDL_BorderLayout()	{ }
 
-	virtual const char * GetType()				{ return "borderlayout"; }
+	virtual const char * GetType()				{ return "SDL_BorderLayout"; }
 	
 // 方法
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Widget * pContainer )	{
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
 		SDL_Size	sz;
 
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos, true );
+		SDL_Iterator<SDL_Glyph> pos; 
+		pContainer->GetIterator<SDL_Glyph>( &pos, true );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 			SDL_Size	szItem = pItem->GetPreferedSize();
 			switch ( pItem->GetLayoutProperty() )
 			{
@@ -73,17 +73,17 @@ public:
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Widget * pContainer, const SDL_Rect * lprc )
+    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc )
     {
 		SDL_Rect	rc = *lprc;
-		SDL_Iterator pos; 
-		pContainer->GetIterator( &pos );
+		SDL_Iterator<SDL_Glyph> pos; 
+		pContainer->GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			if ( rc.w == 0 || rc.h == 0 )
 				continue;
 
-			SDL_Widget * pItem = (SDL_Widget *)pos.GetCurrentItem();
+			SDL_Glyph * pItem = pos.GetCurrentItem();
 			SDL_Size	sz = pItem->GetPreferedSize();
 			SDL_Rect	rcItem;
 			switch ( pItem->GetLayoutProperty() )

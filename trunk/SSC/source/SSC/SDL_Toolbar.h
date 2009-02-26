@@ -41,8 +41,8 @@ public:
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
 		
-		SDL_Iterator pos; 
-		GetIterator( &pos, true );
+		SDL_Iterator<SDL_Glyph> pos; 
+		GetIterator<SDL_Glyph>( &pos, true );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
@@ -60,6 +60,8 @@ protected:
     virtual void DrawWidget( SDL_Surface * screen ) { 
 		SDL_Rect	rc = GetBounds();
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+
+		SDL_Widget::DrawWidget( screen );
 	}
 };
 

@@ -21,10 +21,10 @@
 #ifndef SDL_IMAGE_H_INCLUDED
 #define SDL_IMAGE_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Glyph.h"
 
 class SDL_ImageList;
-class SDL_Image :	public SDL_Widget
+class SDL_Image :	public SDL_Glyph
 {
 public:
 	SDL_Image( SDL_Surface * surface );
@@ -34,7 +34,7 @@ public:
 	virtual const char * GetType()				{ return "image"; }
 
 	virtual SDL_Size GetPreferedSize();
-	virtual void Draw( SDL_Surface * screen );
+	virtual void DrawWidget( SDL_Surface * screen );
 
 protected:
 	SDL_Surface	*		m_pBitmap;

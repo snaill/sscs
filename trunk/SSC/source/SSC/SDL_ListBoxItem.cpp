@@ -64,10 +64,13 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-	if ( GetSelected() )
-		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
-	else
+//	if ( GetSelected() )
+//		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
+//	else
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
+
+	//
+	SDL_Container::DrawWidget( screen );
 
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
 }

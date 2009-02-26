@@ -56,10 +56,16 @@ public:
 		SDL_SetClipRect( screen, &rcOld );
 	}
 
+	virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
+    virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
+
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen ) = 0;
+
+protected:
+	int				m_nLayoutProperty;
 };
 
 #endif // SDL_GLYPH_H_INCLUDED
