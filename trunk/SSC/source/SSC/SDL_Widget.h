@@ -44,23 +44,29 @@ public:
 	SDL_Widget() : m_pLayout(0), m_nLayoutProperty(0), m_bHover(false), m_bVisible( true ), 
 		m_pParent(0), m_bCheck( false ), m_bSelected( false ) {}
 
-	~SDL_Widget() {
+	virtual ~SDL_Widget() {
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::~%s Start\n", GetType(), GetType() );
+
 		if ( m_pLayout )
 			m_pLayout->Release();
 				
 		disconnect_all();
         Clear();
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::~%s End\n", GetType(), GetType() );
 	}
 
-	virtual const char * GetType() { return "widget"; }
+	virtual const char * GetType() { return "SDL_Widget"; }
 
 	/// @brief 获取图元所需的最小区域
     /// @param w 返回的矩形宽度
     /// @param h 返回的矩形宽度
 	virtual SDL_Size GetPreferedSize()	{
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::GetPreferedSize Start\n", GetType() );
+
 		if ( GetLayout() )
 			return GetLayout()->GetPreferedSize( this );
 
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::GetPreferedSize End\n", GetType() );
 		return SDL_Size( 0, 0 );
 	}
 
@@ -103,6 +109,8 @@ public:
 	}
 
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::HandleMouseEvent Start\n", GetType() );
+
 		SDL_Iterator pos; 
 		GetIterator( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
@@ -136,6 +144,7 @@ public:
 				break;
 		}
 
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::HandleMouseEvent End\n", GetType() );
 		return bHandled;
 	}
 
@@ -154,16 +163,22 @@ public:
     /// 添加一个图元
     virtual bool Add( SDL_Widget * g )
     {
-        assert( g );
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add Start\n", GetType() );
+
+		assert( g );
 		g->SetParent( this );
         m_aChildren.push_back( g );
 		add( g );
-        return true;
+
+ 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add End\n", GetType() );
+       return true;
     }
 
     /// 删除一个图元
     virtual void Remove( SDL_Widget * g )
     {
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove Start\n", GetType() );
+
         assert( g );
         for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
@@ -172,17 +187,23 @@ public:
 				remove( g );
 			}
 		}
+
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove End\n", GetType() );
     }
 
     /// 清除所有子图元
     virtual void Clear()
     {
-        for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear Start\n", GetType() );
+
+		for ( std::vector<SDL_Widget *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
 			remove( *pos );
 			(*pos)->Release();
 		}
-        m_aChildren.clear();
+		m_aChildren.clear();
+
+		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear End\n", GetType() );
     }
 
 	void GetIterator( SDL_Iterator * iter, bool r = false )	{
@@ -234,7 +255,7 @@ public:
 			return;
 
 		GetLayout()->Update( this, &GetBounds() );
-		RedrawWidget();
+//		RedrawWidget();
 	}
 
 	virtual void RedrawWidget()	{

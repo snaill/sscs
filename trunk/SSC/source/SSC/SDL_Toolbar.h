@@ -36,7 +36,7 @@ public:
 
 	virtual ~SDL_Toolbar()	{}
 
-	virtual const char * GetType()				{ return "toolbar"; }
+	virtual const char * GetType()				{ return "SDL_Toolbar"; }
 
 	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz( 0, 0 );
@@ -54,23 +54,12 @@ public:
 		return sz;
 	}
 
-	virtual bool Add( SDL_Widget * g )
-    {
-        assert( g );
-//		g->click.connect( this, &SDL_Toolbar::OnButtonClicked );
-		return SDL_Widget::Add( g );
-    }
-
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
     virtual void DrawWidget( SDL_Surface * screen ) { 
 		SDL_Rect	rc = GetBounds();
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
-	}
-
-	void OnButtonClicked( SDL_Widget * button ) {
-///		click( button );
 	}
 };
 

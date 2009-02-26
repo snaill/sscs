@@ -77,7 +77,7 @@ public:
 
     virtual ~SDL_ListBoxItem()		{}
 
-	virtual const char * GetType()	{ return "listboxitem"; }
+	virtual const char * GetType()	{ return "SDL_ListBoxItem"; }
 	//virtual SDL_Size GetPreferedSize();
 
     /// @brief 在制定区域绘制图元

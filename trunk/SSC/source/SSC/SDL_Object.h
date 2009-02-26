@@ -112,6 +112,10 @@ public:
 
 };
 
+#define LOG_LEVEL_NONE				0
+#define LOG_LEVEL_FUNCTION_INOUT	1
+#define LOG_LEVEL	LOG_LEVEL_FUNCTION_INOUT
+
 /// @brief 所有图元对象的基类，包含对象的计数操作
 class SDL_Object
 {
@@ -138,8 +142,21 @@ public:
     {
         m_ref --;
         if ( !m_ref )
-            delete this;
+			delete this;
     }
+
+protected:
+	void LOG( int nLevel, const char* format, ... )	{
+#if ( LOG_LEVEL > 0 )
+		if ( nLevel < LOG_LEVEL )
+			return;
+
+		va_list ap;
+		va_start(ap, format);
+		vfprintf( stdout, format, ap );
+		va_end( ap );
+#endif
+	}
 
 protected:
     /// 构造函数为保护类型，说明该基类不能直接创建
