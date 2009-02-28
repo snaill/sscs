@@ -174,7 +174,7 @@ public:
 			return;
 
 		GetLayout()->Update( this, &GetBounds() );
-//		RedrawWidget();
+		RedrawWidget();
 	}
 
 	virtual void RedrawWidget()	{
