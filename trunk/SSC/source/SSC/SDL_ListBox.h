@@ -38,7 +38,10 @@ public:
 		m_pLayout = new SDL_ScrollBoxLayout();
 	}
 
-	virtual ~SDL_ListBox()	{}
+	virtual ~SDL_ListBox()	{
+		if ( m_curItem )
+			m_curItem->Release();
+	}
 
 	virtual const char * GetType()				{ return "SDL_ListBox"; }
 
@@ -122,21 +125,30 @@ protected:
 
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
- //   virtual void DrawWidget( SDL_Surface * screen ){}
+    virtual void DrawWidget( SDL_Surface * screen ){
+		SDL_FillRect( screen, ( SDL_Rect * )&GetBounds(), SDL_MapRGB( screen->format, 0, 0, 0 ) );
+
+		//
+		SDL_Container::DrawWidget( screen );
+	}
 
 	void SelectItem( SDL_Glyph * g )	{
 		if ( g == m_curItem )
 			return;
 
-		SDL_ListBoxItem * pCurItem = dynamic_cast<SDL_ListBoxItem *>(m_curItem);
-		if ( pCurItem )
-			pCurItem->SetSelected( false );
+		if ( m_curItem )
+		{
+			SDL_ListBoxItem * pCurItem = dynamic_cast<SDL_ListBoxItem *>(m_curItem);
+			if ( pCurItem )
+				pCurItem->SetSelected( false );
+			m_curItem->Release();
+		}
 		
 		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>(g);
 		if ( pItem )
 			pItem->SetSelected( true );
 
-		m_curItem = g;
+		m_curItem = dynamic_cast<SDL_Glyph *>( g->GetObj() );
 		if ( pItem )
 			select( pItem );
 
