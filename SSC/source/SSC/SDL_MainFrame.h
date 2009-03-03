@@ -23,6 +23,7 @@
 
 #include "SDL_Widget.h"
 #include "SDL_Theme.h"
+#include "SDL_CardLayout.h"
 
 /// @brief 屏幕类负责管理页面Surface
 class SDL_MainFrame : public SDL_Widget
@@ -57,6 +58,9 @@ public:
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
+
+protected:
+	virtual SDL_Layout * DefaultLayout() { return new SDL_CardLayout(); }
 
 protected:
 	SDL_Surface *	m_screen;

@@ -171,10 +171,16 @@ public:
 	}
 
 	///
-    virtual SDL_Layout * GetLayout(){ return m_pLayout;	}
+    virtual SDL_Layout * GetLayout(){ 
+		if ( !m_pLayout )
+			m_pLayout = DefaultLayout();
+		return m_pLayout;	
+	}
     virtual void SetLayout( SDL_Layout * layout ){ m_pLayout = layout; }
 
 protected:
+	virtual SDL_Layout * DefaultLayout() { return 0; }
+
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen ) {

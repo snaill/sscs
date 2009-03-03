@@ -26,8 +26,6 @@ SDL_Button::SDL_Button( SDL_Label * text, SDL_Image * image )
 {
 	Add( image );
 	Add( text );
-
-	SetLayout( new SDL_HBoxLayout() );
 }
 
 SDL_Size SDL_Button::GetPreferedSize()	

@@ -39,6 +39,12 @@ public:
 
 	virtual SDL_Size GetPreferedSize();
 
+	void SetFont( int nFont )		{ m_nFont = nFont;		}
+	void SetColor( int nColor )		{ m_nColor = nColor;	}
+	void SetAlign( int nAlign )		{ m_align = nAlign;		}
+	void SetVAlign( int nvAlign )	{ m_valign = nvAlign;	}
+
+protected:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen );

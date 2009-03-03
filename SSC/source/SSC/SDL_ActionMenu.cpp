@@ -31,8 +31,6 @@ SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 )
 
 	Add( btn1 );
 	Add( btn2 );
-
-	SetLayout( new SDL_HBoxLayout() );
 }
 
 void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )   
