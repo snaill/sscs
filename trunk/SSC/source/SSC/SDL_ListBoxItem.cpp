@@ -20,11 +20,15 @@
 
 #include "SDL_ListBoxItem.h"
 #include "SDL_MainFrame.h"
+#include "SDL_BorderLayout.h"
 #include <SDL_gfxPrimitives.h>
+#include <SDL_ttf.h>
 
-SDL_ListBoxItem::SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image ) 
+SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image ) 
 	: m_bSelected( false ) 
 {
+	assert( text );
+
 	if ( image )
 	{
 		image->SetLayoutProperty( SDL_BorderLayout::west );
@@ -33,39 +37,20 @@ SDL_ListBoxItem::SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, 
 
 	if ( remark )
 	{
-		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
-		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
-		Add( remarkLabel );
+		remark->SetLayoutProperty( SDL_BorderLayout::south );
+		remark->SetFont( SDL_Theme::Text );
+		remark->SetColor( SDL_Theme::Text );
+		remark->SetAlign( -1 );
+		remark->SetVAlign( 0 );
+		Add( remark );
 	}
 
-	SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
-	textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
-	Add( textLabel );
-
-	SetLayout( new SDL_BorderLayout() );
-}
-
-SDL_ListBoxItem::SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) : m_bSelected( false )
-{
-	if ( imgList )
-	{
-		SDL_Image * img = new SDL_Image( imgList, iImage );
-		img->SetLayoutProperty( SDL_BorderLayout::west );
-		Add( img );
-	}
-
-	if ( remark )
-	{
-		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
-		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
-		Add( remarkLabel );
-	}
-
-	SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
-	textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
-	Add( textLabel );
-
-	SetLayout( new SDL_BorderLayout() );
+	text->SetLayoutProperty( SDL_BorderLayout::fill );
+	text->SetFont( SDL_Theme::BigText );
+	text->SetColor( SDL_Theme::Text );
+	text->SetAlign( -1 );
+	text->SetVAlign( 0 );	
+	Add( text );
 }
 
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   

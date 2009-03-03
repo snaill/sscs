@@ -37,6 +37,9 @@ public:
 
 	virtual const char * GetType()	{ return "SDL_ActionMenu"; }
 
+protected:
+	virtual SDL_Layout * DefaultLayout() { return new SDL_HBoxLayout(); }
+
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen );

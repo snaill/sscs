@@ -19,7 +19,6 @@
  */
 
 #include "SDL_MainFrame.h"
-#include "SDL_CardLayout.h"
 #include <SDL_rotozoom.h>
 
 SDL_MainFrame * SDL_MainFrame::m_this = NULL;
@@ -34,7 +33,6 @@ SDL_MainFrame::SDL_MainFrame( int width, int height, int bpp, int videoFlag )
 	m_degree = 0;
 	m_curGlyph = 0;
 	m_screen = SDL_SetVideoMode( width, height, bpp, videoFlag );
-	SetLayout( new SDL_CardLayout() );
 
 	m_this = this;
 }

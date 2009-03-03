@@ -141,7 +141,7 @@ void SDL_ListBox::SelectItem( SDL_Glyph * g )
 	if ( pItem )
 		select( pItem );
 
-	SDL_Rect	rc = pItem->GetBounds();
+	SDL_Rect	rc = g->GetBounds();
 	if ( rc.y < m_pt.y )
 		GetCurrentLayout()->Scroll( m_pt.y - rc.y, this );
 	if ( rc.y + rc.h > m_pt.y + m_sz.h )
