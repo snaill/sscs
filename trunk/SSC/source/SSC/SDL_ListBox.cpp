@@ -70,6 +70,7 @@ bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw
 		if ( pItem )
 		{
 			SelectItem( pItem );
+			select( pItem );
 			*bDraw = true;	
 		}
 		return true;
@@ -86,8 +87,7 @@ bool SDL_ListBox::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw )
 			SelectItem( GetCurrentLayout()->GetBottom( this ) );
 		else
 		{
-			SDL_Glyph * g =  GetItem( GetItemID( m_curItem ) - 1 );
-			SDL_Widget * pItem = dynamic_cast<SDL_Widget *>(g);
+			SDL_Glyph * pItem =  GetItem( GetItemID( m_curItem ) - 1 );
 			if ( pItem )
 				SelectItem( pItem );
 		}
@@ -95,11 +95,10 @@ bool SDL_ListBox::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw )
 		break;
 	case SDLK_DOWN:
 		if ( !m_curItem )
-			SelectItem( dynamic_cast<SDL_Widget *>( GetItem( 0 ) ) );
+			SelectItem( GetItem( 0 ) );
 		else
 		{
-			SDL_Glyph * g =  GetItem( GetItemID( m_curItem ) + 1 );
-			SDL_Widget * pItem = dynamic_cast<SDL_Widget *>(g);
+			SDL_Glyph * pItem =  GetItem( GetItemID( m_curItem ) + 1 );
 			if ( pItem )
 				SelectItem( pItem );
 		}
@@ -138,8 +137,6 @@ void SDL_ListBox::SelectItem( SDL_Glyph * g )
 		pItem->SetSelected( true );
 
 	m_curItem = dynamic_cast<SDL_Glyph *>( g->GetObj() );
-	if ( pItem )
-		select( pItem );
 
 	SDL_Rect	rc = g->GetBounds();
 	if ( rc.y < m_pt.y )
