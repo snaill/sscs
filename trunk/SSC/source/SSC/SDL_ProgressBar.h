@@ -33,7 +33,7 @@ public:
 	virtual ~SDL_ProgressBar(void);
 
 	//
-	virtual const char * GetType()			{ return "progressbar";	}
+	virtual const char * GetType()			{ return "SDL_ProgressBar";	}
 
 	/// @brief 获取装饰器除去客户图元以后的矩形位置
 	/// @param lprc 返回的矩形位置

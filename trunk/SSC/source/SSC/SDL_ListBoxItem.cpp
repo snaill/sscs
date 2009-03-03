@@ -22,36 +22,51 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
-//SDL_Size SDL_ListBoxItem::GetPreferedSize()	
-//{	
-//	SDL_Size	sz( 0, 0 ), szImage( 0, 0 ), szFont( 0, 0 );
-//	sz.w = 0;
-//	sz.h = 0;
-//	if ( m_imgList )
-//		szImage = m_imgList->GetImageSize();
-//
-//	if ( m_text.size() > 0 )
-//	{
-//		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-//		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
-//		szFont = pFontBig->GetTextSize( m_text.c_str() );
-//		pFontBig->Release();
-//
-//		if ( m_remark.size() > 0 )
-//		{
-//			SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
-//			SDL_Size szTemp = pFont->GetTextSize( m_remark.c_str() );
-//			if ( szFont.w < szTemp.w )
-//				szFont.w = szTemp.w;
-//			szFont.h += 4 + szTemp.h;
-//			pFont->Release();
-//		}
-//	}
-//
-//	sz.w += 4 + szImage.w + szFont.w + 4;
-//	sz.h = 4 + max( szImage.h, szFont.h ) + 4;
-//	return sz;
-//}
+SDL_ListBoxItem::SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image ) 
+	: m_bSelected( false ) 
+{
+	if ( image )
+	{
+		image->SetLayoutProperty( SDL_BorderLayout::west );
+		Add( image );
+	}
+
+	if ( remark )
+	{
+		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
+		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
+		Add( remarkLabel );
+	}
+
+	SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
+	textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
+	Add( textLabel );
+
+	SetLayout( new SDL_BorderLayout() );
+}
+
+SDL_ListBoxItem::SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) : m_bSelected( false )
+{
+	if ( imgList )
+	{
+		SDL_Image * img = new SDL_Image( imgList, iImage );
+		img->SetLayoutProperty( SDL_BorderLayout::west );
+		Add( img );
+	}
+
+	if ( remark )
+	{
+		SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
+		remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
+		Add( remarkLabel );
+	}
+
+	SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
+	textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
+	Add( textLabel );
+
+	SetLayout( new SDL_BorderLayout() );
+}
 
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   
 {
@@ -64,10 +79,8 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-//	if ( GetSelected() )
-//		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
-//	else
-//		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
+	if ( GetSelected() )
+		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 
 	//
 	SDL_Container::DrawWidget( screen );

@@ -30,7 +30,7 @@ public:
 	virtual ~SDL_ProgressBall(void);
 
 	//
-	virtual const char * GetType()			{ return "progressball";	}
+	virtual const char * GetType()			{ return "SDL_ProgressBall";	}
 
 	/// @brief 获取装饰器除去客户图元以后的矩形位置
 	/// @param lprc 返回的矩形位置

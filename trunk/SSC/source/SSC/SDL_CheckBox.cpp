@@ -22,6 +22,12 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_CheckBox::SDL_CheckBox( const wchar_t * text ) 
+{
+	if ( text )
+		m_text = text;
+}
+
 SDL_Size SDL_CheckBox::GetPreferedSize()	
 {	
 	SDL_Size	sz( 0, 0 ), szImage( 13, 13 ), szFont( 0, 0 );
@@ -75,4 +81,28 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen  )
 		pFontBig->Release();
 	}
 
+}
+
+bool SDL_CheckBox::OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	
+{ 
+	SDL_Widget::OnMouseEnter( motion, bDraw );
+	*bDraw = true;
+	return true;	
+}
+
+bool SDL_CheckBox::OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	
+{ 
+	SDL_Widget::OnMouseLeave( motion, bDraw );
+	*bDraw = true;
+	return true;	
+}
+
+bool SDL_CheckBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	
+{
+	if ( !IsIn( button->x, button->y ) )
+		return false;
+
+	SetCheck( !GetCheck() );
+	*bDraw = true;
+	return true;
 }

@@ -28,10 +28,7 @@
 class SDL_CheckBox : public SDL_Widget
 {
 public:
-    SDL_CheckBox( const wchar_t * text ) {
-		if ( text )
-			m_text = text;
-    }
+    SDL_CheckBox( const wchar_t * text ); 
 
     virtual ~SDL_CheckBox()				 {}
 
@@ -43,25 +40,9 @@ public:
     /// @param screen	ÆÁÄ»Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
-	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseEnter( motion, bDraw );
-		*bDraw = true;
-		return true;	
-	}
-
-	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseLeave( motion, bDraw );
-		*bDraw = true;
-		return true;	
-	}
-	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-		if ( !IsIn( button->x, button->y ) )
-			return false;
-
-		SetCheck( !GetCheck() );
-		*bDraw = true;
-		return true;
-	}
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw );
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw );
+	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw );
 
 protected:
 	std::wstring		m_text;

@@ -32,48 +32,8 @@
 class SDL_ListBoxItem : public SDL_Container
 {
 public:
-	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image ) : m_bSelected( false ) {
-		if ( image )
-		{
-			image->SetLayoutProperty( SDL_BorderLayout::west );
-			Add( image );
-		}
-
-		if ( remark )
-		{
-			SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
-			remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
-			Add( remarkLabel );
-		}
-
-		SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
-		textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
-		Add( textLabel );
-
-		SetLayout( new SDL_BorderLayout() );
-    }
-
-	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage ) : m_bSelected( false ){
-		if ( imgList )
-		{
-			SDL_Image * img = new SDL_Image( imgList, iImage );
-			img->SetLayoutProperty( SDL_BorderLayout::west );
-			Add( img );
-		}
-
-		if ( remark )
-		{
-			SDL_Label * remarkLabel = new SDL_Label( remark, SDL_Theme::Text, SDL_Theme::Text, -1 );
-			remarkLabel->SetLayoutProperty( SDL_BorderLayout::south );
-			Add( remarkLabel );
-		}
-
-		SDL_Label * textLabel = new SDL_Label( text, SDL_Theme::BigText, SDL_Theme::Text, -1 );
-		textLabel->SetLayoutProperty( SDL_BorderLayout::fill );
-		Add( textLabel );
-
-		SetLayout( new SDL_BorderLayout() );
-    }
+	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_Image * image );
+	SDL_ListBoxItem( const wchar_t * text, const wchar_t * remark, SDL_ImageList * imgList, int iImage );
 
     virtual ~SDL_ListBoxItem()		{}
 
@@ -92,15 +52,6 @@ public:
 protected:
 	long			m_lParam;
 	bool			m_bSelected;
-
-	//virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-	//	if ( !IsIn( button->x, button->y ) )
-	//		return false;
-
-	//	if ( button->button == SDL_BUTTON_LEFT )
-	//		click( this );
-	//	return false;
-	//}
 };
 
 #endif //!SDL_LISTBOXITEM_H_INCLUDED

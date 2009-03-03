@@ -32,18 +32,7 @@
 class SDL_ActionMenu : public SDL_Widget
 {
 public:
-    SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) {
-		if ( !btn1 )
-			btn1 = new SDL_Button( 0, 0 );
-		if ( !btn2 )
-			btn2 = new SDL_Button( 0, 0 );
-
-		Add( btn1 );
-		Add( btn2 );
-
-		SetLayout( new SDL_HBoxLayout() );
-    }
-
+    SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 );
     virtual ~SDL_ActionMenu()		{}
 
 	virtual const char * GetType()	{ return "SDL_ActionMenu"; }

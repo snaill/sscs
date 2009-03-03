@@ -34,13 +34,7 @@ public:
 	sigslot::signal1<SDL_Widget *>		click;
 
 public:
-    SDL_Button( SDL_Label * text, SDL_Image * image ) {
-		Add( image );
-		Add( text );
-
-		SetLayout( new SDL_HBoxLayout() );
-    }
-
+    SDL_Button( SDL_Label * text, SDL_Image * image );
     virtual ~SDL_Button()	{}
 
 	virtual const char * GetType()	{ return "SDL_Button"; }
@@ -51,36 +45,10 @@ public:
     /// @param screen	ÆÁÄ»Surface
 	virtual void DrawWidget( SDL_Surface * screen );
 
-	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		if ( !motion->state )
-		{
-			SDL_Widget::OnMouseEnter( motion, bDraw );
-			*bDraw = true;
-		}
-		return true;	
-	}
-	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ 
-		SDL_Widget::OnMouseLeave( motion, bDraw );
-		*bDraw = true;
-		return true;	
-	}
-
-	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-		if ( !IsIn( button->x, button->y ) )
-			return false;
-
-			click( this );
-		*bDraw = true;
-		return true;
-	}
-
-	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )	{
-		if ( IsIn( button->x, button->y ) )
-			click( this );
-
-		*bDraw = true;
-		return true;
-	}
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw );
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw );
+	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw );
+	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw );
 };
 
 #endif //!SDL_BUTTON_H_INCLUDED

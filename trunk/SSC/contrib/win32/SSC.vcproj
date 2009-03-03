@@ -155,10 +155,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\source\SSC\SDL_Widget.cpp"
-				>
-			</File>
 			<Filter
 				Name="ImageView"
 				>
@@ -180,6 +176,18 @@
 				>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ActionMenu.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ListBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_MainFrame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Toolbar.cpp"
 					>
 				</File>
 			</Filter>
@@ -215,6 +223,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Base"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Widget.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -222,23 +238,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\source\SSC\SDL_Container.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\SSC\SDL_Font.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\SSC\SDL_Glyph.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\SSC\SDL_Iterator.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\SSC\SDL_Object.h"
 				>
 			</File>
 			<File
@@ -247,10 +251,6 @@
 			</File>
 			<File
 				RelativePath="..\..\source\SSC\SDL_Theme.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\SSC\SDL_Widget.h"
 				>
 			</File>
 			<File
@@ -354,6 +354,26 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Base"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Container.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Glyph.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Object.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Widget.h"
 					>
 				</File>
 			</Filter>

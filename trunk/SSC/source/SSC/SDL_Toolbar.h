@@ -22,47 +22,22 @@
 #define SDL_TOOLBAR_H_INCLUDED
 
 #include "SDL_Widget.h"
-#include "SDL_Button.h"
-#include "SDL_FlowLayout.h"
 
 /// @brief 控件类的基类
 class SDL_Toolbar : public SDL_Widget
 {
 // 基本属性
 public:
-	SDL_Toolbar()		{
-		m_pLayout = new SDL_FlowLayout();
-	}
-
+	SDL_Toolbar();
 	virtual ~SDL_Toolbar()	{}
-
 	virtual const char * GetType()				{ return "SDL_Toolbar"; }
 
-	virtual SDL_Size GetPreferedSize()	{
-		SDL_Size	sz( 0, 0 );
-		
-		SDL_Iterator<SDL_Glyph> pos; 
-		GetIterator<SDL_Glyph>( &pos, true );
-		for ( pos.First(); !pos.IsDone(); pos.Next() )
-		{
-			SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
-			sz.w += size.w;
-			if ( sz.h < size.h )
-				sz.h = size.h;
-		}
-
-		return sz;
-	}
+	virtual SDL_Size GetPreferedSize();
 
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-    virtual void DrawWidget( SDL_Surface * screen ) { 
-		SDL_Rect	rc = GetBounds();
-		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
-
-		SDL_Widget::DrawWidget( screen );
-	}
+    virtual void DrawWidget( SDL_Surface * screen );
 };
 
 #endif // SDL_TOOLBAR_H_INCLUDED
