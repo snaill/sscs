@@ -13,7 +13,7 @@ public:
 	}
 
 	void OnToolButtonClick( SDL_Widget * button );
-	void OnItemSelected( SDL_Widget * button );
+	void OnItemSelected( SDL_ListBoxItem * button );
 
 protected:
 	SDL_Widget *		m_this;

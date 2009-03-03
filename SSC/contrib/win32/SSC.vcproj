@@ -156,10 +156,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\source\SSC\SDL_Iterator.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\SSC\SDL_Widget.cpp"
 				>
 			</File>
