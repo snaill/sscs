@@ -22,6 +22,14 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_Button::SDL_Button( SDL_Label * text, SDL_Image * image ) 
+{
+	Add( image );
+	Add( text );
+
+	SetLayout( new SDL_HBoxLayout() );
+}
+
 SDL_Size SDL_Button::GetPreferedSize()	
 {
 	SDL_Size	sz = SDL_Widget::GetPreferedSize();
@@ -85,4 +93,40 @@ void SDL_Button::DrawWidget( SDL_Surface * screen  )
 		else 
             Draw3DRect( screen, rc2, cr2, cr1);
 	}
+}
+
+bool SDL_Button::OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	
+{ 
+	if ( !motion->state )
+	{
+		SDL_Widget::OnMouseEnter( motion, bDraw );
+		*bDraw = true;
+	}
+	return true;	
+}
+
+bool SDL_Button::OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	
+{ 
+	SDL_Widget::OnMouseLeave( motion, bDraw );
+	*bDraw = true;
+	return true;	
+}
+
+bool SDL_Button::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	
+{
+	if ( !IsIn( button->x, button->y ) )
+		return false;
+
+		click( this );
+	*bDraw = true;
+	return true;
+}
+
+bool SDL_Button::OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )	
+{
+	if ( IsIn( button->x, button->y ) )
+		click( this );
+
+	*bDraw = true;
+	return true;
 }

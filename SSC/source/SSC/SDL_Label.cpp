@@ -22,6 +22,16 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_Label::SDL_Label( const wchar_t * text, int nFont, int nColor, int align, int valign ) 
+{
+	if ( text )
+		m_text = text;
+	m_nFont = nFont;
+	m_nColor = nColor;
+	m_align = align;
+	m_valign = valign;
+}
+
 SDL_Size SDL_Label::GetPreferedSize()	
 {	
 	SDL_Size	szFont( 0, 0 );

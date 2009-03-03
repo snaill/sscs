@@ -12,8 +12,6 @@
 #include "FileView.h"
 #include "ImageView.h"
 
-SDL_MainFrame * SDL_MainFrame::m_this = NULL;
-
 int main(int argc, char *argv[])
 {
 	// Initialize SDL 
@@ -32,7 +30,6 @@ int main(int argc, char *argv[])
 	screen->Add( fileView );
 	((SDL_CardLayout *)screen->GetLayout())->SetActiveItem( fileView );
 //	screen->Add( imageView );
-	screen->Draw(0);
 
 	/* Wait for a keystroke */
 	int			done = 0;

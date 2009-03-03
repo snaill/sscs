@@ -22,120 +22,30 @@
 #define SDL_MAINFRAME_H_INCLUDED
 
 #include "SDL_Widget.h"
-#include "SDL_CardLayout.h"
 #include "SDL_Theme.h"
-#include <SDL_rotozoom.h>
 
 /// @brief 屏幕类负责管理页面Surface
 class SDL_MainFrame : public SDL_Widget
 {
-// 基本属性
+protected:
+	SDL_MainFrame( int width, int height, int bpp, int videoFlag );
+	virtual ~SDL_MainFrame();
+
 public:
-	virtual const char * GetType()				{ return "screen"; }
+	virtual const char * GetType()				{ return "SDL_MainFrame"; }
 
-	static SDL_MainFrame * Create( int width, int height, int bpp, int videoFlag )	{
-		if ( !m_this )
-			m_this = new SDL_MainFrame(width, height, bpp, videoFlag);
+	static SDL_MainFrame * Create( int width, int height, int bpp, int videoFlag );
+	static SDL_MainFrame * Get();
 
-		return m_this;
-	}
-
-	static SDL_MainFrame * Get()	{
-		assert( m_this );
-		return m_this;
-	}
-
-    virtual void SetBounds( const SDL_Rect * lprc ){
-		SDL_Rect	rc = *lprc;
-		if ( m_degree == 90 || m_degree == 270 )
-		{
-			int tmp = rc.w;
-			rc.w = rc.h;
-			rc.h = tmp;
-		}
-
-		if ( GetLayout() )
-			GetLayout()->Update( this, &rc );
-		
-		SDL_BoundingBox::SetBounds( lprc );
-	}
+    virtual void SetBounds( const SDL_Rect * lprc );
 
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
-    virtual void Draw( SDL_Surface * screen )
-    {
-		SDL_Rect	rect = GetBounds();
-		if ( m_screen->w != rect.w || m_screen->h != rect.h )
-		{
-			rect.w = m_screen->w;
-			rect.h = m_screen->h;
-			SetBounds( &rect ); 
-		}
-
-		//
-		
-		// 
-		if ( !m_degree )
-		{
-			SDL_Widget::Draw( m_screen );
-			if ( m_screen->flags & SDL_DOUBLEBUF ) {
-				SDL_Flip(m_screen);
-			} else {
-				SDL_UpdateRect(m_screen, 0, 0, 0, 0);
-			}
-		}
-		else
-		{
-			screen = rotateSurface90Degrees( m_screen, m_degree / 90 );
-			SDL_Widget::Draw( screen );
-			
-			SDL_Surface * screen2 = rotateSurface90Degrees( screen, ( 360 - m_degree ) / 90 );
-			SDL_BlitSurface( screen2, 0, m_screen, &GetBounds() );
-
-			if ( m_screen->flags & SDL_DOUBLEBUF ) {
-				SDL_Flip(m_screen);
-			} else {
-				SDL_UpdateRect(m_screen, 0, 0, 0, 0);
-			}
-			SDL_FreeSurface( screen );
-			SDL_FreeSurface( screen2 );
-		}
-    }
+    virtual void Draw( SDL_Surface * screen );;
 
     /// @brief 发送事件
     /// @param evnet 事件信息
- 	virtual bool HandleEvent(const SDL_Event *event, bool * b = 0 )
-	{
-		switch (event->type) {
-			case SDL_VIDEOEXPOSE:
-				Draw(m_screen);
-				break;
-			case SDL_VIDEORESIZE:
-				m_screen = SDL_SetVideoMode( event->resize.w, event->resize.h, m_bpp, m_videoFlag );
-				Draw(m_screen);
-				break;
-			default:
-			{
-				bool bDraw = false;
-				switch ( event->type )	{
-					case SDL_MOUSEBUTTONDOWN:
-					case SDL_MOUSEBUTTONUP:
-					case SDL_MOUSEMOTION:
-						SDL_Widget::HandleMouseEvent( event, &bDraw );
-						break;
-					case SDL_KEYDOWN:
-					case SDL_KEYUP:
-						if ( GetFocusGlyph() )
-							GetFocusGlyph()->HandleKeyEvent( event, &bDraw );
-						break;
-				}
-				if ( bDraw )
-					Draw( m_screen );
-			}
-		}
-
-		return true;
-	}
+ 	virtual bool HandleEvent(const SDL_Event *event, bool * b = 0 );
 
 	inline SDL_Theme * GetTheme()				{ return m_theme;	}
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
@@ -146,27 +56,6 @@ public:
 	}
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
-	}
-
-protected:
-	SDL_MainFrame( int width, int height, int bpp, int videoFlag )  
-	{ 
-		TTF_Init();
-		SDL_EnableKeyRepeat( SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL );
-
-		m_bpp = bpp;
-		m_videoFlag = videoFlag;
-		m_degree = 0;
-		m_curGlyph = 0;
-		m_screen = SDL_SetVideoMode( width, height, bpp, videoFlag );
-		SetLayout( new SDL_CardLayout() );
-	}
-
-	virtual ~SDL_MainFrame()	{
-		if ( m_screen && SDL_WasInit(SDL_INIT_VIDEO) )
-			SDL_FreeSurface( m_screen );
-
-		 TTF_Quit();
 	}
 
 protected:

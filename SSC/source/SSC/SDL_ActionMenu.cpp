@@ -22,6 +22,19 @@
 #include "SDL_MainFrame.h"
 #include <SDL_gfxPrimitives.h>
 
+SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) 
+{
+	if ( !btn1 )
+		btn1 = new SDL_Button( 0, 0 );
+	if ( !btn2 )
+		btn2 = new SDL_Button( 0, 0 );
+
+	Add( btn1 );
+	Add( btn2 );
+
+	SetLayout( new SDL_HBoxLayout() );
+}
+
 void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小

@@ -18,31 +18,35 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_SIMPLECONTROLS_H_INCLUDED
-#define SDL_SIMPLECONTROLS_H_INCLUDED
-
-#ifdef __cplusplus
-    #include <cstdlib>
-#else
-    #include <stdlib.h>
-#endif
-
-#ifdef __APPLE__
-    #include <SDL/SDL.h>
-#else
-    #include <SDL.h>
-#endif
-
-#include "SDL_ImageList.h"
-#include "SDL_BorderLayout.h"
-#include "SDL_CardLayout.h"
-#include "SDL_MainFrame.h"
-#include "SDL_ProgressBar.h"
-#include "SDL_ProgressBall.h"
-#include "SDL_CheckBox.h"
-#include "SDL_ListBox.h"
-#include "SDL_ActionMenu.h"
 #include "SDL_Toolbar.h"
-#include "SDL_Theme.h"
+#include "SDL_FlowLayout.h"
 
-#endif // SDL_SIMPLECONTROLS_H_INCLUDED
+SDL_Toolbar::SDL_Toolbar()		
+{
+	m_pLayout = new SDL_FlowLayout();
+}
+
+SDL_Size SDL_Toolbar::GetPreferedSize()	
+{
+	SDL_Size	sz( 0, 0 );
+	
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos, true );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
+		sz.w += size.w;
+		if ( sz.h < size.h )
+			sz.h = size.h;
+	}
+
+	return sz;
+}
+
+void SDL_Toolbar::DrawWidget( SDL_Surface * screen ) 
+{ 
+	SDL_Rect	rc = GetBounds();
+	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+
+	SDL_Widget::DrawWidget( screen );
+}

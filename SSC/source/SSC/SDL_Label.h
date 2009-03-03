@@ -31,14 +31,7 @@ class SDL_Label : public SDL_Glyph
 {
 public:
     SDL_Label( const wchar_t * text, int nFont = SDL_Theme::Text, 
-			  int nColor = SDL_Theme::Text, int align = 0, int valign = 0 ) {
-		if ( text )
-			m_text = text;
-		m_nFont = nFont;
-		m_nColor = nColor;
-		m_align = align;
-		m_valign = valign;
-    }
+			  int nColor = SDL_Theme::Text, int align = 0, int valign = 0 );
 
     virtual ~SDL_Label()				 {}
 
