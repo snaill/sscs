@@ -69,18 +69,18 @@ void CFileView::OnItemSelected( SDL_ListBoxItem * button )
 {
 	m_listbox->Clear();
 
-	if ( m_nClick > 0 )
-		m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"2" ), 0, 0 ) );
-	if ( m_nClick > 1 )
-		m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"中国" ), new SDL_Label( L"aaa" ), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 0 ) ) );
-	if ( m_nClick < 2 )
-		m_listbox->Add( new SDL_Button( new SDL_Label( L"ToolButton4" ), 
-			new SDL_Image( (SDL_ImageList *)m_imgList->GetObj(), 0 ) ) );
-		m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test2"), new SDL_Label( L"bbbb"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 1 ) ));
-	if ( m_nClick < 3 )
-		m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test3"), new SDL_Label( L"ccccc"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 2 ) ));
-	if ( m_nClick < 4 )
-		m_listbox->Add( new SDL_CheckBox( L"CheckBox1" ) );
+	//if ( m_nClick > 0 )
+	//	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"2" ), 0, 0 ) );
+	//if ( m_nClick > 1 )
+	//	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"中国" ), new SDL_Label( L"aaa" ), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 0 ) ) );
+	//if ( m_nClick < 2 )
+	//	m_listbox->Add( new SDL_Button( new SDL_Label( L"ToolButton4" ), 
+	//		new SDL_Image( (SDL_ImageList *)m_imgList->GetObj(), 0 ) ) );
+	//	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test2"), new SDL_Label( L"bbbb"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 1 ) ));
+	//if ( m_nClick < 3 )
+	//	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test3"), new SDL_Label( L"ccccc"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 2 ) ));
+	//if ( m_nClick < 4 )
+	//	m_listbox->Add( new SDL_CheckBox( L"CheckBox1" ) );
 
 	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test5"), new SDL_Label( L"ccccc"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 4 ) ));
 	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), new SDL_Image( ( SDL_ImageList * )m_imgList->GetObj(), 5 ) ));
