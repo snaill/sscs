@@ -38,16 +38,16 @@ SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Imag
 	if ( remark )
 	{
 		remark->SetLayoutProperty( SDL_BorderLayout::south );
-		remark->SetFont( SDL_Theme::Text );
-		remark->SetColor( SDL_Theme::Text );
+		remark->SetFont( SDL_FONTSIZE_NORMAL );
+		remark->SetColor( SDL_Theme::WindowText );
 		remark->SetAlign( -1 );
 		remark->SetVAlign( 0 );
 		Add( remark );
 	}
 
 	text->SetLayoutProperty( SDL_BorderLayout::fill );
-	text->SetFont( SDL_Theme::BigText );
-	text->SetColor( SDL_Theme::Text );
+	text->SetFont( SDL_FONTSIZE_BIG );
+	text->SetColor( SDL_Theme::WindowText );
 	text->SetAlign( -1 );
 	text->SetVAlign( 0 );	
 	Add( text );
@@ -58,7 +58,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 
-	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
+	SDL_Color	color = theme->GetColor( SDL_Theme::WindowText );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
 
 	SDL_Rect	rc = GetBounds();
