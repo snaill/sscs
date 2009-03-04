@@ -25,13 +25,19 @@
 #include "SDL_Font.h"
 #include <map>
 
+#define SDL_FONTSIZE_NORMAL		0
+#define SDL_FONTSIZE_SMALL		(-1)
+#define SDL_FONTSIZE_BIG		1
+
 // @brief …Ë÷√¿‡
 class SDL_Theme : public SDL_Object
 {
 public:
 	enum {
-		BigText,
-		Text,
+		Background,
+		BtnFace,
+		BtnText,
+		WindowText,
 		Selected
 	};
 
@@ -44,9 +50,8 @@ public:
 class SDL_DefaultTheme : public SDL_Theme
 {
 public:
-    SDL_DefaultTheme()   {
-		m_pTextFont = 0;
-		m_pBigTextFont = 0;
+    SDL_DefaultTheme( const char * font )   {
+		m_strFont = font;
     }
 
     ~SDL_DefaultTheme()  {
@@ -55,13 +60,22 @@ public:
 		m_mapFonts.clear();
     }
 
-	virtual const char * GetType()	{ return "defaulttheme"; }
+	virtual const char * GetType()	{ return "SDL_DefaultTheme"; }
 
 	SDL_Color GetColor( int nParam ) {
 		SDL_Color	color;
 		switch ( nParam )
 		{
-		case Text:
+		case Background:
+			color.r = color.g = color.b = 0; color.unused = 0;
+			break;
+		case BtnFace:
+			color.r = color.g = color.b = 255; color.unused = 0;
+			break;
+		case BtnText:
+			color.r = color.g = color.b = 0; color.unused = 0;
+			break;
+		case WindowText:
 			color.r = color.g = color.b = 255; color.unused = 0;
 			break;
 		case Selected:
@@ -78,29 +92,34 @@ public:
 		return 0;
 	}
 
-	SDL_Font * GetFont( int nParam )	{
-		if ( m_mapFonts.find( nParam ) == m_mapFonts.end() )
+	SDL_Font * GetFont( int nSize )	{
+		if ( nSize < -1 || nSize > 1 )
+			return 0;
+
+		if ( m_mapFonts.find( nSize ) == m_mapFonts.end() )
 		{
-			switch ( nParam )
+			switch ( nSize )
 			{
-			case Text: 
-				m_mapFonts[ nParam ] = new SDL_Font( "C:\\Windows\\Fonts\\arial.ttf", 12 );
+			case -1: 
+				m_mapFonts[ nSize ] = new SDL_Font( m_strFont.c_str(), 9 );
 				break;
-			case BigText:
-				m_mapFonts[ nParam ] = new SDL_Font( "C:\\Windows\\Fonts\\arial.ttf", 24 );
+			case 0:
+				m_mapFonts[ nSize ] = new SDL_Font( m_strFont.c_str(), 12 );
+				break;
+			case 1:
+				m_mapFonts[ nSize ] = new SDL_Font( m_strFont.c_str(), 24 );
 				break;
 			default:
 				return 0;
 			}
 		}
 
-		return ( SDL_Font * )m_mapFonts[ nParam ]->GetObj();
+		return ( SDL_Font * )m_mapFonts[ nSize ]->GetObj();
 	}
 
 protected:
 	std::map<int, SDL_Font *>	m_mapFonts;
-	SDL_Font *		m_pTextFont;
-	SDL_Font *		m_pBigTextFont;
+	std::string					m_strFont;
 };
 
 #endif // SDL_THEME_H_INCLUDED

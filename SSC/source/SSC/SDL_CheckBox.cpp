@@ -35,7 +35,7 @@ SDL_Size SDL_CheckBox::GetPreferedSize()
 	if ( m_text.size() > 0 )
 	{
 		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
+		SDL_Font *pFontBig = theme->GetFont( SDL_FONTSIZE_BIG );
 		szFont = pFontBig->GetTextSize( m_text.c_str() );
 		pFontBig->Release();
 	}
@@ -67,8 +67,8 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen  )
 	//
 	if ( m_text.size() > 0 )
 	{
-		SDL_Font *pFontBig = theme->GetFont( SDL_Theme::BigText );
-		SDL_Color	color = theme->GetColor( SDL_Theme::Text );
+		SDL_Font *pFontBig = theme->GetFont( SDL_FONTSIZE_BIG );
+		SDL_Color	color = theme->GetColor( SDL_Theme::WindowText );
 
 		SDL_Rect	rect;
 		rect.x = x;

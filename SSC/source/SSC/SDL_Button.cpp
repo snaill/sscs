@@ -24,7 +24,11 @@
 
 SDL_Button::SDL_Button( SDL_Label * text, SDL_Image * image ) 
 {
-	Add( image );
+	if ( image )
+		Add( image );
+
+	assert( text );
+	text->SetColor( SDL_Theme::BtnText );
 	Add( text );
 }
 
@@ -61,13 +65,13 @@ void SDL_Button::DrawWidget( SDL_Surface * screen  )
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
-	SDL_Font *pFont = theme->GetFont( SDL_Theme::Text );
+	SDL_Font *pFont = theme->GetFont( 0 );
 
-	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
-	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
+	SDL_Color	crText = theme->GetColor( SDL_Theme::BtnText );
+	SDL_Color	crFace = theme->GetColor( SDL_Theme::BtnFace );
 
 	SDL_Rect	rc = GetBounds();
-	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crFace.r, crFace.g, crFace.b ) );
 
 	//
 	SDL_Widget::DrawWidget( screen );

@@ -38,7 +38,7 @@ void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
 
-	SDL_Color	color = theme->GetColor( SDL_Theme::Text );
+	SDL_Color	color = theme->GetColor( SDL_Theme::WindowText );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
 
 	SDL_Rect	rc = GetBounds();
