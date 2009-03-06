@@ -230,6 +230,10 @@
 					RelativePath="..\..\source\SSC\SDL_Widget.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Window.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

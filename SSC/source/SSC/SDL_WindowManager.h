@@ -49,9 +49,7 @@ public:
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
 	inline SDL_Widget * GetFocusGlyph()				{ return m_curGlyph;	}
 	inline void SetFocusGlyph( SDL_Widget * pFocus )	{ m_curGlyph = pFocus;	}
-	void SetCaption( const char *title, const char *icon )	{
-		SDL_WM_SetCaption( title, icon );
-	}
+
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
@@ -62,10 +60,10 @@ public:
 			pLayout->SetActiveItem( w );
 	}
 
-	void DoModal( SDL_Window * w )	{
-		w->destroy.connect( this, &SDL_WindowManager::OnModalWidgetClosed );
-		SetActiveWidget( w );
-	}
+	//void DoModal( SDL_Window * w )	{
+	//	w->destroy.connect( this, &SDL_WindowManager::OnModalWidgetClosed );
+	//	SetActiveWidget( w );
+	//}
 public:
 	static SDL_WindowManager * Create( int width, int height, int bpp, int videoFlag );
 	static SDL_WindowManager * Get();
