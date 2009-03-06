@@ -19,7 +19,7 @@
  */
 
 #include "SDL_Widget.h"
-#include "SDL_MainFrame.h"
+#include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
 void SDL_Widget::Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTopLeft, SDL_Color clrBottomRight )
@@ -32,7 +32,7 @@ void SDL_Widget::Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTo
 
 SDL_Widget * SDL_Widget::SetFocus()
 {
-	SDL_MainFrame * pScreen = SDL_MainFrame::Get();
+	SDL_WindowManager * pScreen = SDL_WindowManager::Get();
 	SDL_Widget * pOld = pScreen->GetFocusGlyph();
 	if ( pOld == this )
 		return this;

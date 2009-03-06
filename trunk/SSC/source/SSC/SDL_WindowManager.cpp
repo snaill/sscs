@@ -18,12 +18,12 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#include "SDL_MainFrame.h"
+#include "SDL_WindowManager.h"
 #include <SDL_rotozoom.h>
 
-SDL_MainFrame * SDL_MainFrame::m_this = NULL;
+SDL_WindowManager * SDL_WindowManager::m_this = NULL;
 
-SDL_MainFrame::SDL_MainFrame( int width, int height, int bpp, int videoFlag )  
+SDL_WindowManager::SDL_WindowManager( int width, int height, int bpp, int videoFlag )  
 { 
 	TTF_Init();
 	SDL_EnableKeyRepeat( SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL );
@@ -37,28 +37,30 @@ SDL_MainFrame::SDL_MainFrame( int width, int height, int bpp, int videoFlag )
 	m_this = this;
 }
 
-SDL_MainFrame::~SDL_MainFrame()	{
+SDL_WindowManager::~SDL_WindowManager()	{
 	if ( m_screen && SDL_WasInit(SDL_INIT_VIDEO) )
 		SDL_FreeSurface( m_screen );
 
 	 TTF_Quit();
+
+	 disconnect_all();
 }
 
-SDL_MainFrame * SDL_MainFrame::Create( int width, int height, int bpp, int videoFlag )	
+SDL_WindowManager * SDL_WindowManager::Create( int width, int height, int bpp, int videoFlag )	
 {
 	if ( !m_this )
-		m_this = new SDL_MainFrame(width, height, bpp, videoFlag);
+		m_this = new SDL_WindowManager(width, height, bpp, videoFlag);
 
 	return m_this;
 }
 
-SDL_MainFrame * SDL_MainFrame::Get()	
+SDL_WindowManager * SDL_WindowManager::Get()	
 {
 	assert( m_this );
 	return m_this;
 }
 
-void SDL_MainFrame::SetBounds( const SDL_Rect * lprc )
+void SDL_WindowManager::SetBounds( const SDL_Rect * lprc )
 {
 	SDL_Rect	rc = *lprc;
 	if ( m_degree == 90 || m_degree == 270 )
@@ -74,7 +76,7 @@ void SDL_MainFrame::SetBounds( const SDL_Rect * lprc )
 	SDL_BoundingBox::SetBounds( lprc );
 }
 
-void SDL_MainFrame::Draw( SDL_Surface * screen )
+void SDL_WindowManager::Draw( SDL_Surface * screen )
 {
 	SDL_Rect	rect = GetBounds();
 	if ( m_screen->w != rect.w || m_screen->h != rect.h )
@@ -112,7 +114,7 @@ void SDL_MainFrame::Draw( SDL_Surface * screen )
 	}
 }
 
-bool SDL_MainFrame::HandleEvent(const SDL_Event *event, bool * b )
+bool SDL_WindowManager::HandleEvent(const SDL_Event *event, bool * b )
 {
 	switch (event->type) {
 		case SDL_VIDEOEXPOSE:

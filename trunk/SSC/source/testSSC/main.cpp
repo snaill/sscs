@@ -20,15 +20,15 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	SDL_MainFrame * screen = SDL_MainFrame::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
+	SDL_WindowManager * screen = SDL_WindowManager::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
 	screen->SetCaption( "testSSC", "test.bmp" );
-	screen->SetTheme( new SDL_DefaultTheme() );
+	screen->SetTheme( new SDL_DefaultTheme( "C:\\windows\\fonts\\simsun.ttc" ) );
 
 	CFileView	fileView;
 	CImageView	imageView;
 
 	screen->Add( fileView );
-	((SDL_CardLayout *)screen->GetLayout())->SetActiveItem( fileView );
+	screen->SetActiveWidget( fileView );
 //	screen->Add( imageView );
 
 	/* Wait for a keystroke */

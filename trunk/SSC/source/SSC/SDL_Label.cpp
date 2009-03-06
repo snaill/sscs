@@ -19,7 +19,7 @@
  */
 
 #include "SDL_Label.h"
-#include "SDL_MainFrame.h"
+#include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_Label::SDL_Label( const wchar_t * text, int nFont, int nColor, int align, int valign ) 
@@ -38,7 +38,7 @@ SDL_Size SDL_Label::GetPreferedSize()
 
 	if ( m_text.size() > 0 )
 	{
-		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+		SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
 		SDL_Font *pFontBig = theme->GetFont( m_nFont );
 		szFont = pFontBig->GetTextSize( m_text.c_str() );
 		pFontBig->Release();
@@ -51,7 +51,7 @@ void SDL_Label::DrawWidget( SDL_Surface * screen  )
 {
 	if ( m_text.size() > 0 )
 	{
-		SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+		SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
 		SDL_Font *pFontBig = theme->GetFont( m_nFont );
 		SDL_Color	color = theme->GetColor( m_nColor );
 
