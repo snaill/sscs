@@ -18,33 +18,11 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_WINDOW_H_INCLUDED
-#define SDL_WINDOW_H_INCLUDED
+#include "SDL_Window.h"
+#include "SDL_WindowManager.h"
 
-#include "SDL_Widget.h"
-
-class SDL_Window : public SDL_Widget
+void SDL_Window::Show()		
 {
-public:
-	sigslot::signal1<SDL_Widget *>		destroy;
-
-public:
-	SDL_Window()			{}
-    virtual ~SDL_Window()	{
-		destroy( this );
-	}
-
-	virtual const char * GetType()	{ return "SDL_Window"; }
-
-	void SetCaption( const char *title, const char *icon )	{
-		SDL_WM_SetCaption( title, icon );
-	}
-
-	void Active()	{
-		
-	}
-
-	void Show();
-};
-
-#endif //!SDL_WINDOW_H_INCLUDED
+	SDL_WindowManager::Get()->Add( this );
+	SDL_WindowManager::Get()->SetActiveWidget( this );
+}

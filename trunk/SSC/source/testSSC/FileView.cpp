@@ -49,12 +49,11 @@ CFileView::CFileView(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	m_this = new SDL_Widget();
-	m_this->SetLayout( new SDL_BorderLayout() );
-	m_this->Add( m_toolbar );
-//	m_this->Add( progress );
-	m_this->Add( menu );
-	m_this->Add( listbox );
+	SetLayout( new SDL_BorderLayout() );
+	Add( m_toolbar );
+//	Add( progress );
+	Add( menu );
+	Add( listbox );
 
 	listbox->SetFocus();
 
@@ -62,7 +61,6 @@ CFileView::CFileView(void)
 
 CFileView::~CFileView(void)
 {
-	m_this->Release();
 }
 
 void CFileView::OnItemSelected( SDL_ListBoxItem * button )
