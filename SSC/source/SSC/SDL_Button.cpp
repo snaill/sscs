@@ -19,7 +19,7 @@
  */
 
 #include "SDL_Button.h"
-#include "SDL_MainFrame.h"
+#include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_Button::SDL_Button( SDL_Label * text, SDL_Image * image ) 
@@ -64,7 +64,7 @@ SDL_Size SDL_Button::GetPreferedSize()
 void SDL_Button::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
-	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
 	SDL_Font *pFont = theme->GetFont( 0 );
 
 	SDL_Color	crText = theme->GetColor( SDL_Theme::BtnText );

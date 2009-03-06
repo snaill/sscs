@@ -155,6 +155,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\source\SSC\SDL_WindowManager.cpp"
+				>
+			</File>
 			<Filter
 				Name="ImageView"
 				>
@@ -180,10 +184,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_ListBox.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_MainFrame.cpp"
 					>
 				</File>
 				<File
@@ -251,6 +251,10 @@
 			</File>
 			<File
 				RelativePath="..\..\source\SSC\SDL_Theme.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\SSC\SDL_WindowManager.h"
 				>
 			</File>
 			<File
@@ -349,10 +353,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_MainFrame.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
 					>
 				</File>
@@ -374,6 +374,10 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Widget.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Window.h"
 					>
 				</File>
 			</Filter>

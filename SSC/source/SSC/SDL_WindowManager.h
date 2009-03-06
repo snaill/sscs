@@ -18,25 +18,22 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_MAINFRAME_H_INCLUDED
-#define SDL_MAINFRAME_H_INCLUDED
+#ifndef SDL_WINDOWMANAGER_H_INCLUDED
+#define SDL_WINDOWMANAGER_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Window.h"
 #include "SDL_Theme.h"
 #include "SDL_CardLayout.h"
 
 /// @brief 屏幕类负责管理页面Surface
-class SDL_MainFrame : public SDL_Widget
+class SDL_WindowManager : public SDL_Widget, public sigslot::has_slots<>
 {
 protected:
-	SDL_MainFrame( int width, int height, int bpp, int videoFlag );
-	virtual ~SDL_MainFrame();
+	SDL_WindowManager( int width, int height, int bpp, int videoFlag );
+	virtual ~SDL_WindowManager();
 
 public:
-	virtual const char * GetType()				{ return "SDL_MainFrame"; }
-
-	static SDL_MainFrame * Create( int width, int height, int bpp, int videoFlag );
-	static SDL_MainFrame * Get();
+	virtual const char * GetType()				{ return "SDL_WindowManager"; }
 
     virtual void SetBounds( const SDL_Rect * lprc );
 
@@ -59,9 +56,25 @@ public:
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
 
+	void SetActiveWidget( SDL_Widget * w )	{
+		SDL_CardLayout * pLayout = (SDL_CardLayout *)GetLayout();
+		if ( pLayout )
+			pLayout->SetActiveItem( w );
+	}
+
+	void DoModal( SDL_Window * w )	{
+		w->destroy.connect( this, &SDL_WindowManager::OnModalWidgetClosed );
+		SetActiveWidget( w );
+	}
+public:
+	static SDL_WindowManager * Create( int width, int height, int bpp, int videoFlag );
+	static SDL_WindowManager * Get();
+
 protected:
 	virtual SDL_Layout * DefaultLayout() { return new SDL_CardLayout(); }
-
+	void OnModalWidgetClosed( SDL_Widget * w )	{
+		Remove( w );
+	}
 protected:
 	SDL_Surface *	m_screen;
 	SDL_Theme *		m_theme;
@@ -71,7 +84,7 @@ protected:
 	SDL_Widget *		m_curGlyph;
 
 protected:
-	static SDL_MainFrame * m_this;
+	static SDL_WindowManager * m_this;
 };
 
-#endif // SDL_MAINFRAME_H_INCLUDED
+#endif // SDL_WINDOWMANAGER_H_INCLUDED

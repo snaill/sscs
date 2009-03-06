@@ -19,8 +19,6 @@
  */
 
 #include "SDL_ListBox.h"
-#include "SDL_MainFrame.h"
-#include <SDL_gfxPrimitives.h>
 
 SDL_ListBox::SDL_ListBox()		
 {

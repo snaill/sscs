@@ -19,7 +19,7 @@
  */
 
 #include "SDL_ActionMenu.h"
-#include "SDL_MainFrame.h"
+#include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) 
@@ -36,7 +36,7 @@ SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 )
 void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )   
 {
     //打开字体文件并设置字体大小
-	SDL_Theme * theme = SDL_MainFrame::Get()->GetTheme();
+	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
 
 	SDL_Color	color = theme->GetColor( SDL_Theme::WindowText );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );

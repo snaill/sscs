@@ -18,31 +18,23 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_SIMPLECONTROLS_H_INCLUDED
-#define SDL_SIMPLECONTROLS_H_INCLUDED
+#ifndef SDL_WINDOW_H_INCLUDED
+#define SDL_WINDOW_H_INCLUDED
 
-#ifdef __cplusplus
-    #include <cstdlib>
-#else
-    #include <stdlib.h>
-#endif
+#include "SDL_Widget.h"
 
-#ifdef __APPLE__
-    #include <SDL/SDL.h>
-#else
-    #include <SDL.h>
-#endif
+class SDL_Window : public SDL_Widget
+{
+public:
+	sigslot::signal1<SDL_Widget *>		destroy;
 
-#include "SDL_ImageList.h"
-#include "SDL_BorderLayout.h"
-#include "SDL_CardLayout.h"
-#include "SDL_WindowManager.h"
-#include "SDL_ProgressBar.h"
-#include "SDL_ProgressBall.h"
-#include "SDL_CheckBox.h"
-#include "SDL_ListBox.h"
-#include "SDL_ActionMenu.h"
-#include "SDL_Toolbar.h"
-#include "SDL_Theme.h"
+public:
+	SDL_Window()			{}
+    virtual ~SDL_Window()	{
+		destroy( this );
+	}
 
-#endif // SDL_SIMPLECONTROLS_H_INCLUDED
+	virtual const char * GetType()	{ return "SDL_Window"; }
+};
+
+#endif //!SDL_WINDOW_H_INCLUDED
