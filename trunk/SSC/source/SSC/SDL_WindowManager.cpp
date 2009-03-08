@@ -20,6 +20,7 @@
 
 #include "SDL_WindowManager.h"
 #include <SDL_rotozoom.h>
+#include <SDL_image.h>
 
 SDL_WindowManager * SDL_WindowManager::m_this = NULL;
 
@@ -145,4 +146,59 @@ bool SDL_WindowManager::HandleEvent(const SDL_Event *event, bool * b )
 	}
 
 	return true;
+}
+
+void SDL_WindowManager::Loop()
+{
+	/* Wait for a keystroke */
+	int			done = 0;
+	SDL_Event	event;
+
+	while ( !done && SDL_WaitEvent(&event) ) {
+		switch (event.type) {
+			/* Any other key quits the application... */
+			case SDL_QUIT:
+				done = 1;
+				break;			
+			default:
+				HandleEvent( &event, 0 );
+				break;
+		}
+	}
+}
+
+void SDL_WindowManager::SetIcon( const char * icon )
+{
+	SDL_Surface * surface = IMG_Load( icon );
+	SDL_WM_SetIcon( surface, NULL );
+	SDL_FreeSurface( surface );
+
+}
+
+void SDL_WindowManager::SetActiveWidget( SDL_Widget * w )	
+{
+	SDL_CardLayout * pLayout = (SDL_CardLayout *)GetLayout();
+	if ( pLayout )
+	{
+		pLayout->SetActiveItem( w );
+		RecalcLayout();
+	}
+}
+
+bool SDL_WindowManager::Add( SDL_Glyph * g )
+{
+	assert( g );
+    m_aChildren.push_back( g );
+   return true;
+}
+
+void SDL_WindowManager::Remove( SDL_Glyph * g )
+{
+    assert( g );
+    for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+	{
+		if ( g == *pos ) {
+            m_aChildren.erase( pos );
+		}
+	}
 }

@@ -29,22 +29,23 @@ public:
 	sigslot::signal1<SDL_Widget *>		destroy;
 
 public:
-	SDL_Window()			{}
+	SDL_Window() : m_bActive( false )		{}
     virtual ~SDL_Window()	{
 		destroy( this );
 	}
 
 	virtual const char * GetType()	{ return "SDL_Window"; }
 
-	void SetCaption( const char *title, const char *icon )	{
-		SDL_WM_SetCaption( title, icon );
-	}
-
-	void Active()	{
-		
-	}
+	void SetTitle( const char *title );
+	void Active();
+	void UnActive();
 
 	void Show();
+	void Destory();
+
+protected:
+	std::string		m_strTitle;
+	bool			m_bActive;
 };
 
 #endif //!SDL_WINDOW_H_INCLUDED

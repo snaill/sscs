@@ -26,3 +26,33 @@ void SDL_Window::Show()
 	SDL_WindowManager::Get()->Add( this );
 	SDL_WindowManager::Get()->SetActiveWidget( this );
 }
+
+void SDL_Window::SetTitle( const char *title )	
+{
+	if ( !m_strTitle.compare( title ) )
+		return;
+
+	m_strTitle = title;
+	if ( m_bActive )
+		SDL_WM_SetCaption( m_strTitle.c_str(), 0 );
+}
+
+void SDL_Window::Active()	
+{
+	if ( m_bActive )
+		return;
+
+	SDL_WM_SetCaption( m_strTitle.c_str(), 0 );
+	m_bActive = true;
+}
+
+void SDL_Window::UnActive()	
+{
+	m_bActive = false;
+}
+
+void SDL_Window::Destory()
+{
+	SDL_WindowManager::Get()->Remove( this );
+	Release();
+}
