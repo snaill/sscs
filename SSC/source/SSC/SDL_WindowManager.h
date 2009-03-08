@@ -45,20 +45,25 @@ public:
     /// @param evnet 事件信息
  	virtual bool HandleEvent(const SDL_Event *event, bool * b = 0 );
 
+    /// 添加一个图元
+    virtual bool Add( SDL_Glyph * g );
+
+    /// 删除一个图元
+    virtual void Remove( SDL_Glyph * g );
+
+public:
 	inline SDL_Theme * GetTheme()				{ return m_theme;	}
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
 	inline SDL_Widget * GetFocusGlyph()				{ return m_curGlyph;	}
 	inline void SetFocusGlyph( SDL_Widget * pFocus )	{ m_curGlyph = pFocus;	}
+	void SetIcon (const char * icon );
 
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
 
-	void SetActiveWidget( SDL_Widget * w )	{
-		SDL_CardLayout * pLayout = (SDL_CardLayout *)GetLayout();
-		if ( pLayout )
-			pLayout->SetActiveItem( w );
-	}
+	void SetActiveWidget( SDL_Widget * w );	
+	void Loop();
 
 	//void DoModal( SDL_Window * w )	{
 	//	w->destroy.connect( this, &SDL_WindowManager::OnModalWidgetClosed );
@@ -70,9 +75,9 @@ public:
 
 protected:
 	virtual SDL_Layout * DefaultLayout() { return new SDL_CardLayout(); }
-	void OnModalWidgetClosed( SDL_Widget * w )	{
-		Remove( w );
-	}
+	//void OnModalWidgetClosed( SDL_Widget * w )	{
+	//	Remove( w );
+	//}
 protected:
 	SDL_Surface *	m_screen;
 	SDL_Theme *		m_theme;
