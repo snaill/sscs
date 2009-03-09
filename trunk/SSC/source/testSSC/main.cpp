@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	CFileView	fileView;
 	CImageView	imageView;
 
-	fileView.SetCaption( "testSSC", "test.bmp" );
+	fileView.SetTitle( "testSSC" );
 	fileView.Show();
 
 	//screen->Add( &fileView );
