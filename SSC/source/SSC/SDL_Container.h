@@ -184,13 +184,8 @@ protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen ) {
-		SDL_Iterator<SDL_Glyph> pos;
-		GetIterator<SDL_Glyph>( &pos );
-		for ( pos.First(); !pos.IsDone(); pos.Next() )
-		{
-			SDL_Glyph * pItem = pos.GetCurrentItem();
-			pItem->Draw( screen );
-		}
+		if ( GetLayout() )
+			GetLayout()->DrawWidget( this, screen );
 	}
 
 protected:

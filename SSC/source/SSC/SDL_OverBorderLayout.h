@@ -18,29 +18,36 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_LAYOUT_H_INCLUDED
-#define SDL_LAYOUT_H_INCLUDED
+#ifndef SDL_OVERBORDERLAYOUT_H_INCLUDED
+#define SDL_OVERBORDERLAYOUT_H_INCLUDED
 
-#include "SDL_Object.h"
+#include "SDL_Layout.h"
+#include "SDL_Widget.h"
 
-class SDL_Container;
-/// @brief 所有界面布局的基类，实现固定布局，即对内部控件不做处理
-class SDL_Layout : public SDL_Object, public SDL_BoundingBox
+/// @brief 所有界面布局的基类，实现固定布局
+class SDL_OverBorderLayout : public SDL_Layout
 {
+public:
+	enum { north, south, west, east, fill };
+
 // 基本属性
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer ) = 0;
+	SDL_OverBorderLayout()		  	{ }
+    virtual ~SDL_OverBorderLayout()	{ }
+
+	virtual const char * GetType()				{ return "SDL_OverBorderLayout"; }
+	
+// 方法
+public:
+	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer );
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) = 0;
-
+    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc );
+	
 	virtual void DrawWidget( SDL_Container * pContainer, SDL_Surface * screen );
  	virtual bool HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw );
 
-protected:
-	SDL_Layout() {}
-    virtual ~SDL_Layout()	{ }
 };
 
-#endif // SDL_LAYOUT_H_INCLUDED
+#endif // SDL_OVERBORDERLAYOUT_H_INCLUDED
