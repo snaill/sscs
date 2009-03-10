@@ -49,7 +49,7 @@ CFileView::CFileView(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	SetLayout( new SDL_BorderLayout() );
+	SetLayout( new SDL_OverBorderLayout() );
 	Add( m_toolbar );
 //	Add( progress );
 	Add( menu );

@@ -18,29 +18,31 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_LAYOUT_H_INCLUDED
-#define SDL_LAYOUT_H_INCLUDED
+#include "SDL_Layout.h"
+#include "SDL_Widget.h"
 
-#include "SDL_Object.h"
-
-class SDL_Container;
-/// @brief 所有界面布局的基类，实现固定布局，即对内部控件不做处理
-class SDL_Layout : public SDL_Object, public SDL_BoundingBox
+void SDL_Layout::DrawWidget( SDL_Container * pContainer, SDL_Surface * screen )	
 {
-// 基本属性
-public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer ) = 0;
+	SDL_Iterator<SDL_Glyph> pos;
+	pContainer->GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * pItem = pos.GetCurrentItem();
+		pItem->Draw( screen );
+	}
+}
 
-    /// @brief 设置图元所在区域
-    /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) = 0;
+bool SDL_Layout::HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw )
+{
+	SDL_Iterator<SDL_Widget> pos; 
+	pContainer->GetIterator<SDL_Widget>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Widget * pItem = dynamic_cast<SDL_Widget *>( pos.GetCurrentItem() );
+		if ( pItem && pItem->GetVisible() )
+			if ( pItem->HandleMouseEvent( event, bDraw ) )
+				return true;
+	}
 
-	virtual void DrawWidget( SDL_Container * pContainer, SDL_Surface * screen );
- 	virtual bool HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw );
-
-protected:
-	SDL_Layout() {}
-    virtual ~SDL_Layout()	{ }
-};
-
-#endif // SDL_LAYOUT_H_INCLUDED
+	return false;
+}

@@ -49,15 +49,8 @@ public:
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::HandleMouseEvent Start\n", GetType() );
 
-		SDL_Iterator<SDL_Widget> pos; 
-		GetIterator<SDL_Widget>( &pos );
-		for ( pos.First(); !pos.IsDone(); pos.Next() )
-		{
-			SDL_Widget * pItem = dynamic_cast<SDL_Widget *>( pos.GetCurrentItem() );
-			if ( pItem && pItem->GetVisible() )
-				if ( pItem->HandleMouseEvent( event, bDraw ) )
-					return true;
-		}
+		if ( GetLayout() )
+			GetLayout()->HandleMouseEvent( this, event, bDraw );
 
 		bool bHandled = false;
 		switch ( event->type )

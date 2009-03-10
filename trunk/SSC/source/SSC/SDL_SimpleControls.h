@@ -35,6 +35,7 @@
 
 #include "SDL_ImageList.h"
 #include "SDL_BorderLayout.h"
+#include "SDL_OverBorderLayout.h"
 #include "SDL_CardLayout.h"
 #include "SDL_WindowManager.h"
 #include "SDL_ProgressBar.h"
