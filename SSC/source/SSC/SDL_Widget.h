@@ -47,7 +47,7 @@ public:
 	virtual const char * GetType() { return "SDL_Widget"; }
 
  	virtual bool HandleMouseEvent(const SDL_Event *event, bool * bDraw){
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::HandleMouseEvent Start\n", GetType() );
+		log_f_start( "HandleMouseEvent" );
 
 		if ( GetLayout() )
 			GetLayout()->HandleMouseEvent( this, event, bDraw );
@@ -75,7 +75,7 @@ public:
 				break;
 		}
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::HandleMouseEvent End\n", GetType() );
+		log_f_end( "HandleMouseEvent" );
 		return bHandled;
 	}
 
@@ -94,20 +94,20 @@ public:
     /// 添加一个图元
     virtual bool Add( SDL_Glyph * g )
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add Start\n", GetType() );
+		log_f_start( "Add" );
 
 		SDL_Container::Add( g );
 		SDL_Widget * w = dynamic_cast<SDL_Widget *>(g);
 		add( w );
 
- 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add End\n", GetType() );
+		log_f_end( "Add" );
        return true;
     }
 
     /// 删除一个图元
     virtual void Remove( SDL_Glyph * g )
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove Start\n", GetType() );
+		log_f_start( "Remove" );
 
         assert( g );
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
@@ -120,13 +120,13 @@ public:
 			}
 		}
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove End\n", GetType() );
+		log_f_end( "Remove" );
     }
 
     /// 清除所有子图元
     virtual void Clear()
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear Start\n", GetType() );
+		log_f_start( "Clear" );
 
 		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
@@ -136,7 +136,7 @@ public:
 		}
 		m_aChildren.clear();
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear End\n", GetType() );
+		log_f_end( "Clear" );
     }
 
 	//template< class T >

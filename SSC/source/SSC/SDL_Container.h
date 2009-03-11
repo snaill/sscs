@@ -32,13 +32,13 @@ public:
 	SDL_Container() : m_pLayout(0) {}
 
 	virtual ~SDL_Container() {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::~%s Start\n", GetType(), GetType() );
+		log_f_start( "~SDL_Container" );
 
 		if ( m_pLayout )
 			m_pLayout->Release();
 				
         Clear();
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::~%s End\n", GetType(), GetType() );
+		log_f_end( "~SDL_Container" );
 	}
 
 	virtual const char * GetType() { return "SDL_Container"; }
@@ -47,12 +47,12 @@ public:
     /// @param w 返回的矩形宽度
     /// @param h 返回的矩形宽度
 	virtual SDL_Size GetPreferedSize()	{
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::GetPreferedSize Start\n", GetType() );
+		log_f_start( "GetPreferedSize" );
 
 		if ( GetLayout() )
 			return GetLayout()->GetPreferedSize( this );
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::GetPreferedSize End\n", GetType() );
+		log_f_end( "GetPreferedSize" );
 		return SDL_Size( 0, 0 );
 	}
 
@@ -70,19 +70,19 @@ public:
     /// 添加一个图元
     virtual bool Add( SDL_Glyph * g )
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add Start\n", GetType() );
+		log_f_start( "Add" );
 
 		assert( g );
         m_aChildren.push_back( g );
 
- 		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Add End\n", GetType() );
+		log_f_end( "Add" );
        return true;
     }
 
     /// 删除一个图元
     virtual void Remove( SDL_Glyph * g )
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove Start\n", GetType() );
+		log_f_start( "Remove" );
 
         assert( g );
         for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
@@ -92,13 +92,13 @@ public:
 			}
 		}
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Remove End\n", GetType() );
+		log_f_end( "Remove" );
     }
 
     /// 清除所有子图元
     virtual void Clear()
     {
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear Start\n", GetType() );
+		log_f_start( "Clear" );
 
 		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
 		{
@@ -106,7 +106,7 @@ public:
 		}
 		m_aChildren.clear();
 
-		LOG( LOG_LEVEL_FUNCTION_INOUT, "%s::Clear End\n", GetType() );
+		log_f_end( "Clear" );
     }
 
 	template < class T >	
