@@ -25,6 +25,7 @@
 #include <vector>
 #include <SDL.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define   MAX(a,   b)     (((a)   >   (b))   ?   (a)   :   (b))
 #define   MIN(a,   b)     (((a)   <   (b))   ?   (a)   :   (b))
@@ -112,13 +113,19 @@ public:
 
 };
 
-#define LOG_LEVEL_NONE				0
-#define LOG_LEVEL_FUNCTION_INOUT	1
-#define LOG_LEVEL	LOG_LEVEL_FUNCTION_INOUT
+#define LOG_LEVEL	SDL_Object::warning
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
 class SDL_Object
 {
+protected:
+	enum {
+		debug = 0,
+		info = 100,
+		warning = 200,
+		error = 300,
+		fatal = 400
+	};
 protected:
     /// 图元计数，用来记录图元被引用的次数，
     /// 初始为1，为0时图元被真正释放
@@ -146,16 +153,25 @@ public:
     }
 
 protected:
-	void LOG( int nLevel, const char* format, ... )	{
-#if ( LOG_LEVEL > 0 )
+	void log_f_start( const char * name )	{
+		char cLog[4096];
+		sprintf( cLog, "%s::%s start", GetType(), name );
+		log( info, cLog );
+	}
+	
+	void log_f_end( const char * name )	{
+		char cLog[4096];
+		sprintf( cLog, "%s::%s end", GetType(), name );
+		log( info, cLog );
+	}
+
+	void log( int nLevel, const char* log )	{
 		if ( nLevel < LOG_LEVEL )
 			return;
 
-		va_list ap;
-		va_start(ap, format);
-		vfprintf( stdout, format, ap );
-		va_end( ap );
-#endif
+		time_t t = time(0); 
+		struct tm * time = localtime(&t);
+		fprintf( stdout, "[%d-%d-%d %d:%d:%d] %s\n", time->tm_year, time->tm_mon, time->tm_yday, time->tm_hour, time->tm_min, time->tm_sec, log );
 	}
 
 protected:
