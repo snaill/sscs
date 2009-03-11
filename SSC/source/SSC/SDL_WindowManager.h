@@ -85,6 +85,7 @@ protected:
 	int				m_bpp;
 	int				m_degree;
 	SDL_Widget *		m_curGlyph;
+	std::vector<SDL_Window *>	m_delWindows;
 
 protected:
 	static SDL_WindowManager * m_this;
