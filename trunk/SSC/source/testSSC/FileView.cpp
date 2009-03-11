@@ -1,4 +1,5 @@
 #include "FileView.h"
+#include "ImageView.h"
 
 CFileView::CFileView(void)
 {
@@ -21,7 +22,9 @@ CFileView::CFileView(void)
 //	SDL_ImageList * imgList2 = new SDL_ImageList();
 //	imgList2->Create( 48, SDL_LoadBMP("D:\\BookStar SDL\\bin\\win32\\test.bmp") );
 //	toolbar->SetContent( listbox );
-	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton1" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
+	SDL_Button * btnIV = new SDL_Button( new SDL_Label( L"ToolButton1" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) ;
+	btnIV->click.connect( this, &CFileView::OnBtnClose );
+	m_toolbar->Add( btnIV );
 	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton2" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
 	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton3" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
 	m_toolbar->Add( new SDL_Button( new SDL_Label( L"ToolButton4" ), new SDL_Image( (SDL_ImageList *)imgList->GetObj(), 0 ) ) );
@@ -102,5 +105,11 @@ void CFileView::OnItemSelected( SDL_ListBoxItem * button )
 
 void CFileView::OnToolButtonClick( SDL_Widget * button )
 {
-	OnItemSelected( 0 );
+	CImageView * pView = new CImageView();
+	pView->Show();
+}
+
+void CFileView::OnBtnClose( SDL_Widget * button )
+{
+	this->Destory();
 }

@@ -29,25 +29,26 @@ int main(int argc, char *argv[])
 	fileView.SetTitle( "testSSC" );
 	fileView.Show();
 
+	screen->Loop();
 	//screen->Add( &fileView );
 	//screen->SetActiveWidget( &fileView );
 //	screen->Add( imageView );
 
 	/* Wait for a keystroke */
-	int			done = 0;
-	SDL_Event	event;
+	//int			done = 0;
+	//SDL_Event	event;
 
-	while ( !done && SDL_WaitEvent(&event) ) {
-		switch (event.type) {
-			/* Any other key quits the application... */
-			case SDL_QUIT:
-				done = 1;
-				break;			
-			default:
-				screen->HandleEvent( &event, 0 );
-				break;
-		}
-	}
+	//while ( !done && SDL_WaitEvent(&event) ) {
+	//	switch (event.type) {
+	//		/* Any other key quits the application... */
+	//		case SDL_QUIT:
+	//			done = 1;
+	//			break;			
+	//		default:
+	//			screen->HandleEvent( &event, 0 );
+	//			break;
+	//	}
+	//}
 	SDL_Quit();
 	return(0);
 }

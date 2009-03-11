@@ -199,6 +199,16 @@ void SDL_WindowManager::Remove( SDL_Glyph * g )
 	{
 		if ( g == *pos ) {
             m_aChildren.erase( pos );
+			if ( m_aChildren.empty() )
+			{
+				SDL_Event	event;
+				event.type = SDL_QUIT;
+				SDL_PushEvent( &event );
+			}
+			else
+				if ( g == ( ( SDL_CardLayout * )GetLayout() )->GetActiveItem() )
+					( ( SDL_CardLayout * )GetLayout() )->SetActiveItem( ( SDL_Window * )( *m_aChildren.rbegin( ) ) );
+			break;
 		}
 	}
 }

@@ -54,5 +54,5 @@ void SDL_Window::UnActive()
 void SDL_Window::Destory()
 {
 	SDL_WindowManager::Get()->Remove( this );
-	Release();
+//	Release();
 }

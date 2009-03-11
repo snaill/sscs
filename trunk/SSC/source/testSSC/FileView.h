@@ -10,6 +10,7 @@ public:
 
 	void OnToolButtonClick( SDL_Widget * button );
 	void OnItemSelected( SDL_ListBoxItem * button );
+	void OnBtnClose( SDL_Widget * button );
 
 protected:
 	SDL_Toolbar	*		m_toolbar;
