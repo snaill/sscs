@@ -235,11 +235,23 @@
 				Name="Base"
 				>
 				<File
+					RelativePath="..\..\source\SSC\SDL_Glyph.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_Widget.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Window.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tools"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_SwitchUI.cpp"
 					>
 				</File>
 			</Filter>
@@ -333,14 +345,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ImageList.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_ImageMap.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\source\SSC\SDL_Label.h"
 					>
 				</File>
@@ -394,6 +398,22 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Window.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Tools"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ImageList.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ImageMap.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_SwitchUI.h"
 					>
 				</File>
 			</Filter>

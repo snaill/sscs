@@ -41,13 +41,12 @@ SDL_Size SDL_ProgressBall::GetPreferedSize()
 	return SDL_Size( BALL_SIZE * 3 + BALL_SPACE * 4, BALL_SIZE + BALL_SPACE * 2 );
 }
 
-void SDL_ProgressBall::DrawWidget( SDL_Surface * screen )
+void SDL_ProgressBall::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc  )
 {
-	SDL_Rect	rc = GetBounds();
-		
 	// 绘制背景
-	SDL_FillRect( screen, &rc, SDL_MapRGB( screen->format, 64, 64, 64 ) );
+	SDL_FillRect( screen, ( SDL_Rect *)lprc, SDL_MapRGB( screen->format, 64, 64, 64 ) );
 
+	SDL_Rect	rc = *lprc;
 	///进度显示
 	rc.x += ( rc.w - BALL_SIZE * 3 - BALL_SPACE * 2 ) / 2 + BALL_RAD;
 	rc.y += ( rc.h - BALL_SIZE ) / 2 + BALL_RAD;

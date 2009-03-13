@@ -78,13 +78,16 @@ protected:
 	//void OnModalWidgetClosed( SDL_Widget * w )	{
 	//	Remove( w );
 	//}
+
+public:
+	SDL_Surface *				m_screen;
+
 protected:
-	SDL_Surface *	m_screen;
-	SDL_Theme *		m_theme;
-	int				m_videoFlag;
-	int				m_bpp;
-	int				m_degree;
-	SDL_Widget *		m_curGlyph;
+	SDL_Theme *					m_theme;
+	int							m_videoFlag;
+	int							m_bpp;
+	int							m_degree;
+	SDL_Widget *				m_curGlyph;
 	std::vector<SDL_Window *>	m_delWindows;
 
 protected:

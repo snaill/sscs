@@ -31,10 +31,10 @@ public:
 	SDL_Image( SDL_ImageList * imgList, int iImage );
 	virtual ~SDL_Image(void);
 
-	virtual const char * GetType()				{ return "image"; }
+	virtual const char * GetType()				{ return "SDL_Image"; }
 
 	virtual SDL_Size GetPreferedSize();
-	virtual void DrawWidget( SDL_Surface * screen );
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 
 protected:
 	SDL_Surface	*		m_pBitmap;

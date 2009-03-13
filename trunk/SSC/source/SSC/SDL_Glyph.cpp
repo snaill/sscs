@@ -1,6 +1,6 @@
 /*
  * SDL_SimpleControls
- * Copyright (C) 2008 Snaill
+ * Copyright (C) 2009 Snaill
  *
     SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -18,31 +18,15 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#pragma once
+#include "SDL_Glyph.h"
 
-#include "SDL_Widget.h"
-
-/// @brief 进度条处理类，包括文档进度及当前的翻页进度
-class SDL_ProgressBar : public SDL_Widget
+SDL_Surface * SDL_Glyph::ToSurface( SDL_Surface * screen )
 {
-protected:
-	int			m_nPos;
-
-public:
-	SDL_ProgressBar( );
-	virtual ~SDL_ProgressBar(void);
-
-	//
-	virtual const char * GetType()			{ return "SDL_ProgressBar";	}
-
-	/// @brief 获取装饰器除去客户图元以后的矩形位置
-	/// @param lprc 返回的矩形位置
-	SDL_Size GetPreferedSize();
-
-	inline int GetPos()				{ return m_nPos;				}
-	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
-
-	void HitTest( POINT pt, int &nCommand, int &nPos );
-protected:
-	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
-};
+	SDL_Rect	rc = GetBounds();
+	SDL_Surface * surface = SDL_CreateRGBSurface( 0, rc.w, rc.h, screen->format->BitsPerPixel, 
+		screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask );
+	
+	rc.x = rc.y = 0;
+	DrawWidget( surface, &rc );
+	return surface;
+}

@@ -44,7 +44,7 @@ public:
 protected:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
-	virtual void DrawWidget( SDL_Surface * screen );
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 
 protected:
 	std::wstring		m_text;

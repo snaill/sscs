@@ -1,6 +1,6 @@
 /*
  * SDL_SimpleControls
- * Copyright (C) 2008 Snaill
+ * Copyright (C) 2009 Snaill
  *
     SDL_SimpleControls is free software: you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -51,7 +51,7 @@ public:
 
 		SDL_SetClipRect( screen, &rcClip );
 
-		DrawWidget( screen );
+		DrawWidget( screen, &GetBounds() );
 
 		SDL_SetClipRect( screen, &rcOld );
 	}
@@ -59,10 +59,12 @@ public:
 	virtual int GetLayoutProperty(){ return m_nLayoutProperty;	}
     virtual void SetLayoutProperty( int layoutProperty ){ m_nLayoutProperty = layoutProperty; }
 
+	SDL_Surface * ToSurface( SDL_Surface * screen );
+
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-	virtual void DrawWidget( SDL_Surface * screen ) = 0;
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) = 0;
 
 protected:
 	int				m_nLayoutProperty;

@@ -109,12 +109,12 @@ bool SDL_ListBox::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw )
 	return true;
 }
 
-void SDL_ListBox::DrawWidget( SDL_Surface * screen )
+void SDL_ListBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 {
-	SDL_FillRect( screen, ( SDL_Rect * )&GetBounds(), SDL_MapRGB( screen->format, 0, 0, 0 ) );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
 
 	//
-	SDL_Container::DrawWidget( screen );
+	SDL_Container::DrawWidget( screen, lprc );
 }
 
 void SDL_ListBox::SelectItem( SDL_Glyph * g )	

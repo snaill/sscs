@@ -52,7 +52,7 @@ SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Imag
 	Add( text );
 }
 
-void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )   
+void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
@@ -67,7 +67,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen  )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 
 	//
-	SDL_Container::DrawWidget( screen );
+	SDL_Container::DrawWidget( screen, lprc );
 
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
 }

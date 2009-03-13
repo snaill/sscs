@@ -44,6 +44,7 @@
 #include "SDL_ListBox.h"
 #include "SDL_ActionMenu.h"
 #include "SDL_Toolbar.h"
+#include "SDL_SwitchUI.h"
 #include "SDL_Theme.h"
 
 #endif // SDL_SIMPLECONTROLS_H_INCLUDED

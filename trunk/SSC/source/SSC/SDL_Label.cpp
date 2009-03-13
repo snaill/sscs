@@ -47,7 +47,7 @@ SDL_Size SDL_Label::GetPreferedSize()
 	return szFont;
 }
 
-void SDL_Label::DrawWidget( SDL_Surface * screen  )   
+void SDL_Label::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
 {
 	if ( m_text.size() > 0 )
 	{
@@ -55,8 +55,7 @@ void SDL_Label::DrawWidget( SDL_Surface * screen  )
 		SDL_Font *pFontBig = theme->GetFont( m_nFont );
 		SDL_Color	color = theme->GetColor( m_nColor );
 
-		SDL_Rect	rect = GetBounds();
-		pFontBig->DrawText( screen, m_text.c_str(), rect, color, m_align, m_valign );
+		pFontBig->DrawText( screen, m_text.c_str(), *lprc, color, m_align, m_valign );
    
 		//¹Ø±Õ×ÖÌå
 		pFontBig->Release();

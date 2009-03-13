@@ -183,7 +183,7 @@ protected:
 
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-	virtual void DrawWidget( SDL_Surface * screen ) {
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) {
 		if ( GetLayout() )
 			GetLayout()->DrawWidget( this, screen );
 	}

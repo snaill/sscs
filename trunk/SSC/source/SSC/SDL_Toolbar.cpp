@@ -43,10 +43,9 @@ SDL_Size SDL_Toolbar::GetPreferedSize()
 	return sz;
 }
 
-void SDL_Toolbar::DrawWidget( SDL_Surface * screen ) 
+void SDL_Toolbar::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) 
 { 
-	SDL_Rect	rc = GetBounds();
-	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 
-	SDL_Widget::DrawWidget( screen );
+	SDL_Widget::DrawWidget( screen, lprc );
 }

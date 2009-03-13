@@ -56,9 +56,9 @@ SDL_Size SDL_Image::GetPreferedSize()
 	return SDL_Size( 0, 0 );
 }
 
-void SDL_Image::DrawWidget( SDL_Surface * screen )
+void SDL_Image::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 {
-	SDL_Rect	rect = GetBounds();
+	SDL_Rect	rect = *lprc;
 	if ( m_pBitmap ) 
 	{
 		if ( m_pBitmap->w < rect.w )

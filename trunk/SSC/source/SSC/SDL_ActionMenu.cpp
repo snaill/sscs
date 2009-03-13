@@ -33,7 +33,7 @@ SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 )
 	Add( btn2 );
 }
 
-void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )   
+void SDL_ActionMenu::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc  )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
@@ -41,12 +41,11 @@ void SDL_ActionMenu::DrawWidget( SDL_Surface * screen  )
 	SDL_Color	color = theme->GetColor( SDL_Theme::WindowText );
 	SDL_Color	crSelect = theme->GetColor( SDL_Theme::Selected );
 
-	SDL_Rect	rc = GetBounds();
 	int			x = m_pt.x;
 
-	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
 
 	rectangleRGBA( screen, m_pt.x, m_pt.y, m_pt.x + m_sz.w - 1, m_pt.y + m_sz.h - 1, 0, 0, 0, 100 ); 
 
-	SDL_Widget::DrawWidget( screen );
+	SDL_Widget::DrawWidget( screen, lprc );
 }

@@ -52,7 +52,7 @@ CFileView::CFileView(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	SetLayout( new SDL_OverBorderLayout() );
+	SetLayout( new SDL_BorderLayout() );
 	Add( m_toolbar );
 //	Add( progress );
 	Add( menu );
@@ -68,6 +68,8 @@ CFileView::~CFileView(void)
 
 void CFileView::OnItemSelected( SDL_ListBoxItem * button )
 {
+	SDL_SwitchUI	sui;
+	SDL_Surface * pold = m_listbox->ToSurface( SDL_WindowManager::Get()->m_screen );
 	m_listbox->Clear();
 
 	//if ( m_nClick > 0 )
@@ -101,6 +103,9 @@ void CFileView::OnItemSelected( SDL_ListBoxItem * button )
 		m_nClick = 0;
 
 	m_listbox->RecalcLayout();
+
+	SDL_Surface * pnew = m_listbox->ToSurface( SDL_WindowManager::Get()->m_screen );
+	sui.ToLeft( SDL_WindowManager::Get()->m_screen, &m_listbox->GetBounds(), pold, pnew );
 }
 
 void CFileView::OnToolButtonClick( SDL_Widget * button )
