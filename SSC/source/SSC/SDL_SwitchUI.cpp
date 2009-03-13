@@ -18,31 +18,34 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#pragma once
-
+#include "SDL_SwitchUI.h"
 #include "SDL_Widget.h"
 
-/// @brief 进度条处理类，包括文档进度及当前的翻页进度
-class SDL_ProgressBar : public SDL_Widget
+void SDL_SwitchUI::ToLeft( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface )
 {
-protected:
-	int			m_nPos;
+	SDL_Rect	rcOld;
+	SDL_GetClipRect( screen, &rcOld );
+	SDL_SetClipRect( screen, lprc );
 
-public:
-	SDL_ProgressBar( );
-	virtual ~SDL_ProgressBar(void);
+	int xOff = lprc->w / 10;
+	SDL_Rect	rectOld, rectNew;
+	rectOld = rectNew = *lprc;
+	rectNew.x = lprc->x + lprc->w;
+	for ( int i = 0; i < 9; i ++ )
+	{
+		rectOld.x -= xOff;
+		rectOld.w -= xOff;
+		rectNew.x += xOff;
+		rectNew.w += xOff;
+		SDL_BlitSurface( oldSurface, 0, screen, &rectOld );
+		SDL_BlitSurface( newSurface, 0, screen, &rectNew );
 
-	//
-	virtual const char * GetType()			{ return "SDL_ProgressBar";	}
+		SDL_UpdateRect(screen, lprc->x, lprc->y, lprc->w, lprc->h);
 
-	/// @brief 获取装饰器除去客户图元以后的矩形位置
-	/// @param lprc 返回的矩形位置
-	SDL_Size GetPreferedSize();
+		SDL_Delay( 100 );
+	}
+		
+	SDL_BlitSurface( newSurface, 0, screen, ( SDL_Rect * )lprc );
 
-	inline int GetPos()				{ return m_nPos;				}
-	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
-
-	void HitTest( POINT pt, int &nCommand, int &nPos );
-protected:
-	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
-};
+	SDL_SetClipRect( screen, &rcOld );
+}

@@ -46,7 +46,7 @@ protected:
 
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
-	virtual void DrawWidget( SDL_Surface * screen );
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 
 	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw );
 	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw );

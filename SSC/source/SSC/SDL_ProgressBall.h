@@ -37,5 +37,5 @@ public:
 	SDL_Size GetPreferedSize();
 
 protected:
-	virtual void DrawWidget( SDL_Surface * screen );
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 };

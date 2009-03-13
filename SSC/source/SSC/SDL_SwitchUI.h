@@ -18,31 +18,21 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#pragma once
+#ifndef SDL_SWITCHUI_H_INCLUDED
+#define SDL_SWITCHUI_H_INCLUDED
 
-#include "SDL_Widget.h"
-
-/// @brief 进度条处理类，包括文档进度及当前的翻页进度
-class SDL_ProgressBar : public SDL_Widget
+#include <SDL.h>
+/// 
+class SDL_SwitchUI
 {
-protected:
-	int			m_nPos;
-
+// 基本属性
 public:
-	SDL_ProgressBar( );
-	virtual ~SDL_ProgressBar(void);
+	SDL_SwitchUI()		  	{ }
+    virtual ~SDL_SwitchUI()	{ }
 
-	//
-	virtual const char * GetType()			{ return "SDL_ProgressBar";	}
-
-	/// @brief 获取装饰器除去客户图元以后的矩形位置
-	/// @param lprc 返回的矩形位置
-	SDL_Size GetPreferedSize();
-
-	inline int GetPos()				{ return m_nPos;				}
-	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
-
-	void HitTest( POINT pt, int &nCommand, int &nPos );
-protected:
-	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
+// 方法
+public:
+	void ToLeft( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface );
 };
+
+#endif // SDL_SWITCHUI_H_INCLUDED

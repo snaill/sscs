@@ -60,10 +60,10 @@ SDL_Size SDL_ProgressBar::GetPreferedSize()
 	return SDL_Size( 0, BAR_HEIGHT );
 }
 
-void SDL_ProgressBar::DrawWidget( SDL_Surface * screen )
+void SDL_ProgressBar::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 {
-	SDL_Rect	rc = GetBounds();
-		
+	SDL_Rect	rc = *lprc;
+
 	// »æÖÆ±³¾°
 	SDL_FillRect( screen, &rc, SDL_MapRGB( screen->format, 64, 64, 64 ) );
 

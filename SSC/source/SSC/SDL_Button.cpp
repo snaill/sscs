@@ -61,7 +61,7 @@ SDL_Size SDL_Button::GetPreferedSize()
 	return sz;
 }
 
-void SDL_Button::DrawWidget( SDL_Surface * screen  )   
+void SDL_Button::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
@@ -70,11 +70,10 @@ void SDL_Button::DrawWidget( SDL_Surface * screen  )
 	SDL_Color	crText = theme->GetColor( SDL_Theme::BtnText );
 	SDL_Color	crFace = theme->GetColor( SDL_Theme::BtnFace );
 
-	SDL_Rect	rc = GetBounds();
-	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crFace.r, crFace.g, crFace.b ) );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, crFace.r, crFace.g, crFace.b ) );
 
 	//
-	SDL_Widget::DrawWidget( screen );
+	SDL_Widget::DrawWidget( screen, lprc );
 
 	//
 	if ( GetHover() )

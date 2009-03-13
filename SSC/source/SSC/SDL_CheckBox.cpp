@@ -45,22 +45,21 @@ SDL_Size SDL_CheckBox::GetPreferedSize()
 	return sz;
 }
 
-void SDL_CheckBox::DrawWidget( SDL_Surface * screen  )   
+void SDL_CheckBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
 {
     //打开字体文件并设置字体大小
 	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
 
-	SDL_Rect	rc = GetBounds();
-	SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
 
 	//
 	int			x = m_pt.x;
 	int			a = GetHover() || GetCheck() ? 255 : 100;
 
-	rectangleRGBA( screen, x + 4, rc.y + ( rc.h - 13) / 2, x + 4 + 13, rc.y + ( rc.h - 13) / 2 + 13, 255, 255, 255, a ); 
+	rectangleRGBA( screen, x + 4, lprc->y + ( lprc->h - 13) / 2, x + 4 + 13, lprc->y + ( lprc->h - 13) / 2 + 13, 255, 255, 255, a ); 
 	if ( GetCheck() ) {
-		lineRGBA( screen, x + 4 + 4, rc.y + ( rc.h - 13) / 2 + 4, x + 4 + 13 - 4, rc.y + ( rc.h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
-		lineRGBA( screen, x + 4 + 13 - 4, rc.y + ( rc.h - 13) / 2 + 4, x + 4 + 4, rc.y + ( rc.h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
+		lineRGBA( screen, x + 4 + 4, lprc->y + ( lprc->h - 13) / 2 + 4, x + 4 + 13 - 4, lprc->y + ( lprc->h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
+		lineRGBA( screen, x + 4 + 13 - 4, lprc->y + ( lprc->h - 13) / 2 + 4, x + 4 + 4, lprc->y + ( lprc->h - 13) / 2 + 13 - 4, 255, 255, 255, a ); 
 	}
 	x += 4 + 13 + 4;
 
