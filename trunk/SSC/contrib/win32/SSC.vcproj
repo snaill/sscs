@@ -171,6 +171,10 @@
 				Name="Layout"
 				>
 				<File
+					RelativePath="..\..\source\SSC\SDL_9CellLayout.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_BoxLayout.cpp"
 					>
 				</File>
@@ -300,6 +304,10 @@
 			<Filter
 				Name="Layout"
 				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_9CellLayout.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_BorderLayout.h"
 					>
