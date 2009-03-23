@@ -117,7 +117,7 @@ public:
 			{
 				T * pItem = dynamic_cast<T *>( *pos );
 				if ( pItem )
-					iter->Add( ( T * )pItem->GetObj() );
+					iter->Add( pItem->GetObj<T>() );
 			}
 		}
 		else
@@ -126,7 +126,7 @@ public:
 			{
 				T * pItem = dynamic_cast<T *>( *pos );
 				if ( pItem )
-					iter->Add( ( T * )pItem->GetObj() );
+					iter->Add( pItem->GetObj<T>() );
 			}
 		}
 	}

@@ -114,7 +114,7 @@ public:
 			}
 		}
 
-		return ( SDL_Font * )m_mapFonts[ nSize ]->GetObj();
+		return m_mapFonts[ nSize ]->GetObj<SDL_Font>();
 	}
 
 protected:

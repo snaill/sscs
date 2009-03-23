@@ -138,10 +138,10 @@ public:
     virtual const char * GetType() = 0;
 
     /// 获取图元引用，图元计数加1
-    virtual SDL_Object * GetObj()
+    template<class T> T * GetObj()
     {
         m_ref ++;
-        return this;
+        return dynamic_cast<T *>(this);
     }
 
     /// 释放图元，只有在计数为0的情况下，图元才会被真的释放

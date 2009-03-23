@@ -21,10 +21,17 @@
 #ifndef SDL_SWITCHUI_H_INCLUDED
 #define SDL_SWITCHUI_H_INCLUDED
 
+#include "SDL_Glyph.h"
 #include <SDL.h>
 /// 
 class SDL_SwitchUI
 {
+public:
+	enum {
+		toLeft,
+		toRight
+	};
+
 // 基本属性
 public:
 	SDL_SwitchUI()		  	{ }
@@ -32,7 +39,18 @@ public:
 
 // 方法
 public:
+	void SetOld( SDL_Glyph * g );
+	void SetNew( SDL_Glyph * g );
+	void Switch( int nMode );
+
+protected:
 	void ToLeft( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface );
+	void ToRight( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface );
+
+protected:
+	SDL_Rect		m_rcClip;
+	SDL_Surface *	m_old;
+	SDL_Surface *	m_new;
 };
 
 #endif // SDL_SWITCHUI_H_INCLUDED
