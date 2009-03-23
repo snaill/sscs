@@ -134,7 +134,7 @@ void SDL_ListBox::SelectItem( SDL_Glyph * g )
 	if ( pItem )
 		pItem->SetSelected( true );
 
-	m_curItem = dynamic_cast<SDL_Glyph *>( g->GetObj() );
+	m_curItem = g->GetObj<SDL_Glyph>();
 
 	SDL_Rect	rc = g->GetBounds();
 	if ( rc.y < m_pt.y )

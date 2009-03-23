@@ -73,7 +73,7 @@ public:
 		if ( pos == m_images.end() )
 			return 0;
 
-		return ( SDL_Image * )(*pos).second->GetObj();
+		return (*pos).second->GetObj<SDL_Image>();
 	}
 	
 protected:

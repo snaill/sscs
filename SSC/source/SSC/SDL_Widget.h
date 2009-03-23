@@ -162,12 +162,13 @@ public:
 	//}
 
 public:
-	virtual void RecalcLayout()	{ 
+	virtual void RecalcLayout( bool bDraw = true )	{ 
 		if ( !GetLayout() )
 			return;
 
 		GetLayout()->Update( this, &GetBounds() );
-		RedrawWidget();
+		if ( bDraw )
+			RedrawWidget();
 	}
 
 	virtual void RedrawWidget()	{
