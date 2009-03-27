@@ -26,7 +26,7 @@
 #include "SDL_CardLayout.h"
 
 /// @brief 屏幕类负责管理页面Surface
-class SDL_WindowManager : public SDL_Widget, public sigslot::has_slots<>
+class SDL_WindowManager : public SDL_Container
 {
 protected:
 	SDL_WindowManager( int width, int height, int bpp, int videoFlag );
@@ -40,10 +40,6 @@ public:
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
     virtual void Draw( SDL_Surface * screen );;
-
-    /// @brief 发送事件
-    /// @param evnet 事件信息
- 	virtual bool HandleEvent(const SDL_Event *event, bool * b = 0 );
 
     /// 添加一个图元
     virtual bool Add( SDL_Glyph * g );
@@ -65,19 +61,13 @@ public:
 	void SetActiveWidget( SDL_Widget * w );	
 	void Loop();
 
-	//void DoModal( SDL_Window * w )	{
-	//	w->destroy.connect( this, &SDL_WindowManager::OnModalWidgetClosed );
-	//	SetActiveWidget( w );
-	//}
 public:
 	static SDL_WindowManager * Create( int width, int height, int bpp, int videoFlag );
 	static SDL_WindowManager * Get();
 
 protected:
 	virtual SDL_Layout * DefaultLayout() { return new SDL_CardLayout(); }
-	//void OnModalWidgetClosed( SDL_Widget * w )	{
-	//	Remove( w );
-	//}
+	SDL_Window * GetActiveWindow();
 
 public:
 	SDL_Surface *				m_screen;

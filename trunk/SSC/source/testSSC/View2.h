@@ -2,11 +2,11 @@
 
 #include "SSC/SDL_SimpleControls.h"
 
-class CImageView : public SDL_Window, public sigslot::has_slots<>
+class CView2 : public SDL_Window, public sigslot::has_slots<>
 {
 public:
-	CImageView(void);
-	~CImageView(void);
+	CView2(void);
+	~CView2(void);
 
 	void OnBtnClose( SDL_Widget * button );
 

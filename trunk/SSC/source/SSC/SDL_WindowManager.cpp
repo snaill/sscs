@@ -43,8 +43,6 @@ SDL_WindowManager::~SDL_WindowManager()	{
 		SDL_FreeSurface( m_screen );
 
 	 TTF_Quit();
-
-	 disconnect_all();
 }
 
 SDL_WindowManager * SDL_WindowManager::Create( int width, int height, int bpp, int videoFlag )	
@@ -88,9 +86,13 @@ void SDL_WindowManager::Draw( SDL_Surface * screen )
 	}
 
 	// 
+	SDL_Window * pActiveWindow = GetActiveWindow();
+	if ( !pActiveWindow )
+		return;
+
 	if ( !m_degree )
 	{
-		SDL_Widget::Draw( m_screen );
+		pActiveWindow->Draw( m_screen );
 		if ( m_screen->flags & SDL_DOUBLEBUF ) {
 			SDL_Flip(m_screen);
 		} else {
@@ -100,7 +102,7 @@ void SDL_WindowManager::Draw( SDL_Surface * screen )
 	else
 	{
 		screen = rotateSurface90Degrees( m_screen, m_degree / 90 );
-		SDL_Widget::Draw( screen );
+		pActiveWindow->Draw( screen );
 		
 		SDL_Surface * screen2 = rotateSurface90Degrees( screen, ( 360 - m_degree ) / 90 );
 		SDL_BlitSurface( screen2, 0, m_screen, &GetBounds() );
@@ -115,54 +117,50 @@ void SDL_WindowManager::Draw( SDL_Surface * screen )
 	}
 }
 
-bool SDL_WindowManager::HandleEvent(const SDL_Event *event, bool * b )
-{
-	switch (event->type) {
-		case SDL_VIDEOEXPOSE:
-			Draw(m_screen);
-			break;
-		case SDL_VIDEORESIZE:
-			m_screen = SDL_SetVideoMode( event->resize.w, event->resize.h, m_bpp, m_videoFlag );
-			Draw(m_screen);
-			break;
-		default:
-		{
-			bool bDraw = false;
-			switch ( event->type )	{
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-				case SDL_MOUSEMOTION:
-					SDL_Widget::HandleMouseEvent( event, &bDraw );
-					break;
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					if ( GetFocusGlyph() )
-						GetFocusGlyph()->HandleKeyEvent( event, &bDraw );
-					break;
-			}
-			if ( bDraw )
-				Draw( m_screen );
-		}
-	}
-
-	return true;
-}
-
 void SDL_WindowManager::Loop()
 {
 	/* Wait for a keystroke */
 	int			done = 0;
 	SDL_Event	event;
 
-	while ( !done && SDL_WaitEvent(&event) ) {
-		switch (event.type) {
+	while ( !done && SDL_WaitEvent(&event) ) 
+	{
+		switch (event.type) 
+		{
 			/* Any other key quits the application... */
 			case SDL_QUIT:
 				done = 1;
 				break;			
-			default:
-				HandleEvent( &event, 0 );
+			case SDL_VIDEOEXPOSE:
+				Draw(m_screen);
 				break;
+			case SDL_VIDEORESIZE:
+				m_screen = SDL_SetVideoMode( event.resize.w, event.resize.h, m_bpp, m_videoFlag );
+				Draw(m_screen);
+				break;
+			default:
+			{
+				SDL_Window * pActiveWindow = GetActiveWindow();
+				if ( !pActiveWindow )
+					break;
+
+				bool bDraw = false;
+				switch ( event.type )	
+				{
+					case SDL_MOUSEBUTTONDOWN:
+					case SDL_MOUSEBUTTONUP:
+					case SDL_MOUSEMOTION:
+						pActiveWindow->HandleMouseEvent( &event, &bDraw );
+						break;
+					//case SDL_KEYDOWN:
+					//case SDL_KEYUP:
+					//	if ( GetFocusGlyph() )
+					//		GetFocusGlyph()->HandleKeyEvent( event, &bDraw );
+					//	break;
+				}
+				if ( bDraw )
+					Draw( m_screen );
+			}
 		}
 	}
 }
@@ -173,6 +171,14 @@ void SDL_WindowManager::SetIcon( const char * icon )
 	SDL_WM_SetIcon( surface, NULL );
 	SDL_FreeSurface( surface );
 
+}
+
+SDL_Window * SDL_WindowManager::GetActiveWindow()
+{
+	if ( m_aChildren.empty() )
+		return 0;
+	
+	return ( SDL_Window * )*m_aChildren.rbegin();
 }
 
 void SDL_WindowManager::SetActiveWidget( SDL_Widget * w )	
