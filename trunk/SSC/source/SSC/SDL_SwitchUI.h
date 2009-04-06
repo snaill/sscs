@@ -23,6 +23,10 @@
 
 #include "SDL_Glyph.h"
 #include <SDL.h>
+
+///
+typedef void (* SwitchUIFunc)( long lParam );
+
 /// 
 class SDL_SwitchUI
 {
@@ -37,6 +41,10 @@ public:
 	SDL_SwitchUI()		  	{ }
     virtual ~SDL_SwitchUI()	{ }
 
+public:
+	void Switch( int nMode, bool bOldMove, SDL_Glyph * gOld, SDL_Glyph * gNew );
+	void Switch( int nMode, SDL_Glyph * g, SwitchUIFunc f, long lParam, bool bOldMove );
+
 // ·½·¨
 public:
 	void SetOld( SDL_Glyph * g );
@@ -44,6 +52,7 @@ public:
 	void Switch( int nMode );
 
 protected:
+	void Move( SDL_Surface * screen, SDL_Surface * oldSurface, SDL_Surface * newSurface, int nMode, bool bOldMove, const SDL_Rect * lprc );
 	void ToLeft( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface );
 	void ToRight( SDL_Surface * screen, const SDL_Rect * lprc, SDL_Surface * oldSurface, SDL_Surface * newSurface );
 

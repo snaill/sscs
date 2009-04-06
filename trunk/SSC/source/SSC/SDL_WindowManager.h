@@ -37,48 +37,31 @@ public:
 
     virtual void SetBounds( const SDL_Rect * lprc );
 
-    /// @brief 在制定区域绘制图元
-    /// @param screen	屏幕Surface
-    virtual void Draw( SDL_Surface * screen );;
-
-    /// 添加一个图元
-    virtual bool Add( SDL_Glyph * g );
-
-    /// 删除一个图元
-    virtual void Remove( SDL_Glyph * g );
-
 public:
+	SDL_Surface * GetScreen();
+	void Update();
+
 	inline SDL_Theme * GetTheme()				{ return m_theme;	}
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
-	inline SDL_Widget * GetFocusGlyph()				{ return m_curGlyph;	}
-	inline void SetFocusGlyph( SDL_Widget * pFocus )	{ m_curGlyph = pFocus;	}
 	void SetIcon (const char * icon );
 
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
 
-	void SetActiveWidget( SDL_Widget * w );	
-	void Loop();
+	SDL_Window * GetActiveWindow();
 
 public:
 	static SDL_WindowManager * Create( int width, int height, int bpp, int videoFlag );
 	static SDL_WindowManager * Get();
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_CardLayout(); }
-	SDL_Window * GetActiveWindow();
-
-public:
 	SDL_Surface *				m_screen;
-
-protected:
+	SDL_Surface *				m_screenBuffer;
 	SDL_Theme *					m_theme;
 	int							m_videoFlag;
 	int							m_bpp;
 	int							m_degree;
-	SDL_Widget *				m_curGlyph;
-	std::vector<SDL_Window *>	m_delWindows;
 
 protected:
 	static SDL_WindowManager * m_this;

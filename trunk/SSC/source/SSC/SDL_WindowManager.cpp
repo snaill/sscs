@@ -32,8 +32,8 @@ SDL_WindowManager::SDL_WindowManager( int width, int height, int bpp, int videoF
 	m_bpp = bpp;
 	m_videoFlag = videoFlag;
 	m_degree = 0;
-	m_curGlyph = 0;
 	m_screen = SDL_SetVideoMode( width, height, bpp, videoFlag );
+	m_screenBuffer = 0;
 
 	m_this = this;
 }
@@ -48,7 +48,11 @@ SDL_WindowManager::~SDL_WindowManager()	{
 SDL_WindowManager * SDL_WindowManager::Create( int width, int height, int bpp, int videoFlag )	
 {
 	if ( !m_this )
+	{
 		m_this = new SDL_WindowManager(width, height, bpp, videoFlag);
+		m_this->m_sz.w = width;
+		m_this->m_sz.h = height;
+	}
 
 	return m_this;
 }
@@ -75,24 +79,30 @@ void SDL_WindowManager::SetBounds( const SDL_Rect * lprc )
 	SDL_BoundingBox::SetBounds( lprc );
 }
 
-void SDL_WindowManager::Draw( SDL_Surface * screen )
+SDL_Surface * SDL_WindowManager::GetScreen()
 {
-	SDL_Rect	rect = GetBounds();
-	if ( m_screen->w != rect.w || m_screen->h != rect.h )
+	if ( !m_degree )
+		return m_screen;
+	else
 	{
-		rect.w = m_screen->w;
-		rect.h = m_screen->h;
-		SetBounds( &rect ); 
+		switch ( m_degree )
+		{
+		case 90:	
+		case 180:	
+		case 270:	
+			return m_screenBuffer;
+		}
 	}
 
-	// 
-	SDL_Window * pActiveWindow = GetActiveWindow();
-	if ( !pActiveWindow )
-		return;
+	assert(false);
+	return 0;
+}
 
+void SDL_WindowManager::Update( )
+{
+	// 
 	if ( !m_degree )
 	{
-		pActiveWindow->Draw( m_screen );
 		if ( m_screen->flags & SDL_DOUBLEBUF ) {
 			SDL_Flip(m_screen);
 		} else {
@@ -101,11 +111,13 @@ void SDL_WindowManager::Draw( SDL_Surface * screen )
 	}
 	else
 	{
-		screen = rotateSurface90Degrees( m_screen, m_degree / 90 );
-		pActiveWindow->Draw( screen );
-		
-		SDL_Surface * screen2 = rotateSurface90Degrees( screen, ( 360 - m_degree ) / 90 );
-		SDL_BlitSurface( screen2, 0, m_screen, &GetBounds() );
+		SDL_Rect	rc;
+		rc.x = m_pt.x;
+		rc.y = m_pt.y;
+		rc.w = m_sz.w;
+		rc.h = m_sz.h;
+		SDL_Surface * screen = rotateSurface90Degrees( m_screenBuffer, ( 360 - m_degree ) / 90 );
+		SDL_BlitSurface( screen, 0, m_screen, &rc );
 
 		if ( m_screen->flags & SDL_DOUBLEBUF ) {
 			SDL_Flip(m_screen);
@@ -113,55 +125,6 @@ void SDL_WindowManager::Draw( SDL_Surface * screen )
 			SDL_UpdateRect(m_screen, 0, 0, 0, 0);
 		}
 		SDL_FreeSurface( screen );
-		SDL_FreeSurface( screen2 );
-	}
-}
-
-void SDL_WindowManager::Loop()
-{
-	/* Wait for a keystroke */
-	int			done = 0;
-	SDL_Event	event;
-
-	while ( !done && SDL_WaitEvent(&event) ) 
-	{
-		switch (event.type) 
-		{
-			/* Any other key quits the application... */
-			case SDL_QUIT:
-				done = 1;
-				break;			
-			case SDL_VIDEOEXPOSE:
-				Draw(m_screen);
-				break;
-			case SDL_VIDEORESIZE:
-				m_screen = SDL_SetVideoMode( event.resize.w, event.resize.h, m_bpp, m_videoFlag );
-				Draw(m_screen);
-				break;
-			default:
-			{
-				SDL_Window * pActiveWindow = GetActiveWindow();
-				if ( !pActiveWindow )
-					break;
-
-				bool bDraw = false;
-				switch ( event.type )	
-				{
-					case SDL_MOUSEBUTTONDOWN:
-					case SDL_MOUSEBUTTONUP:
-					case SDL_MOUSEMOTION:
-						pActiveWindow->HandleMouseEvent( &event, &bDraw );
-						break;
-					//case SDL_KEYDOWN:
-					//case SDL_KEYUP:
-					//	if ( GetFocusGlyph() )
-					//		GetFocusGlyph()->HandleKeyEvent( event, &bDraw );
-					//	break;
-				}
-				if ( bDraw )
-					Draw( m_screen );
-			}
-		}
 	}
 }
 
@@ -179,42 +142,4 @@ SDL_Window * SDL_WindowManager::GetActiveWindow()
 		return 0;
 	
 	return ( SDL_Window * )*m_aChildren.rbegin();
-}
-
-void SDL_WindowManager::SetActiveWidget( SDL_Widget * w )	
-{
-	SDL_CardLayout * pLayout = (SDL_CardLayout *)GetLayout();
-	if ( pLayout )
-	{
-		pLayout->SetActiveItem( w );
-		RecalcLayout();
-	}
-}
-
-bool SDL_WindowManager::Add( SDL_Glyph * g )
-{
-	assert( g );
-    m_aChildren.push_back( g );
-   return true;
-}
-
-void SDL_WindowManager::Remove( SDL_Glyph * g )
-{
-    assert( g );
-    for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-	{
-		if ( g == *pos ) {
-            m_aChildren.erase( pos );
-			if ( m_aChildren.empty() )
-			{
-				SDL_Event	event;
-				event.type = SDL_QUIT;
-				SDL_PushEvent( &event );
-			}
-			else
-				if ( g == ( ( SDL_CardLayout * )GetLayout() )->GetActiveItem() )
-					( ( SDL_CardLayout * )GetLayout() )->SetActiveItem( ( SDL_Window * )( *m_aChildren.rbegin( ) ) );
-			break;
-		}
-	}
 }

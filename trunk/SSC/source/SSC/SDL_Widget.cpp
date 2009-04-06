@@ -29,14 +29,3 @@ void SDL_Widget::Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTo
     hlineRGBA( screen, rect.x, rect.x + rect.w - 1, rect.y + rect.h - 1, clrBottomRight.r, clrBottomRight.g, clrBottomRight.b, 255 );
     vlineRGBA( screen, rect.x + rect.w - 1, rect.y, rect.y + rect.h - 1, clrBottomRight.r, clrBottomRight.g, clrBottomRight.b, 255 );
 }
-
-SDL_Widget * SDL_Widget::SetFocus()
-{
-	SDL_WindowManager * pScreen = SDL_WindowManager::Get();
-	SDL_Widget * pOld = pScreen->GetFocusGlyph();
-	if ( pOld == this )
-		return this;
-
-	pScreen->SetFocusGlyph( this );
-	return pOld;
-}

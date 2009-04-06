@@ -29,7 +29,7 @@ public:
 	sigslot::signal1<SDL_Widget *>		destroy;
 
 public:
-	SDL_Window() : m_bActive( false )		{}
+	SDL_Window() : m_bLoop( false )		{}
     virtual ~SDL_Window()	{
 		destroy( this );
 	}
@@ -37,15 +37,17 @@ public:
 	virtual const char * GetType()	{ return "SDL_Window"; }
 
 	void SetTitle( const char *title );
-	void Active();
-	void UnActive();
 
+	void Draw( SDL_Surface * screen );
 	void Show();
 	void Destory();
 
 protected:
+	void Loop();
+
+protected:
 	std::string		m_strTitle;
-	bool			m_bActive;
+	bool			m_bLoop;
 };
 
 #endif //!SDL_WINDOW_H_INCLUDED

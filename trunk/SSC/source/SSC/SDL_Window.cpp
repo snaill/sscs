@@ -20,12 +20,8 @@
 
 #include "SDL_Window.h"
 #include "SDL_WindowManager.h"
-
-void SDL_Window::Show()		
-{
-	SDL_WindowManager::Get()->Add( this );
-	SDL_WindowManager::Get()->SetActiveWidget( this );
-}
+#include "SDL_SwitchUI.h"
+#include <SDL_rotozoom.h>
 
 void SDL_Window::SetTitle( const char *title )	
 {
@@ -33,26 +29,78 @@ void SDL_Window::SetTitle( const char *title )
 		return;
 
 	m_strTitle = title;
-	if ( m_bActive )
-		SDL_WM_SetCaption( m_strTitle.c_str(), 0 );
 }
 
-void SDL_Window::Active()	
+void SDL_Window::Show()		
 {
-	if ( m_bActive )
-		return;
+	SDL_WindowManager * wm = SDL_WindowManager::Get();
+	SDL_Rect			rc = wm->GetBounds();
 
-	SDL_WM_SetCaption( m_strTitle.c_str(), 0 );
-	m_bActive = true;
-}
+	SetBounds( &rc );
+	wm->Add( this );
 
-void SDL_Window::UnActive()	
-{
-	m_bActive = false;
+	SDL_SwitchUI	sui;
+	sui.Switch( SDL_SwitchUI::toLeft, true, SDL_WindowManager::Get()->GetActiveWindow(), this );
+
+	Loop();
 }
 
 void SDL_Window::Destory()
 {
 	SDL_WindowManager::Get()->Remove( this );
-//	Release();
+
+	SDL_SwitchUI	sui;
+	sui.Switch( SDL_SwitchUI::toRight, true, this, SDL_WindowManager::Get()->GetActiveWindow() );
+
+	m_bLoop = false;
+}
+
+void SDL_Window::Draw( SDL_Surface * screen )
+{
+	SDL_Widget::Draw( screen );
+	SDL_WindowManager::Get()->Update();
+}
+
+void SDL_Window::Loop()
+{
+	/* Wait for a keystroke */
+	SDL_Event	event;
+	
+	m_bLoop = true;
+	while ( m_bLoop && SDL_WaitEvent(&event) ) 
+	{
+		switch (event.type) 
+		{
+			/* Any other key quits the application... */
+			case SDL_QUIT:
+				SDL_PushEvent( &event );
+				return;			
+			case SDL_VIDEOEXPOSE:
+				Draw( SDL_WindowManager::Get()->GetScreen() );
+				break;
+			case SDL_VIDEORESIZE:
+				{
+					SDL_Rect	rc = SDL_WindowManager::Get()->GetBounds();
+					rc.w = event.resize.w;
+					rc.h = event.resize.h;
+					SDL_WindowManager::Get()->SetBounds( &rc );
+					Draw( SDL_WindowManager::Get()->GetScreen() );
+				}
+				break;
+			default:
+			{
+				bool bDraw = false;
+				switch ( event.type )	
+				{
+					case SDL_MOUSEBUTTONDOWN:
+					case SDL_MOUSEBUTTONUP:
+					case SDL_MOUSEMOTION:
+						HandleMouseEvent( &event, &bDraw );
+						break;
+				}
+				if ( bDraw )
+					Draw( SDL_WindowManager::Get()->GetScreen() );
+			}
+		}
+	}
 }

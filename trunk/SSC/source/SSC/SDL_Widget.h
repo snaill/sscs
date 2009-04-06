@@ -24,13 +24,6 @@
 #include "SDL_Container.h"
 #include "sigslot.h"
 
-struct SDL_WidgetStatus {
-	long			lParam;
-	long			m_bHover : 1;
-	long			m_bVisible : 1;
-	long			m_bCheck : 1;
-	long			m_bSelected : 1;
-};
 /// @brief 控件类的基类
 class SDL_Widget : public SDL_Container
 {
@@ -77,16 +70,6 @@ public:
 
 		log_f_end( "HandleMouseEvent" );
 		return bHandled;
-	}
-
- 	virtual bool HandleKeyEvent(const SDL_Event *event, bool * bDraw){
-		switch ( event->type )
-		{
-			case SDL_KEYDOWN:			return OnKeyDown( &event->key, bDraw );
-			case SDL_KEYUP:				return OnKeyUp( &event->key, bDraw );
-		}
-
-		return false;
 	}
 
 // 子图元操作
@@ -139,28 +122,6 @@ public:
 		log_f_end( "Clear" );
     }
 
-	//template< class T >
-	//void GetIterator( SDL_Iterator * iter, bool r = false )	{
-	//	if ( !r )
-	//	{
-	//        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
-	//		{
-	//			SDL_Widget * w = dynamic_cast<SDL_Widget *>( *pos );
-	//			if ( w && w->GetVisible() )
-	//				iter->Add( ( SDL_Glyph * )w->GetObj() );
-	//		}
-	//	}
-	//	else
-	//	{
-	//		for ( std::vector<SDL_Widget *>::reverse_iterator pos = m_aChildren.rbegin(); pos != m_aChildren.rend(); pos ++ )
-	//		{
-	//			SDL_Widget * w = dynamic_cast<SDL_Widget *>( *pos );
-	//			if ( w && w->GetVisible() )
-	//				iter->Add( ( SDL_Glyph * )w->GetObj() );
-	//		}
-	//	}
-	//}
-
 public:
 	virtual void RecalcLayout( bool bDraw = true )	{ 
 		if ( !GetLayout() )
@@ -180,8 +141,6 @@ public:
 	///
     virtual SDL_Widget * GetParent(){ return m_pParent;	}
     virtual void SetParent( SDL_Widget * parent ){ m_pParent = parent; }
-
-	virtual SDL_Widget * SetFocus();
 
 public:
 	bool GetVisible()			{ return m_bVisible;	}

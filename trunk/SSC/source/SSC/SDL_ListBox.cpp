@@ -62,8 +62,6 @@ bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw
 		if ( !g->IsIn( button->x, button->y ) )
 			continue;
 
-		SetFocus();
-
 		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
 		if ( pItem )
 		{

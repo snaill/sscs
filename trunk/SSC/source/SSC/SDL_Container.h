@@ -89,6 +89,7 @@ public:
 		{
 			if ( g == *pos ) {
                 m_aChildren.erase( pos );
+				break;
 			}
 		}
 
