@@ -154,45 +154,6 @@ void SDL_ImageView::DrawWidget( SDL_Surface * screen )
 	SDL_BlitSurface( m_pObject, 0, screen, &rc );
 }
 
-bool SDL_ImageView::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw )
-{
-	//CVirtualScreen	aScreen;
-	//aScreen.SetDegree( GetObject()->GetDegree() );
-	//aScreen.RealToVirtual( pArgs->KeyCode ); 
-
-	//
-//	IParameterService * pSrv = ( IParameterService * )_ServiceMgr->GetService( SERVICE_PARAMETER );
-	int		nMinMove = MIN_IMAGEMOVE; //pSrv->GetDWORD( Parameter::MinImageMove );	
-	switch ( key->keysym.sym )
-	{
-	case SDLK_UP:
-		m_rcImage.y += nMinMove;
-		break;
-	case SDLK_DOWN:
-		m_rcImage.y -= nMinMove;
-		break;
-	case SDLK_LEFT:
-		m_rcImage.x += nMinMove;
-		break;
-	case SDLK_RIGHT:
-		m_rcImage.x -= nMinMove;
-		break;
-	default:
-		return false;
-	//case VK_PRIOR:
-	//	GetObject()->PrevImage();
-	//	break;
-	//case VK_NEXT:
-	//	GetObject()->NextImage();
-	//	break;
-	}
-	
-	RecalcImageRect();
-	*bDraw = true;
-
-	return true;
-}
-
 bool SDL_ImageView::OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw )
 {
 	if ( !( motion->state & SDL_BUTTON(1) ) )

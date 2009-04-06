@@ -94,6 +94,5 @@ protected:
 	void RecalcImageRect();
 	void DrawWidget( SDL_Surface * screen );
 
-	bool OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw );
 	bool OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw );
 };
