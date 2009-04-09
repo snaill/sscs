@@ -35,12 +35,14 @@ void SDL_Window::Show()
 {
 	SDL_WindowManager * wm = SDL_WindowManager::Get();
 	SDL_Rect			rc = wm->GetBounds();
+	SDL_Window *		wOld = SDL_WindowManager::Get()->GetActiveWindow();
 
 	SetBounds( &rc );
 	wm->Add( this );
 
 	SDL_SwitchUI	sui;
-	sui.Switch( SDL_SwitchUI::toLeft, true, SDL_WindowManager::Get()->GetActiveWindow(), this );
+	sui.Switch( SDL_SwitchUI::toLeft, wOld, this );
+	
 
 	Loop();
 }
@@ -50,7 +52,7 @@ void SDL_Window::Destory()
 	SDL_WindowManager::Get()->Remove( this );
 
 	SDL_SwitchUI	sui;
-	sui.Switch( SDL_SwitchUI::toRight, true, this, SDL_WindowManager::Get()->GetActiveWindow() );
+	sui.Switch( SDL_SwitchUI::toRight, SDL_WindowManager::Get()->GetActiveWindow(), this );
 
 	m_bLoop = false;
 }
