@@ -8,6 +8,6 @@ public:
 	CView2(void);
 	~CView2(void);
 
-	void OnBtnClose( SDL_Widget * button );
+	void OnBtnReturn( SDL_Widget * button );
 
 };

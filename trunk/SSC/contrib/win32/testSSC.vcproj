@@ -187,6 +187,10 @@
 				RelativePath="..\..\source\testSSC\View2.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\source\testSSC\View3.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -199,6 +203,10 @@
 			</File>
 			<File
 				RelativePath="..\..\source\testSSC\View2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\testSSC\View3.h"
 				>
 			</File>
 		</Filter>

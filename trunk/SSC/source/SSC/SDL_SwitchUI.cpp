@@ -214,7 +214,7 @@ void SDL_SwitchUI::Move( SDL_Surface * screen, SDL_Surface * oldSurface, SDL_Sur
 
 		SDL_UpdateRect(screen, lprc->x, lprc->y, lprc->w, lprc->h);
 
-		SDL_Delay( 20 );
+		SDL_Delay( 500 );
 	}
 		
 	SDL_BlitSurface( newSurface, 0, screen, ( SDL_Rect * )lprc );
@@ -222,6 +222,9 @@ void SDL_SwitchUI::Move( SDL_Surface * screen, SDL_Surface * oldSurface, SDL_Sur
 
 void SDL_SwitchUI::Switch( int nMode, bool bOldMove, SDL_Glyph * gOld, SDL_Glyph * gNew )
 {
+	if ( !gOld || !gNew )
+		return;
+
 	SDL_Surface *	sOld = gOld->ToSurface( SDL_WindowManager::Get()->GetScreen() );
 	SDL_Surface *	sNew = gNew->ToSurface( SDL_WindowManager::Get()->GetScreen() );
 	SDL_Rect		rcClip = gOld->GetBounds();
