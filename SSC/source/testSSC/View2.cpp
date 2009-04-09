@@ -20,13 +20,19 @@ CView2::CView2(void)
 	toolbar->Add( new SDL_Button( new SDL_Label( L"IVTB3" ), new SDL_Image( imgList->GetObj<SDL_ImageList>(), 0 ) ) );
 
 	SDL_Button * btnClose = new SDL_Button( new SDL_Label( L"Close" ), new SDL_Image(  imgList->GetObj<SDL_ImageList>(), 0 ) );
-	btnClose->click.connect( this, &CView2::OnBtnClose );
+	btnClose->click.connect( this, &CView2::OnBtnReturn );
 	toolbar->Add( btnClose );
 	toolbar->SetLayoutProperty( SDL_BorderLayout::north );
+
+	SDL_Button * pAction = new SDL_Button( new SDL_Label( L"Return" ), 0 );
+	pAction->click.connect( this, &CView2::OnBtnReturn );
+	SDL_ActionMenu * menu = new SDL_ActionMenu( pAction, new SDL_Button( new SDL_Label( L"ToolButton2" ), 0 ) );
+	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
 	SetLayout( new SDL_BorderLayout() );
 	Add( toolbar );
+	Add( menu );
 	Add( imageView );
 }
 
@@ -34,7 +40,7 @@ CView2::~CView2(void)
 {
 }
 
-void CView2::OnBtnClose( SDL_Widget * button )
+void CView2::OnBtnReturn( SDL_Widget * button )
 {
-	this->Destory();
+	Destory();
 }

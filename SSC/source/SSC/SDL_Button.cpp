@@ -118,7 +118,6 @@ bool SDL_Button::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw 
 	if ( !IsIn( button->x, button->y ) )
 		return false;
 
-		click( this );
 	*bDraw = true;
 	return true;
 }

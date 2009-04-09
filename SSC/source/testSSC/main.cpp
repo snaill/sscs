@@ -27,8 +27,6 @@ int main(int argc, char *argv[])
 	mainView.SetTitle( "testSSC" );
 	mainView.Show();
 
-	screen->Loop();
-
 	SDL_Quit();
 	return(0);
 }
