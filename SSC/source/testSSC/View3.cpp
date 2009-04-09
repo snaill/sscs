@@ -65,8 +65,8 @@ CView3::~CView3(void)
 
 void CView3::OnItemSelected( SDL_ListBoxItem * button )
 {
-	SDL_SwitchUI	sui;
-	sui.SetOld( m_listbox );
+	//SDL_SwitchUI	sui;
+	//sui.SetOld( m_listbox );
 	m_listbox->Clear();
 
 	//if ( m_nClick > 0 )
@@ -101,8 +101,8 @@ void CView3::OnItemSelected( SDL_ListBoxItem * button )
 
 	m_listbox->RecalcLayout();
 
-	sui.SetNew( m_listbox );
-	sui.Switch( SDL_SwitchUI::toLeft );
+	//sui.SetNew( m_listbox );
+	//sui.Switch( SDL_SwitchUI::toLeft );
 }
 
 void CView3::OnToolButtonClick( SDL_Widget * button )
