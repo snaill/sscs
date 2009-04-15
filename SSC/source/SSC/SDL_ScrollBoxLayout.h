@@ -27,9 +27,7 @@
 class SDL_ScrollBoxLayout : public SDL_Layout
 {
 public:
-	SDL_ScrollBoxLayout()            { 
-		m_top = m_bottom = 0;
-	}
+	SDL_ScrollBoxLayout()             { }
 
     virtual ~SDL_ScrollBoxLayout()	  { }
 
@@ -67,8 +65,36 @@ public:
 
 public:
 	void Scroll( int nValue, SDL_Widget * pContainer )	{
+		if ( !nValue )
+			return;
+
 		SDL_Iterator<SDL_Glyph> pos; 
 		pContainer->GetIterator<SDL_Glyph>( &pos );
+		pos.First();
+		if ( pos.IsDone() )
+			return;
+
+		if ( nValue > m_pt.y )
+		{
+			SDL_Glyph * pItem = pos.GetCurrentItem();
+			SDL_Rect	rc = pItem->GetBounds();
+			if ( rc.y + nValue > m_pt.y )
+				nValue = m_pt.y - rc.y;
+		}
+		else
+		{
+			SDL_Iterator<SDL_Glyph> pos2; 
+			pContainer->GetIterator<SDL_Glyph>( &pos2, true );
+			SDL_Glyph * pItem = pos.GetCurrentItem();
+			SDL_Rect	rc = pItem->GetBounds();
+			if ( rc.y + rc.h < m_pt.y + m_sz.h )
+				return;
+
+			if ( rc.y + rc.h + nValue < m_pt.y + m_sz.h )
+				nValue = m_pt.y + m_sz.h - rc.y - rc.h;
+		}
+
+		//
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -77,37 +103,6 @@ public:
 			pItem->SetBounds(&rc);
 		}
 	}
-
-	SDL_Widget * GetTop( SDL_Widget * pContainer )	{
-		SDL_Iterator<SDL_Widget> pos; 
-		pContainer->GetIterator<SDL_Widget>( &pos );
-		for ( pos.First(); !pos.IsDone(); pos.Next() )
-		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
-			SDL_Rect	rc = pItem->GetBounds();
-			if ( rc.y + rc.h > m_pt.y )
-				return pItem;
-		}	
-
-		return 0;
-	}
-
-	SDL_Widget * GetBottom( SDL_Widget * pContainer )	{
-		SDL_Iterator<SDL_Widget> pos; 
-		pContainer->GetIterator<SDL_Widget>( &pos, true );
-		for ( pos.First(); !pos.IsDone(); pos.Next() )
-		{
-			SDL_Widget * pItem = pos.GetCurrentItem();
-			SDL_Rect	rc = pItem->GetBounds();
-			if ( rc.y < m_pt.y + m_sz.h )
-				return pItem;
-		}		
-		return 0;
-	}	
-
-protected:
-	Uint16	m_top, m_bottom;
-
 };
 
 #endif // SDL_SCROLLBOXLAYOUT_H_INCLUDED
