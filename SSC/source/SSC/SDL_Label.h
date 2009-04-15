@@ -30,7 +30,7 @@
 class SDL_Label : public SDL_Glyph
 {
 public:
-    SDL_Label( const wchar_t * text, int nFont = 0, int nColor = SDL_Theme::WindowText, int align = 0, int valign = 0 );
+    SDL_Label( const wchar_t * text, int nFont = 0, int nColor = SDL_Theme::BtnText, int align = 0, int valign = 0 );
     virtual ~SDL_Label()				 {}
 	virtual const char * GetType()	{ return "SDL_Label"; }
 

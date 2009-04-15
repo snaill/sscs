@@ -20,6 +20,7 @@
 
 #include "SDL_Toolbar.h"
 #include "SDL_FlowLayout.h"
+#include "SDL_WindowManager.h"
 
 SDL_Toolbar::SDL_Toolbar()		
 {
@@ -45,7 +46,10 @@ SDL_Size SDL_Toolbar::GetPreferedSize()
 
 void SDL_Toolbar::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) 
 { 
-	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 255, 255, 255 ) );
+	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
+
+	SDL_Color	color = theme->GetColor( SDL_Theme::BtnFace );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, color.r, color.g, color.b ) );
 
 	SDL_Widget::DrawWidget( screen, lprc );
 }
