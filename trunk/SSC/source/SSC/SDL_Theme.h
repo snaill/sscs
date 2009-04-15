@@ -37,8 +37,8 @@ public:
 		Background,
 		BtnFace,
 		BtnText,
-		WindowText,
-		Selected
+		Selected,
+		SelectedText
 	};
 
 public:
@@ -67,22 +67,22 @@ public:
 		switch ( nParam )
 		{
 		case Background:
-			color.r = color.g = color.b = 0; color.unused = 0;
+			color.r = color.g = color.b = 0xFF; color.unused = 0;
 			break;
 		case BtnFace:
-			color.r = color.g = color.b = 255; color.unused = 0;
+			color.r = color.g = color.b = 192; color.unused = 0;
 			break;
 		case BtnText:
 			color.r = color.g = color.b = 0; color.unused = 0;
 			break;
-		case WindowText:
+		case Selected:
+			color.r = 0; color.g = 0; color.b = 255; color.unused = 0;
+			break;
+		case SelectedText:
 			color.r = color.g = color.b = 255; color.unused = 0;
 			break;
-		case Selected:
-			color.r = 255; color.g = 0; color.b = 0; color.unused = 0;
-			break;
 		default:
-			color.r = color.g = color.b = color.unused = 0;
+			color.r = color.g = color.b = 0xFF; color.unused = 0;
 		}
 
 		return color;

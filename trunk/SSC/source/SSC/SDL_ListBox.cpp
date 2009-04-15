@@ -19,6 +19,7 @@
  */
 
 #include "SDL_ListBox.h"
+#include "SDL_WindowManager.h"
 
 SDL_ListBox::SDL_ListBox()		
 {
@@ -109,7 +110,10 @@ bool SDL_ListBox::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw )
 
 void SDL_ListBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 {
-	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, 0, 0, 0 ) );
+	SDL_Theme * theme = SDL_WindowManager::Get()->GetTheme();
+
+	SDL_Color	color = theme->GetColor( SDL_Theme::Background );
+	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, color.r, color.g, color.b ) );
 
 	//
 	SDL_Container::DrawWidget( screen, lprc );
