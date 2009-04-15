@@ -13,7 +13,7 @@ CView1::CView1(void)
 	//
 	SDL_Button * pAction = new SDL_Button( new SDL_Label( L"Quit" ), 0 );
 	pAction->click.connect( this, &CView1::OnBtnClose );
-	SDL_ActionMenu * menu = new SDL_ActionMenu( pAction, new SDL_Button( new SDL_Label( L"ToolButton2" ), 0 ) );
+	SDL_ActionMenu * menu = new SDL_ActionMenu( pAction, 0 );
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//

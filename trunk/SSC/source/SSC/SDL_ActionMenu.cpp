@@ -19,18 +19,14 @@
  */
 
 #include "SDL_ActionMenu.h"
+#include "SDL_Spacer.h"
 #include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
 SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) 
 {
-	if ( !btn1 )
-		btn1 = new SDL_Button( 0, 0 );
-	if ( !btn2 )
-		btn2 = new SDL_Button( 0, 0 );
-
-	Add( btn1 );
-	Add( btn2 );
+	Add( btn1 ? ( SDL_Glyph * )btn1 : ( SDL_Glyph * )new SDL_Spacer() );
+	Add( btn2 ? ( SDL_Glyph * )btn2 : ( SDL_Glyph * )new SDL_Spacer() );
 }
 
 void SDL_ActionMenu::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc  )   
