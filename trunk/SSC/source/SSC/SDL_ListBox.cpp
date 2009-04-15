@@ -66,7 +66,31 @@ bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw
 		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
 		if ( pItem )
 		{
-			SelectItem( pItem );
+			pItem->SetSelected( true );
+			*bDraw = true;	
+		}
+		return true;
+	}
+	return false;
+}
+
+bool SDL_ListBox::OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )
+{
+	if ( button->button != SDL_BUTTON_LEFT )
+		return false;
+
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * g = pos.GetCurrentItem();
+		if ( !g->IsIn( button->x, button->y ) )
+			continue;
+
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		if ( pItem && pItem->GetSelected() )
+		{
+			pItem->SetSelected( false );
 			select( pItem );
 			*bDraw = true;	
 		}
@@ -75,36 +99,30 @@ bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw
 	return false;
 }
 
-bool SDL_ListBox::OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw ) 
+bool SDL_ListBox::OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw )
 {
-	switch ( key->keysym.sym )
-	{
-	case SDLK_UP:
-		if ( !m_curItem )
-			SelectItem( GetCurrentLayout()->GetBottom( this ) );
-		else
-		{
-			SDL_Glyph * pItem =  GetItem( GetItemID( m_curItem ) - 1 );
-			if ( pItem )
-				SelectItem( pItem );
-		}
-		*bDraw = true;
-		break;
-	case SDLK_DOWN:
-		if ( !m_curItem )
-			SelectItem( GetItem( 0 ) );
-		else
-		{
-			SDL_Glyph * pItem =  GetItem( GetItemID( m_curItem ) + 1 );
-			if ( pItem )
-				SelectItem( pItem );
-		}
-		*bDraw = true;
-		break;		
-	default:
+	if ( !( motion->state & SDL_BUTTON(1) ) )
 		return false;
-	}
 
+	GetCurrentLayout()->Scroll( motion->yrel, this );
+
+	//
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * g = pos.GetCurrentItem();
+		if ( !g->IsIn( motion->x, motion->y ) )
+			continue;
+
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		if ( pItem && pItem->GetSelected() )
+		{
+			pItem->SetSelected( false );
+		}
+		break;
+	}
+	*bDraw = true;
 	return true;
 }
 

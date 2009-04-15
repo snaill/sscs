@@ -44,7 +44,8 @@ protected:
 	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return (SDL_ScrollBoxLayout *)GetLayout(); }
 
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw );
-;	virtual bool OnKeyDown( const SDL_KeyboardEvent * key, bool * bDraw );
+	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw );
+	virtual bool OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw );
 
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
