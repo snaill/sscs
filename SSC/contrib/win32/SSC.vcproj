@@ -368,6 +368,10 @@
 					RelativePath="..\..\source\SSC\SDL_ProgressBar.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Spacer.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Widget"
