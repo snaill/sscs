@@ -72,7 +72,16 @@ void SDL_SwitchUI::Move( SDL_Surface * screen, SDL_Surface * oldSurface, SDL_Sur
 		SDL_Delay( 20 );
 	}
 		
-	SDL_BlitSurface( newSurface, 0, screen, ( SDL_Rect * )lprc );
+	switch ( nMode )
+	{
+	case toLeft:
+		SDL_BlitSurface( newSurface, 0, screen, ( SDL_Rect * )lprc );
+		break;
+	case toRight:
+		SDL_BlitSurface( oldSurface, 0, screen, ( SDL_Rect * )lprc );
+		break;
+	}
+	SDL_UpdateRect(screen, lprc->x, lprc->y, lprc->w, lprc->h);
 }
 
 void SDL_SwitchUI::Switch( int nMode, SDL_Glyph * gOld, SDL_Glyph * gNew )
