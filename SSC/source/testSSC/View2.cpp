@@ -7,9 +7,25 @@ CView2::CView2(void)
 	SDL_Color	crMask;
 	crMask.r = 0;crMask.g = 0;crMask.b = 0;
 
-	SDL_ImageView * imageView = new SDL_ImageView();
-	imageView->SetLayoutProperty( SDL_BorderLayout::fill );
-	imageView->Load( "test.bmp" );
+	SDL_ListBox	*	listbox = new SDL_ListBox( );
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test1"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test2"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test3"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test4"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test5"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test7"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test8"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test9"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test10"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test11"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test12"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test13"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test14"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test15"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test16"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test17"), new SDL_Label( L"ccccc"), 0 ));
+	listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 
 	//
 	SDL_Toolbar	*	toolbar = new SDL_Toolbar();
@@ -33,7 +49,7 @@ CView2::CView2(void)
 	SetLayout( new SDL_BorderLayout() );
 	Add( toolbar );
 	Add( menu );
-	Add( imageView );
+	Add( listbox );
 }
 
 CView2::~CView2(void)

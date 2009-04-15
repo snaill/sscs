@@ -74,7 +74,7 @@ public:
 		if ( pos.IsDone() )
 			return;
 
-		if ( nValue > m_pt.y )
+		if ( nValue > 0 )
 		{
 			SDL_Glyph * pItem = pos.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
@@ -85,7 +85,8 @@ public:
 		{
 			SDL_Iterator<SDL_Glyph> pos2; 
 			pContainer->GetIterator<SDL_Glyph>( &pos2, true );
-			SDL_Glyph * pItem = pos.GetCurrentItem();
+			pos2.First();
+			SDL_Glyph * pItem = pos2.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();
 			if ( rc.y + rc.h < m_pt.y + m_sz.h )
 				return;
