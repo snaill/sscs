@@ -59,7 +59,7 @@ void SDL_Window::Destory()
 
 void SDL_Window::Draw( SDL_Surface * screen )
 {
-	SDL_Widget::Draw( screen );
+	SDL_Glyph::Draw( screen );
 	SDL_WindowManager::Get()->Update();
 }
 

@@ -24,17 +24,23 @@
 
 SDL_Button::SDL_Button( SDL_Label * text, SDL_Image * image ) 
 {
-	if ( image )
-		Add( image );
-
 	assert( text );
-	text->SetColor( SDL_Theme::BtnText );
-	Add( text );
+
+	if ( !image )
+	{
+		SetContent( text );
+		return;
+	}
+
+	SDL_HBoxLayout * layout = new SDL_HBoxLayout();
+	layout->Add( image );
+	layout->Add( text );
+	SetContent( layout );
 }
 
 SDL_Size SDL_Button::GetPreferedSize()	
 {
-	SDL_Size	sz = SDL_Widget::GetPreferedSize();
+	SDL_Size	sz = SDL_Glyph::GetPreferedSize();
 	//sz.w = 0;
 	//sz.h = 0;
 
@@ -73,7 +79,7 @@ void SDL_Button::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, crFace.r, crFace.g, crFace.b ) );
 
 	//
-	SDL_Widget::DrawWidget( screen, lprc );
+	SDL_Glyph::DrawWidget( screen, lprc );
 
 	//
 	if ( GetHover() )
@@ -100,7 +106,7 @@ bool SDL_Button::OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw
 { 
 	if ( !motion->state )
 	{
-		SDL_Widget::OnMouseEnter( motion, bDraw );
+		SDL_Glyph::OnMouseEnter( motion, bDraw );
 		*bDraw = true;
 	}
 	return true;	
@@ -108,7 +114,7 @@ bool SDL_Button::OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw
 
 bool SDL_Button::OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	
 { 
-	SDL_Widget::OnMouseLeave( motion, bDraw );
+	SDL_Glyph::OnMouseLeave( motion, bDraw );
 	*bDraw = true;
 	return true;	
 }

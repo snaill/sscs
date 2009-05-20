@@ -35,7 +35,7 @@ SDL_ProgressBar::~SDL_ProgressBar(void)
 {
 }
 
-void SDL_ProgressBar::HitTest( POINT pt, int &nCommand, int &nPos )
+void SDL_ProgressBar::HitTest( SDL_Point pt, int &nCommand, int &nPos )
 {
 	//if ( pt.x >= m_rc.left && pt.x < m_rc.left + 5 + 4 )
 	//	nCommand = Start;

@@ -26,7 +26,7 @@
 #include "SDL_CardLayout.h"
 
 /// @brief 屏幕类负责管理页面Surface
-class SDL_WindowManager : public SDL_Container
+class SDL_WindowManager : public SDL_Layout
 {
 protected:
 	SDL_WindowManager( int width, int height, int bpp, int videoFlag );
@@ -35,6 +35,7 @@ protected:
 public:
 	virtual const char * GetType()				{ return "SDL_WindowManager"; }
 
+	virtual SDL_Size GetPreferedSize( ) { return SDL_Size(0, 0); }
     virtual void SetBounds( const SDL_Rect * lprc );
 
 public:

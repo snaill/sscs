@@ -21,7 +21,6 @@
 #ifndef SDL_LABEL_H_INCLUDED
 #define SDL_LABEL_H_INCLUDED
 
-#include "SDL_Widget.h"
 #include "SDL_Glyph.h"
 #include "SDL_Theme.h"
 #include <SDL_ttf.h>

@@ -19,12 +19,11 @@
  */
 
 #include "SDL_Layout.h"
-#include "SDL_Widget.h"
 
-void SDL_Layout::DrawWidget( SDL_Container * pContainer, SDL_Surface * screen )	
+void SDL_Layout::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 {
 	SDL_Iterator<SDL_Glyph> pos;
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -32,13 +31,13 @@ void SDL_Layout::DrawWidget( SDL_Container * pContainer, SDL_Surface * screen )
 	}
 }
 
-bool SDL_Layout::HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw )
+bool SDL_Layout::HandleMouseEvent( const SDL_Event *event, bool * bDraw )
 {
-	SDL_Iterator<SDL_Widget> pos; 
-	pContainer->GetIterator<SDL_Widget>( &pos );
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = dynamic_cast<SDL_Widget *>( pos.GetCurrentItem() );
+		SDL_Glyph * pItem = dynamic_cast<SDL_Glyph *>( pos.GetCurrentItem() );
 		if ( pItem && pItem->GetVisible() )
 			if ( pItem->HandleMouseEvent( event, bDraw ) )
 				return true;

@@ -21,13 +21,12 @@
 #ifndef SDL_LISTBOXITEM_H_INCLUDED
 #define SDL_LISTBOXITEM_H_INCLUDED
 
-#include "SDL_Container.h"
 #include "SDL_Label.h"
 #include "SDL_Image.h"
 #include "SDL_BorderLayout.h"
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ListBoxItem : public SDL_Container
+class SDL_ListBoxItem : public SDL_Glyph
 {
 public:
 	SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image );

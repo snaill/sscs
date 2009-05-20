@@ -21,26 +21,146 @@
 #ifndef SDL_LAYOUT_H_INCLUDED
 #define SDL_LAYOUT_H_INCLUDED
 
-#include "SDL_Object.h"
+#include "SDL_Glyph.h"
+#include "SDL_Layout.h"
+#include "SDL_Iterator.h"
+#include "sigslot.h"
 
-class SDL_Container;
 /// @brief 所有界面布局的基类，实现固定布局，即对内部控件不做处理
-class SDL_Layout : public SDL_Object, public SDL_BoundingBox
+class SDL_Layout : public SDL_Glyph
 {
+public:
+	sigslot::signal1<SDL_Glyph *>		add;
+	sigslot::signal1<SDL_Glyph *>		remove;
+
 // 基本属性
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer ) = 0;
-
-    /// @brief 设置图元所在区域
+	/// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) = 0;
+    virtual void SetBounds( const SDL_Rect * lprc ){
+		SDL_Glyph::SetBounds( lprc );
+	}
 
-	virtual void DrawWidget( SDL_Container * pContainer, SDL_Surface * screen );
- 	virtual bool HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw );
+	virtual SDL_Size GetPreferedSize( ) = 0;
+
+ 	virtual bool HandleMouseEvent( const SDL_Event *event, bool * bDraw );
+
+// 子图元操作
+public:
+    /// 添加一个图元
+    virtual bool Add( SDL_Glyph * g )
+    {
+		log_f_start( "Add" );
+
+		m_aChildren.push_back(g);
+
+		SDL_Glyph * w = dynamic_cast<SDL_Glyph *>(g);
+		add( w );
+
+		log_f_end( "Add" );
+       return true;
+    }
+
+    /// 删除一个图元
+    virtual void Remove( SDL_Glyph * g )
+    {
+		log_f_start( "Remove" );
+
+        assert( g );
+        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			if ( g == *pos ) {
+                m_aChildren.erase( pos );
+		
+				SDL_Glyph * w = dynamic_cast<SDL_Glyph *>(g);
+				remove( w );
+			}
+		}
+
+		log_f_end( "Remove" );
+    }
+
+    /// 清除所有子图元
+    virtual void Clear()
+    {
+		log_f_start( "Clear" );
+
+		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			SDL_Glyph * w = dynamic_cast<SDL_Glyph *>( *pos );
+			remove( w );
+			(*pos)->Release();
+		}
+		m_aChildren.clear();
+
+		log_f_end( "Clear" );
+    }
+
+	template < class T >	
+	void GetIterator( SDL_Iterator<T> * iter, bool r = false )	{
+		if ( !r )
+		{
+	        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+			{
+				T * pItem = dynamic_cast<T *>( *pos );
+				if ( pItem )
+					iter->Add( pItem->GetObj<T>() );
+			}
+		}
+		else
+		{
+			for ( std::vector<SDL_Glyph *>::reverse_iterator pos = m_aChildren.rbegin(); pos != m_aChildren.rend(); pos ++ )
+			{
+				T * pItem = dynamic_cast<T *>( *pos );
+				if ( pItem )
+					iter->Add( pItem->GetObj<T>() );
+			}
+		}
+	}
+
+    /// 获取子图元个数
+    virtual size_t	GetCount()
+    {
+        return m_aChildren.size();
+    }
+
+    /// 获取对应下标的子图元
+    virtual SDL_Glyph * GetItem( size_t index )
+    {
+		if ( index < 0 || index >= GetCount() )
+			return NULL;
+
+        return m_aChildren[index];
+    }
+
+    virtual int GetItemID( SDL_Glyph * pItem )
+    {
+		for ( size_t i = 0; i < GetCount(); i ++ )
+			if ( pItem == m_aChildren[ i ] )
+				return i;
+
+		return -1;
+    }
 
 protected:
-	SDL_Layout() {}
-    virtual ~SDL_Layout()	{ }
+    /// @brief 绘制当前图元
+    /// @param screen	屏幕Surface
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
+
+protected:
+    /// 子图元列表
+	std::vector<SDL_Glyph *>	m_aChildren;
+ 
+protected:
+	SDL_Layout()	{}
+
+	virtual ~SDL_Layout() {
+		log_f_start( "~SDL_Layout" );
+
+		Clear();
+		
+		log_f_end( "~SDL_Layout" );
+	}
 };
 
 #endif // SDL_LAYOUT_H_INCLUDED

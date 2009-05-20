@@ -20,10 +20,10 @@
 
 #pragma once
 
-#include "SDL_Widget.h"
+#include "SDL_Glyph.h"
 
 /// @brief 进度条处理类，包括文档进度及当前的翻页进度
-class SDL_ProgressBar : public SDL_Widget
+class SDL_ProgressBar : public SDL_Glyph
 {
 protected:
 	int			m_nPos;
@@ -42,7 +42,7 @@ public:
 	inline int GetPos()				{ return m_nPos;				}
 	inline void SetPos( int nPos )	{ m_nPos = nPos;				}
 
-	void HitTest( POINT pt, int &nCommand, int &nPos );
+	void HitTest( SDL_Point pt, int &nCommand, int &nPos );
 protected:
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 };

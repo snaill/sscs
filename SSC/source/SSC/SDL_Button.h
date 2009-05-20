@@ -21,17 +21,16 @@
 #ifndef SDL_BUTTON_H_INCLUDED
 #define SDL_BUTTON_H_INCLUDED
 
-#include "SDL_Widget.h"
 #include "SDL_Label.h"
 #include "SDL_Image.h"
 #include "SDL_BoxLayout.h"
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_Button : public SDL_Widget
+class SDL_Button : public SDL_Glyph
 {
 public:
-	sigslot::signal1<SDL_Widget *>		click;
+	sigslot::signal1<SDL_Glyph *>		click;
 
 public:
     SDL_Button( SDL_Label * text, SDL_Image * image );
@@ -42,8 +41,6 @@ public:
 	virtual SDL_Size GetPreferedSize();
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_HBoxLayout(); }
-
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );

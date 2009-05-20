@@ -28,11 +28,11 @@ class SDL_HBoxLayout : public SDL_Layout
 public:
 	virtual const char * GetType()	{ return "SDL_HBoxLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer );
+	virtual SDL_Size GetPreferedSize();
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc );
+    virtual void SetBounds( const SDL_Rect * lprc );
 };
 
 class SDL_VBoxLayout : public SDL_Layout
@@ -40,11 +40,11 @@ class SDL_VBoxLayout : public SDL_Layout
 public:
 	virtual const char * GetType()	{ return "SDL_VBoxLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer );
+	virtual SDL_Size GetPreferedSize( );
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc );
+    virtual void SetBounds( const SDL_Rect * lprc );
 };
 
 #endif // SDL_BOXLAYOUT_H_INCLUDED

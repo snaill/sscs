@@ -39,7 +39,7 @@ CView3::CView3(void)
 	//progressBall->SetLayoutProperty( SDL_BorderLayout::east );
 	//progressBall->SetPos( 100 );
 
-	//SDL_Widget * progress = new SDL_Widget();
+	//SDL_Glyph * progress = new SDL_Glyph();
 	//progress->SetLayoutProperty( SDL_BorderLayout::south );
 	//progress->SetLayout( new SDL_BorderLayout() );
 	//progress->Add( progressBall );
@@ -52,11 +52,12 @@ CView3::CView3(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	SetLayout( new SDL_BorderLayout() );
-	Add( m_toolbar );
+	SDL_BorderLayout * layout = new SDL_BorderLayout();
+	layout->Add( m_toolbar );
 //	Add( progress );
-	Add( menu );
-	Add( listbox );
+	layout->Add( menu );
+	layout->Add( listbox );
+	SetContent( layout );
 }
 
 CView3::~CView3(void)
@@ -105,13 +106,13 @@ void CView3::OnItemSelected( SDL_ListBoxItem * button )
 	//sui.Switch( SDL_SwitchUI::toLeft );
 }
 
-void CView3::OnToolButtonClick( SDL_Widget * button )
+void CView3::OnToolButtonClick( SDL_Glyph * button )
 {
 	CView2 * pView = new CView2();
 	pView->Show();
 }
 
-void CView3::OnBtnClose( SDL_Widget * button )
+void CView3::OnBtnClose( SDL_Glyph * button )
 {
 	this->Destory();
 }

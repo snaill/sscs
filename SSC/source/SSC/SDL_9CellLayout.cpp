@@ -19,15 +19,14 @@
  */
 
 #include "SDL_9CellLayout.h"
-#include "SDL_Widget.h"
 
 /* SDL_9CellLayout member function */
-SDL_Size SDL_9CellLayout::GetPreferedSize( SDL_Container * pContainer )
+SDL_Size SDL_9CellLayout::GetPreferedSize( )
 {
 	SDL_Size	sz(0, 0);
 	SDL_Iterator<SDL_Glyph> pos;
 	
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -41,7 +40,7 @@ SDL_Size SDL_9CellLayout::GetPreferedSize( SDL_Container * pContainer )
 	return sz;
 }
 
-void SDL_9CellLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+void SDL_9CellLayout::SetBounds( const SDL_Rect * lprc )
 {
 	SDL_Rect	rc;
 	rc.x = lprc->x;
@@ -50,7 +49,7 @@ void SDL_9CellLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc 
 	rc.h = lprc->h / 3;
 	
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	pos.First();
 	for ( int i = 0; i < 9; i++ )
 	{

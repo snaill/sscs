@@ -28,11 +28,11 @@ class SDL_9CellLayout : public SDL_Layout
 public:
 	virtual const char * GetType()	{ return "SDL_9CellLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer );
+	virtual SDL_Size GetPreferedSize( );
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc );
+    virtual void SetBounds( const SDL_Rect * lprc );
 };
 
 #endif // SDL_9CELLLAYOUT_H_INCLUDED

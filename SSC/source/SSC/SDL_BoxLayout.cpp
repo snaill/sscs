@@ -19,16 +19,15 @@
  */
 
 #include "SDL_BoxLayout.h"
-#include "SDL_Widget.h"
 
 /* SDL_HBoxLayout member function */
-SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Container * pContainer )
+SDL_Size SDL_HBoxLayout::GetPreferedSize( )
 {
 	SDL_Size	sz(0, 0);
 	int			nCount = 0;
 
 	SDL_Iterator<SDL_Glyph> pos;
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -42,14 +41,14 @@ SDL_Size SDL_HBoxLayout::GetPreferedSize( SDL_Container * pContainer )
 	return sz;
 }
 
-void SDL_HBoxLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+void SDL_HBoxLayout::SetBounds( const SDL_Rect * lprc )
 {
-	int nCount = pContainer->GetCount();
+	int nCount = GetCount();
 	SDL_Rect	rc = *lprc;
 	rc.w = rc.w / nCount;
 
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -59,13 +58,13 @@ void SDL_HBoxLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
 }
 
 /* SDL_VBoxLayout member function */
-SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Container * pContainer )
+SDL_Size SDL_VBoxLayout::GetPreferedSize()
 {
 	SDL_Size	sz(0, 0);
 	int			nCount = 0;
 
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos, true );
+	GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -79,14 +78,14 @@ SDL_Size SDL_VBoxLayout::GetPreferedSize( SDL_Container * pContainer )
 	return sz;
 }
 
-void SDL_VBoxLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+void SDL_VBoxLayout::SetBounds( const SDL_Rect * lprc )
 {
-	int nCount = pContainer->GetCount();
+	int nCount = GetCount();
 	SDL_Rect	rc = *lprc;
 	rc.h = rc.h / nCount;
 
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos, true );
+	GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();

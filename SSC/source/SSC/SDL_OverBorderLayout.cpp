@@ -19,14 +19,13 @@
  */
 
 #include "SDL_OverBorderLayout.h"
-#include "SDL_Widget.h"
 
-SDL_Size SDL_OverBorderLayout::GetPreferedSize( SDL_Container * pContainer )	
+SDL_Size SDL_OverBorderLayout::GetPreferedSize( )	
 {
 	SDL_Size	sz;
 
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos, true );
+	GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -54,11 +53,11 @@ SDL_Size SDL_OverBorderLayout::GetPreferedSize( SDL_Container * pContainer )
 	return sz;
 }
 
-void SDL_OverBorderLayout::Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+void SDL_OverBorderLayout::SetBounds( const SDL_Rect * lprc )
 {
 	SDL_Rect	rc = *lprc;
 	SDL_Iterator<SDL_Glyph> pos; 
-	pContainer->GetIterator<SDL_Glyph>( &pos );
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		if ( rc.w == 0 || rc.h == 0 )
@@ -109,10 +108,10 @@ void SDL_OverBorderLayout::Update( SDL_Container * pContainer, const SDL_Rect * 
 	}
 }
 
-void SDL_OverBorderLayout::DrawWidget( SDL_Container * pContainer, SDL_Surface * screen )	
+void SDL_OverBorderLayout::DrawWidget( SDL_Surface * screen )	
 {
 	SDL_Iterator<SDL_Glyph> pos;
-	pContainer->GetIterator<SDL_Glyph>( &pos, true );
+	GetIterator<SDL_Glyph>( &pos, true );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
 		SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -120,13 +119,13 @@ void SDL_OverBorderLayout::DrawWidget( SDL_Container * pContainer, SDL_Surface *
 	}
 }
 
-bool SDL_OverBorderLayout::HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw )
+bool SDL_OverBorderLayout::HandleMouseEvent( const SDL_Event *event, bool * bDraw )
 {
-	SDL_Iterator<SDL_Widget> pos; 
-	pContainer->GetIterator<SDL_Widget>( &pos );
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
 	for ( pos.First(); !pos.IsDone(); pos.Next() )
 	{
-		SDL_Widget * pItem = dynamic_cast<SDL_Widget *>( pos.GetCurrentItem() );
+		SDL_Glyph * pItem = dynamic_cast<SDL_Glyph *>( pos.GetCurrentItem() );
 		if ( pItem && pItem->GetVisible() )
 			if ( pItem->HandleMouseEvent( event, bDraw ) )
 				return true;

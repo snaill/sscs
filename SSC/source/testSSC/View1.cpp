@@ -17,9 +17,10 @@ CView1::CView1(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	SetLayout( new SDL_BorderLayout() );
-	Add( menu );
-	Add( m_listbox );
+	SDL_BorderLayout * layout = new SDL_BorderLayout();
+	layout->Add( menu );
+	layout->Add( m_listbox );
+	SetContent( layout );
 }
 
 CView1::~CView1(void)
@@ -38,7 +39,7 @@ void CView1::OnItemSelected( SDL_ListBoxItem * button )
 	view->Show();
 }
 
-void CView1::OnBtnClose( SDL_Widget * button )
+void CView1::OnBtnClose( SDL_Glyph * button )
 {
 	this->Destory();
 }

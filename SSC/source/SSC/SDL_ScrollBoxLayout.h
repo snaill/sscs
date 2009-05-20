@@ -33,14 +33,14 @@ public:
 
 	virtual const char * GetType()				{ return "SDL_ScrollBoxLayout"; }
 
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+	virtual SDL_Size GetPreferedSize()	{
 		//!!!!!
 		return SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc ) {
+    virtual void SetBounds( const SDL_Rect * lprc ) {
 		//
 		SDL_Rect	rcItem;
 		rcItem.x = lprc->x;
@@ -48,7 +48,7 @@ public:
 		rcItem.w = lprc->w;
 
 		SDL_Iterator<SDL_Glyph> pos; 
-		pContainer->GetIterator<SDL_Glyph>( &pos );
+		GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -64,12 +64,12 @@ public:
     }
 
 public:
-	void Scroll( int nValue, SDL_Widget * pContainer )	{
+	void Scroll( int nValue, SDL_Glyph * pContainer )	{
 		if ( !nValue )
 			return;
 
 		SDL_Iterator<SDL_Glyph> pos; 
-		pContainer->GetIterator<SDL_Glyph>( &pos );
+		GetIterator<SDL_Glyph>( &pos );
 		pos.First();
 		if ( pos.IsDone() )
 			return;
@@ -84,7 +84,7 @@ public:
 		else
 		{
 			SDL_Iterator<SDL_Glyph> pos2; 
-			pContainer->GetIterator<SDL_Glyph>( &pos2, true );
+			GetIterator<SDL_Glyph>( &pos2, true );
 			pos2.First();
 			SDL_Glyph * pItem = pos2.GetCurrentItem();
 			SDL_Rect	rc = pItem->GetBounds();

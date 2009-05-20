@@ -9,7 +9,7 @@ public:
 	~CView1(void);
 
 	void OnItemSelected( SDL_ListBoxItem * button );
-	void OnBtnClose( SDL_Widget * button );
+	void OnBtnClose( SDL_Glyph * button );
 
 protected:
 	SDL_ListBox	*		m_listbox;
