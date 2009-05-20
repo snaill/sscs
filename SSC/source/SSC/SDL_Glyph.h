@@ -26,9 +26,25 @@
 /// @brief 控件类的基类
 class SDL_Glyph : public SDL_Object, public SDL_BoundingBox
 {
+protected:
+	typedef struct tagGlyphData {
+		SDL_Glyph *		m_pContent;
+		SDL_Glyph *		m_pParent;
+		Uint32			m_bHover : 1;
+		Uint32			m_bVisible : 1;
+		Uint32			m_bChecked : 1;
+		Uint32			m_bSelected : 1;
+		Uint32			m_bRe : 28;
+	}GLYPH_DATA, * LPGLYPH_DATA;
+
 public:
-	SDL_Glyph() :m_bHover(false), m_bVisible( true ), 
-		m_pParent(0), m_bCheck( false ) {}
+	SDL_Glyph() {
+		m_aData.m_bHover = false;
+		m_aData.m_bVisible = true; 
+		m_aData.m_pParent = 0;
+		m_aData.m_bChecked = false;
+		m_aData.m_pContent = 0;
+	}
 
 	virtual ~SDL_Glyph() {}
 
@@ -37,7 +53,19 @@ public:
 	/// @brief 获取图元所需的最小区域
     /// @param w 返回的矩形宽度
     /// @param h 返回的矩形宽度
-	virtual SDL_Size GetPreferedSize() { return SDL_Size( 0, 0 ); }
+	virtual SDL_Size GetPreferedSize() { 
+		if ( GetContent() )
+			return GetContent()->GetPreferedSize();
+
+		return SDL_Size( 0, 0 ); 
+	}
+
+	virtual void SetBounds( const SDL_Rect * lprc ){
+		if ( GetContent() )
+			GetContent()->SetBounds( lprc );
+
+		SDL_BoundingBox::SetBounds( lprc );
+	}
 
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
@@ -53,6 +81,9 @@ public:
 		SDL_SetClipRect( screen, &rcClip );
 
 		DrawWidget( screen, &GetBounds() );
+
+		if ( GetContent() )
+			GetContent()->Draw( screen );
 
 		SDL_SetClipRect( screen, &rcOld );
 	}
@@ -80,13 +111,13 @@ public:
 			case SDL_MOUSEMOTION:		
 				if ( IsIn( event->motion.x, event->motion.y ) )
 				{
-					if ( m_bHover )
+					if ( m_aData.m_bHover )
 						bHandled = OnMouseMove( &event->motion, bDraw );
 					else
 						bHandled = OnMouseEnter( &event->motion, bDraw );
 				}
 				else
-					if ( m_bHover )
+					if ( m_aData.m_bHover )
 						bHandled = OnMouseLeave( &event->motion, bDraw );
 				break;
 		}
@@ -96,11 +127,11 @@ public:
 	}
 	
 	///
-    virtual SDL_Glyph * GetContent(){ 	return m_pContent;	}
-    virtual void SetContent( SDL_Glyph * content ){ m_pContent = content; }
+    virtual SDL_Glyph * GetContent(){ 	return m_aData.m_pContent;	}
+    virtual void SetContent( SDL_Glyph * content ){ m_aData.m_pContent = content; }
 	///
-    virtual SDL_Glyph * GetParent(){ return m_pParent;	}
-    virtual void SetParent( SDL_Glyph * parent ){ m_pParent = parent; }
+    virtual SDL_Glyph * GetParent(){ return m_aData.m_pParent;	}
+    virtual void SetParent( SDL_Glyph * parent ){ m_aData.m_pParent = parent; }
 
 public:
 	virtual void RecalcLayout( bool bDraw = true )	{ 
@@ -117,21 +148,20 @@ public:
 	}
 
 public:
-	bool GetVisible()			{ return m_bVisible;	}
+	bool GetVisible()			{ return m_aData.m_bVisible;	}
 	void SetVisible( bool bVisible ) { 
-		if ( m_bVisible == bVisible )
+		if ( m_aData.m_bVisible == bVisible )
 			return;
 
-		m_bVisible = bVisible;
+		m_aData.m_bVisible = bVisible;
 		if ( GetParent() )
 			GetParent()->RecalcLayout();
 	}
-	bool GetCheck()					{ return m_bCheck;		}
-	void SetCheck( bool bCheck )	{ m_bCheck = bCheck;	}
-	bool GetHover()					{ return m_bHover;		}
-	void SetHover( bool bHover )	{ m_bHover = bHover;	}
+	bool GetCheck()					{ return m_aData.m_bChecked;		}
+	void SetCheck( bool bCheck )	{ m_aData.m_bChecked = bCheck;	}
+	bool GetHover()					{ return m_aData.m_bHover;		}
+	void SetHover( bool bHover )	{ m_aData.m_bHover = bHover;	}
 
-protected:
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
@@ -140,8 +170,8 @@ protected:
     void Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTopLeft, SDL_Color clrBottomRight );
 
 // 事件
-	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_bHover = true; return false;	}
-	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_bHover = false; return false;	}
+	virtual bool OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_aData.m_bHover = true; return false;	}
+	virtual bool OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ m_aData.m_bHover = false; return false;	}
 	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )	{ return false;	}
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	{ return false;	}
 	virtual bool OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw )	{ return false;	}
@@ -150,12 +180,7 @@ protected:
 
 protected:
 	int				m_nLayoutProperty;
-	/// 客户对象，允许是图元或布局
-	SDL_Glyph *		m_pContent;
-	SDL_Glyph *		m_pParent;
-	bool			m_bHover;
-	bool			m_bVisible;
-	bool			m_bCheck;
+	GLYPH_DATA		m_aData;
 };
 
 #endif // SDL_GLYPH_H_INCLUDED

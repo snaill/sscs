@@ -38,8 +38,6 @@ public:
 
 	virtual const char * GetType()				{ return "SDL_ListBox"; }
 
-	virtual SDL_Size GetPreferedSize();
-
 protected:
 	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return dynamic_cast<SDL_ScrollBoxLayout *>( GetContent() ); }
 

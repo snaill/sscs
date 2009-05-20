@@ -127,6 +127,8 @@ public:
 			}
 			pItem->SetBounds( &rcItem );
 		}
+
+		SDL_Layout::SetBounds( lprc );
     }
 };
 
