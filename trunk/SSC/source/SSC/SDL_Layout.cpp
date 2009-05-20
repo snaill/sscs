@@ -43,5 +43,5 @@ bool SDL_Layout::HandleMouseEvent( const SDL_Event *event, bool * bDraw )
 				return true;
 	}
 
-	return false;
+	return SDL_Glyph::HandleMouseEvent( event, bDraw );
 }

@@ -400,22 +400,22 @@
 					RelativePath="..\..\source\SSC\SDL_SwitchUI.h"
 					>
 				</File>
-				<Filter
-					Name="Widget"
+			</Filter>
+			<Filter
+				Name="Widget"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ActionMenu.h"
 					>
-					<File
-						RelativePath="..\..\source\SSC\SDL_ActionMenu.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\SSC\SDL_ListBox.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\SSC\SDL_Toolbar.h"
-						>
-					</File>
-				</Filter>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ListBox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

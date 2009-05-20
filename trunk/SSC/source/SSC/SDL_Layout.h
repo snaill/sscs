@@ -35,12 +35,6 @@ public:
 
 // 基本属性
 public:
-	/// @brief 设置图元所在区域
-    /// @param lprc 欲设置矩形位置
-    virtual void SetBounds( const SDL_Rect * lprc ){
-		SDL_Glyph::SetBounds( lprc );
-	}
-
 	virtual SDL_Size GetPreferedSize( ) = 0;
 
  	virtual bool HandleMouseEvent( const SDL_Event *event, bool * bDraw );

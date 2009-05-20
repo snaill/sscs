@@ -32,96 +32,79 @@ SDL_ListBox::~SDL_ListBox()
 		m_curItem->Release();
 }
 
-SDL_Size SDL_ListBox::GetPreferedSize()	
-{
-	SDL_Size	sz( 0, 0 );
-	//
-	//SDL_Iterator<SDL_Glyph> pos; 
-	//GetCurrentLayout()->GetIterator<SDL_Glyph>( &pos );
-	//for ( pos.First(); !pos.IsDone(); pos.Next() )
-	//{
-	//	SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
-	//	sz.h += size.h;
-	//	if ( sz.w < size.w )
-	//		sz.w = size.w;
-	//}
-
-	return sz;
-}
-
 bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw )	
 {
-	//if ( button->button != SDL_BUTTON_LEFT )
-	//	return false;
+	if ( button->button != SDL_BUTTON_LEFT )
+		return false;
 
-	//SDL_Iterator<SDL_Glyph> pos; 
-	//GetIterator<SDL_Glyph>( &pos );
-	//for ( pos.First(); !pos.IsDone(); pos.Next() )
-	//{
-	//	SDL_Glyph * g = pos.GetCurrentItem();
-	//	if ( !g->IsIn( button->x, button->y ) )
-	//		continue;
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * g = pos.GetCurrentItem();
+		if ( !g->IsIn( button->x, button->y ) )
+			continue;
 
-	//	SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
-	//	if ( pItem )
-	//	{
-	//		pItem->SetSelected( true );
-	//		*bDraw = true;	
-	//	}
-	//	return true;
-	//}
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		if ( pItem )
+		{
+			pItem->SetSelected( true );
+			*bDraw = true;	
+		}
+		return true;
+	}
 	return false;
 }
 
 bool SDL_ListBox::OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )
 {
-	//if ( button->button != SDL_BUTTON_LEFT )
-	//	return false;
+	if ( button->button != SDL_BUTTON_LEFT )
+		return false;
 
-	//SDL_Iterator<SDL_Glyph> pos; 
-	//GetIterator<SDL_Glyph>( &pos );
-	//for ( pos.First(); !pos.IsDone(); pos.Next() )
-	//{
-	//	SDL_Glyph * g = pos.GetCurrentItem();
-	//	if ( !g->IsIn( button->x, button->y ) )
-	//		continue;
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * g = pos.GetCurrentItem();
+		if ( !g->IsIn( button->x, button->y ) )
+			continue;
 
-	//	SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
-	//	if ( pItem && pItem->GetSelected() )
-	//	{
-	//		pItem->SetSelected( false );
-	//		select( pItem );
-	//		*bDraw = true;	
-	//	}
-	//	return true;
-	//}
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		if ( pItem && pItem->GetSelected() )
+		{
+			pItem->SetSelected( false );
+			select( pItem );
+			*bDraw = true;	
+		}
+		return true;
+	}
 	return false;
 }
 
 bool SDL_ListBox::OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw )
 {
-	//if ( !( motion->state & SDL_BUTTON(1) ) )
-	//	return false;
+	if ( !( motion->state & SDL_BUTTON(1) ) )
+		return false;
 
-	//GetCurrentLayout()->Scroll( motion->yrel, this );
+	GetCurrentLayout()->Scroll( motion->yrel, this );
 
-	////
-	//SDL_Iterator<SDL_Glyph> pos; 
-	//GetIterator<SDL_Glyph>( &pos );
-	//for ( pos.First(); !pos.IsDone(); pos.Next() )
-	//{
-	//	SDL_Glyph * g = pos.GetCurrentItem();
-	//	if ( !g->IsIn( motion->x, motion->y ) )
-	//		continue;
+	//
+	SDL_Iterator<SDL_Glyph> pos; 
+	GetIterator<SDL_Glyph>( &pos );
+	for ( pos.First(); !pos.IsDone(); pos.Next() )
+	{
+		SDL_Glyph * g = pos.GetCurrentItem();
+		if ( !g->IsIn( motion->x, motion->y ) )
+			continue;
 
-	//	SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
-	//	if ( pItem && pItem->GetSelected() )
-	//	{
-	//		pItem->SetSelected( false );
-	//	}
-	//	break;
-	//}
-	//*bDraw = true;
+		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		if ( pItem && pItem->GetSelected() )
+		{
+			pItem->SetSelected( false );
+		}
+		break;
+	}
+	*bDraw = true;
 	return true;
 }
 
@@ -133,7 +116,7 @@ void SDL_ListBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, color.r, color.g, color.b ) );
 
 	//
-	SDL_Glyph::DrawWidget( screen, lprc );
+	SDL_Layout::DrawWidget( screen, lprc );
 }
 
 void SDL_ListBox::SelectItem( SDL_Glyph * g )	
