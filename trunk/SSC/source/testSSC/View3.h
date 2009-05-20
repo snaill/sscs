@@ -8,9 +8,9 @@ public:
 	CView3(void);
 	~CView3(void);
 
-	void OnToolButtonClick( SDL_Widget * button );
+	void OnToolButtonClick( SDL_Glyph * button );
 	void OnItemSelected( SDL_ListBoxItem * button );
-	void OnBtnClose( SDL_Widget * button );
+	void OnBtnClose( SDL_Glyph * button );
 
 protected:
 	SDL_Toolbar	*		m_toolbar;

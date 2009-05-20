@@ -73,8 +73,8 @@ void SDL_WindowManager::SetBounds( const SDL_Rect * lprc )
 		rc.h = tmp;
 	}
 
-	if ( GetLayout() )
-		GetLayout()->Update( this, &rc );
+	if ( GetContent() )
+		GetContent()->SetBounds( &rc );
 	
 	SDL_BoundingBox::SetBounds( lprc );
 }

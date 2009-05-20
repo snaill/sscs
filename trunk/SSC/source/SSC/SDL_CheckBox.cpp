@@ -74,7 +74,7 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 		rect.y = m_pt.y;
 		rect.w = m_pt.x + m_sz.w - x;
 		rect.h = m_sz.h;
-		pFontBig->DrawText( screen, m_text.c_str(), rect, color, -1, 0 );
+		pFontBig->DrawText2( screen, m_text.c_str(), rect, color, -1, 0 );
    
 		//¹Ø±Õ×ÖÌå
 		pFontBig->Release();
@@ -84,14 +84,14 @@ void SDL_CheckBox::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 
 bool SDL_CheckBox::OnMouseEnter( const SDL_MouseMotionEvent * motion, bool * bDraw )	
 { 
-	SDL_Widget::OnMouseEnter( motion, bDraw );
+	SDL_Glyph::OnMouseEnter( motion, bDraw );
 	*bDraw = true;
 	return true;	
 }
 
 bool SDL_CheckBox::OnMouseLeave( const SDL_MouseMotionEvent * motion, bool * bDraw )	
 { 
-	SDL_Widget::OnMouseLeave( motion, bDraw );
+	SDL_Glyph::OnMouseLeave( motion, bDraw );
 	*bDraw = true;
 	return true;	
 }

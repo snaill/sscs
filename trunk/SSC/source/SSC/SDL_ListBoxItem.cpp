@@ -28,10 +28,17 @@ SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Imag
 {
 	assert( text );
 
+	if ( !image &&  !remark )
+	{
+		SetContent( text );
+		return;
+	}
+
+	SDL_BorderLayout * layout = new SDL_BorderLayout();
 	if ( image )
 	{
 		image->SetLayoutProperty( SDL_BorderLayout::west );
-		Add( image );
+		layout->Add( image );
 	}
 
 	if ( remark )
@@ -41,7 +48,7 @@ SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Imag
 		remark->SetColor( SDL_Theme::BtnText );
 		remark->SetAlign( -1 );
 		remark->SetVAlign( 0 );
-		Add( remark );
+		layout->Add( remark );
 	}
 
 	text->SetLayoutProperty( SDL_BorderLayout::fill );
@@ -49,7 +56,9 @@ SDL_ListBoxItem::SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Imag
 	text->SetColor( SDL_Theme::BtnText );
 	text->SetAlign( -1 );
 	text->SetVAlign( 0 );	
-	Add( text );
+	layout->Add( text );
+
+	SetContent( layout );
 }
 
 void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
@@ -67,7 +76,7 @@ void SDL_ListBoxItem::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 
 	//
-	SDL_Container::DrawWidget( screen, lprc );
+	SDL_Glyph::DrawWidget( screen, lprc );
 
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
 }

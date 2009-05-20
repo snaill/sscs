@@ -22,7 +22,7 @@
 #define SDL_BORDERLAYOUT_H_INCLUDED
 
 #include "SDL_Layout.h"
-#include "SDL_Widget.h"
+#include "SDL_Glyph.h"
 
 /// @brief 所有界面布局的基类，实现固定布局
 class SDL_BorderLayout : public SDL_Layout
@@ -39,11 +39,11 @@ public:
 	
 // 方法
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer )	{
+	virtual SDL_Size GetPreferedSize()	{
 		SDL_Size	sz;
 
 		SDL_Iterator<SDL_Glyph> pos; 
-		pContainer->GetIterator<SDL_Glyph>( &pos, true );
+		GetIterator<SDL_Glyph>( &pos, true );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			SDL_Glyph * pItem = pos.GetCurrentItem();
@@ -73,11 +73,11 @@ public:
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc )
+    virtual void SetBounds( const SDL_Rect * lprc )
     {
 		SDL_Rect	rc = *lprc;
 		SDL_Iterator<SDL_Glyph> pos; 
-		pContainer->GetIterator<SDL_Glyph>( &pos );
+		GetIterator<SDL_Glyph>( &pos );
 		for ( pos.First(); !pos.IsDone(); pos.Next() )
 		{
 			if ( rc.w == 0 || rc.h == 0 )

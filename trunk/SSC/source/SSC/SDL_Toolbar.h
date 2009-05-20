@@ -21,10 +21,10 @@
 #ifndef SDL_TOOLBAR_H_INCLUDED
 #define SDL_TOOLBAR_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_FlowLayout.h"
 
 /// @brief 控件类的基类
-class SDL_Toolbar : public SDL_Widget
+class SDL_Toolbar : public SDL_FlowLayout
 {
 // 基本属性
 public:

@@ -25,8 +25,10 @@
 
 SDL_ActionMenu::SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 ) 
 {
-	Add( btn1 ? ( SDL_Glyph * )btn1 : ( SDL_Glyph * )new SDL_Spacer() );
-	Add( btn2 ? ( SDL_Glyph * )btn2 : ( SDL_Glyph * )new SDL_Spacer() );
+	SDL_HBoxLayout * layout = new SDL_HBoxLayout();
+	layout->Add( btn1 ? ( SDL_Glyph * )btn1 : ( SDL_Glyph * )new SDL_Spacer() );
+	layout->Add( btn2 ? ( SDL_Glyph * )btn2 : ( SDL_Glyph * )new SDL_Spacer() );
+	SetContent( layout );
 }
 
 void SDL_ActionMenu::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc  )   
@@ -43,5 +45,5 @@ void SDL_ActionMenu::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc  )
 
 	rectangleRGBA( screen, m_pt.x, m_pt.y, m_pt.x + m_sz.w - 1, m_pt.y + m_sz.h - 1, 0, 0, 0, 100 ); 
 
-	SDL_Widget::DrawWidget( screen, lprc );
+	SDL_Glyph::DrawWidget( screen, lprc );
 }

@@ -24,22 +24,21 @@
 
 SDL_Toolbar::SDL_Toolbar()		
 {
-	m_pLayout = new SDL_FlowLayout();
 }
 
 SDL_Size SDL_Toolbar::GetPreferedSize()	
 {
 	SDL_Size	sz( 0, 0 );
 	
-	SDL_Iterator<SDL_Glyph> pos; 
-	GetIterator<SDL_Glyph>( &pos, true );
-	for ( pos.First(); !pos.IsDone(); pos.Next() )
-	{
-		SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
-		sz.w += size.w;
-		if ( sz.h < size.h )
-			sz.h = size.h;
-	}
+	//SDL_Iterator<SDL_Glyph> pos; 
+	//GetIterator<SDL_Glyph>( &pos, true );
+	//for ( pos.First(); !pos.IsDone(); pos.Next() )
+	//{
+	//	SDL_Size size = pos.GetCurrentItem()->GetPreferedSize();
+	//	sz.w += size.w;
+	//	if ( sz.h < size.h )
+	//		sz.h = size.h;
+	//}
 
 	return sz;
 }
@@ -51,5 +50,5 @@ void SDL_Toolbar::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 	SDL_Color	color = theme->GetColor( SDL_Theme::BtnFace );
 	SDL_FillRect( screen, ( SDL_Rect * )lprc, SDL_MapRGB( screen->format, color.r, color.g, color.b ) );
 
-	SDL_Widget::DrawWidget( screen, lprc );
+	SDL_Glyph::DrawWidget( screen, lprc );
 }

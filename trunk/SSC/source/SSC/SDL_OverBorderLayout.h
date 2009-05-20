@@ -22,7 +22,6 @@
 #define SDL_OVERBORDERLAYOUT_H_INCLUDED
 
 #include "SDL_Layout.h"
-#include "SDL_Widget.h"
 
 /// @brief 所有界面布局的基类，实现固定布局
 class SDL_OverBorderLayout : public SDL_Layout
@@ -39,14 +38,14 @@ public:
 	
 // 方法
 public:
-	virtual SDL_Size GetPreferedSize( SDL_Container * pContainer );
+	virtual SDL_Size GetPreferedSize();
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
-    virtual void Update( SDL_Container * pContainer, const SDL_Rect * lprc );
+    virtual void SetBounds( const SDL_Rect * lprc );
 	
-	virtual void DrawWidget( SDL_Container * pContainer, SDL_Surface * screen );
- 	virtual bool HandleMouseEvent( SDL_Container * pContainer, const SDL_Event *event, bool * bDraw );
+	virtual void DrawWidget( SDL_Surface * screen );
+ 	virtual bool HandleMouseEvent( const SDL_Event *event, bool * bDraw );
 
 };
 

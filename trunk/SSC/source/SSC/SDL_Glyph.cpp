@@ -19,6 +19,7 @@
  */
 
 #include "SDL_Glyph.h"
+#include <SDL_gfxPrimitives.h>
 
 SDL_Surface * SDL_Glyph::ToSurface( SDL_Surface * screen )
 {
@@ -29,4 +30,12 @@ SDL_Surface * SDL_Glyph::ToSurface( SDL_Surface * screen )
 	rc.x = rc.y = 0;
 	DrawWidget( surface, &rc );
 	return surface;
+}
+
+void SDL_Glyph::Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTopLeft, SDL_Color clrBottomRight )
+{
+	hlineRGBA( screen, rect.x, rect.x + rect.w - 1, rect.y, clrTopLeft.r, clrTopLeft.g, clrTopLeft.b, 255 );
+    vlineRGBA( screen, rect.x, rect.y, rect.y + rect.h - 1, clrTopLeft.r, clrTopLeft.g, clrTopLeft.b, 255 );
+    hlineRGBA( screen, rect.x, rect.x + rect.w - 1, rect.y + rect.h - 1, clrBottomRight.r, clrBottomRight.g, clrBottomRight.b, 255 );
+    vlineRGBA( screen, rect.x + rect.w - 1, rect.y, rect.y + rect.h - 1, clrBottomRight.r, clrBottomRight.g, clrBottomRight.b, 255 );
 }

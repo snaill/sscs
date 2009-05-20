@@ -21,7 +21,6 @@
 #ifndef SDL_ACTIONMENU_H_INCLUDED
 #define SDL_ACTIONMENU_H_INCLUDED
 
-#include "SDL_Widget.h"
 #include "SDL_Image.h"
 #include "SDL_Label.h"
 #include "SDL_Button.h"
@@ -29,7 +28,7 @@
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ActionMenu : public SDL_Widget
+class SDL_ActionMenu : public SDL_Glyph
 {
 public:
     SDL_ActionMenu( SDL_Button * btn1, SDL_Button * btn2 );
@@ -38,8 +37,6 @@ public:
 	virtual const char * GetType()	{ return "SDL_ActionMenu"; }
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_HBoxLayout(); }
-
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );

@@ -21,11 +21,11 @@
 #ifndef SDL_CHECKBOX_H_INCLUDED
 #define SDL_CHECKBOX_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Glyph.h"
 #include <SDL_ttf.h>
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_CheckBox : public SDL_Widget
+class SDL_CheckBox : public SDL_Glyph
 {
 public:
     SDL_CheckBox( const wchar_t * text ); 

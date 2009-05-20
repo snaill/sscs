@@ -19,6 +19,8 @@
  */
 
 #include "SDL_Label.h"
+#include "SDL_Font.h"
+#include "SDL_Theme.h"
 #include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
@@ -55,7 +57,7 @@ void SDL_Label::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 		SDL_Font *pFontBig = theme->GetFont( m_nFont );
 		SDL_Color	color = theme->GetColor( m_nColor );
 
-		pFontBig->DrawText( screen, m_text.c_str(), *lprc, color, m_align, m_valign );
+		pFontBig->DrawText2( screen, m_text.c_str(), *lprc, color, m_align, m_valign );
    
 		//¹Ø±Õ×ÖÌå
 		pFontBig->Release();

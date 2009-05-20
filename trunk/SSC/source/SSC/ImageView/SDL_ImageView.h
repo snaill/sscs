@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../SDL_Widget.h"
+#include "../SDL_Glyph.h"
 
 ///<summary>
 /// CImageView类的简要说明
@@ -11,7 +11,7 @@
 /// 版本: 1.0
 /// 日期: 2007/6/4
 ///</summary>
-class SDL_ImageView :  public SDL_Widget
+class SDL_ImageView :  public SDL_Glyph
 {
 protected:
 	///<summary>文件名</summary>

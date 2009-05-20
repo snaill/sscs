@@ -21,12 +21,13 @@
 #ifndef SDL_WINDOW_H_INCLUDED
 #define SDL_WINDOW_H_INCLUDED
 
-#include "SDL_Widget.h"
+#include "SDL_Glyph.h"
+#include "sigslot.h"
 
-class SDL_Window : public SDL_Widget
+class SDL_Window : public SDL_Glyph
 {
 public:
-	sigslot::signal1<SDL_Widget *>		destroy;
+	sigslot::signal1<SDL_Glyph *>		destroy;
 
 public:
 	SDL_Window() : m_bLoop( false )		{}

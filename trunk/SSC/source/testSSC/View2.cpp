@@ -46,17 +46,18 @@ CView2::CView2(void)
 	menu->SetLayoutProperty( SDL_BorderLayout::south );
 
 	//
-	SetLayout( new SDL_BorderLayout() );
-	Add( toolbar );
-	Add( menu );
-	Add( listbox );
+	SDL_BorderLayout * layout = new SDL_BorderLayout();
+	layout->Add( toolbar );
+	layout->Add( menu );
+	layout->Add( listbox );
+	SetContent( layout );
 }
 
 CView2::~CView2(void)
 {
 }
 
-void CView2::OnBtnReturn( SDL_Widget * button )
+void CView2::OnBtnReturn( SDL_Glyph * button )
 {
 	Destory();
 }

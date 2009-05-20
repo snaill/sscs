@@ -50,7 +50,7 @@ public:
 		return SDL_Size( w, h );
 	}
 
-	bool DrawText( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, int align = 0, int valign = 0, bool bHighQuality = true )	{
+	bool DrawText2( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, int align = 0, int valign = 0, bool bHighQuality = true )	{
 
 		//使用打开的字体,将字符串"画"到内存(显示环境)中
 		SDL_Surface  *pTextSurface = 0;
@@ -92,7 +92,7 @@ public:
 		return true;
 	}
 
-	bool DrawText( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, SDL_Color crBack, int align = 0, int valign = 0 )	{
+	bool DrawText2( SDL_Surface * screen, const wchar_t * text, SDL_Rect rc, SDL_Color color, SDL_Color crBack, int align = 0, int valign = 0 )	{
 
 		//使用打开的字体,将字符串"画"到内存(显示环境)中
 		SDL_Surface  *pTextSurface = TTF_RenderUNICODE_Shaded( m_pFont, (const Uint16 *)text, color, crBack );
