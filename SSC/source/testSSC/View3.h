@@ -9,7 +9,7 @@ public:
 	~CView3(void);
 
 	void OnToolButtonClick( SDL_Glyph * button );
-	void OnItemSelected( SDL_ListBoxItem * button );
+	void OnItemSelected( SDL_ListItem * button );
 	void OnBtnClose( SDL_Glyph * button );
 
 protected:

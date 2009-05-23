@@ -22,14 +22,14 @@
 #define SDL_LISTBOX_H_INCLUDED
 
 #include "SDL_ScrollBoxLayout.h"
-#include "SDL_ListBoxItem.h"
+#include "SDL_ListItem.h"
 #include "SDL_ScrollBoxLayout.h"
 
 /// @brief 控件类的基类
 class SDL_ListBox : public SDL_ScrollBoxLayout
 {
 public:
-	sigslot::signal1<SDL_ListBoxItem *>		select;
+	sigslot::signal1<SDL_ListItem *>		select;
 
 // 基本属性
 public:
@@ -39,8 +39,6 @@ public:
 	virtual const char * GetType()				{ return "SDL_ListBox"; }
 
 protected:
-	inline SDL_ScrollBoxLayout * GetCurrentLayout()	{ return dynamic_cast<SDL_ScrollBoxLayout *>( GetContent() ); }
-
 	virtual bool OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw );
 	virtual bool OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw );
 	virtual bool OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw );

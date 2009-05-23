@@ -8,10 +8,10 @@ public:
 	CView1(void);
 	~CView1(void);
 
-	void OnItemSelected( SDL_ListBoxItem * button );
+	void OnItemSelected( SDL_ListItem * button );
 	void OnBtnClose( SDL_Glyph * button );
 
 protected:
 	SDL_ListBox	*		m_listbox;
-	SDL_ListBoxItem *	m_itemView2;
+	SDL_ListItem *	m_itemView2;
 };
