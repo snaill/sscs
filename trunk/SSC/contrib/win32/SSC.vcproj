@@ -223,7 +223,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ListBoxItem.cpp"
+					RelativePath="..\..\source\SSC\SDL_ListItem.cpp"
 					>
 				</File>
 				<File
@@ -353,7 +353,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ListBoxItem.h"
+					RelativePath="..\..\source\SSC\SDL_ListItem.h"
 					>
 				</File>
 				<File

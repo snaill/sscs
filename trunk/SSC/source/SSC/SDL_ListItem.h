@@ -18,37 +18,26 @@
     Snaill  <snaill@jeebook.com>
  */
 
-#ifndef SDL_LISTBOXITEM_H_INCLUDED
-#define SDL_LISTBOXITEM_H_INCLUDED
+#ifndef SDL_LISTITEM_H_INCLUDED
+#define SDL_LISTITEM_H_INCLUDED
 
 #include "SDL_Label.h"
 #include "SDL_Image.h"
 #include "SDL_BorderLayout.h"
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ListBoxItem : public SDL_Glyph
+class SDL_ListItem : public SDL_Glyph
 {
 public:
-	SDL_ListBoxItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image );
-    virtual ~SDL_ListBoxItem()		{}
+	SDL_ListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image );
+    virtual ~SDL_ListItem()		{}
 
-	virtual const char * GetType()	{ return "SDL_ListBoxItem"; }
-
-	long GetParam()					{ return m_lParam;		}
-	void SetParam( long lParam )	{ m_lParam = lParam;	}
-	bool GetSelected()				{ return m_bSelected;		}
-	void SetSelected( bool bSelected )	{ m_bSelected = bSelected;	}
+	virtual const char * GetType()	{ return "SDL_ListItem"; }
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_BorderLayout(); }
-
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
-
-protected:
-	long			m_lParam;
-	bool			m_bSelected;
 };
 
-#endif //!SDL_LISTBOXITEM_H_INCLUDED
+#endif //!SDL_LISTITEM_H_INCLUDED

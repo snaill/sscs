@@ -64,7 +64,7 @@ CView3::~CView3(void)
 {
 }
 
-void CView3::OnItemSelected( SDL_ListBoxItem * button )
+void CView3::OnItemSelected( SDL_ListItem * button )
 {
 	//SDL_SwitchUI	sui;
 	//sui.SetOld( m_listbox );
@@ -83,18 +83,18 @@ void CView3::OnItemSelected( SDL_ListBoxItem * button )
 	//if ( m_nClick < 4 )
 	//	m_listbox->Add( new SDL_CheckBox( L"CheckBox1" ) );
 
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test5"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test7"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test8"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test9"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test10"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test11"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test12"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test13"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test14"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test15"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test16"), new SDL_Label( L"ccccc" ), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test5"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test7"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test8"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test9"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test10"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test11"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test12"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test13"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test14"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test15"), new SDL_Label( L"ccccc"), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test16"), new SDL_Label( L"ccccc" ), new SDL_Image( m_imgList->GetObj<SDL_ImageList>(), 4 ) ));
 
 	m_nClick++;
 	if ( m_nClick > 4 )

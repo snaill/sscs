@@ -92,6 +92,9 @@ public:
 
 	template < class T >	
 	void GetIterator( SDL_Iterator<T> * iter, bool r = false )	{
+		if ( !GetCount() )
+			return;
+
 		if ( !r )
 		{
 	        for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )

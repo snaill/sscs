@@ -4,9 +4,9 @@
 CView1::CView1(void)
 {
 	m_listbox = new SDL_ListBox( );
-	m_itemView2 = new SDL_ListBoxItem( new SDL_Label( L"View2"), new SDL_Label( L"ccccc"), 0 );
+	m_itemView2 = new SDL_ListItem( new SDL_Label( L"View2"), new SDL_Label( L"ccccc"), 0 );
 	m_listbox->Add( m_itemView2 );
-	m_listbox->Add( new SDL_ListBoxItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), 0 ));
+	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), 0 ));
 	m_listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 	m_listbox->select.connect( this, &CView1::OnItemSelected );
 
@@ -27,7 +27,7 @@ CView1::~CView1(void)
 {
 }
 
-void CView1::OnItemSelected( SDL_ListBoxItem * button )
+void CView1::OnItemSelected( SDL_ListItem * button )
 {
 	SDL_Window * view = 0;
 	if ( button == m_itemView2 )

@@ -45,7 +45,7 @@ bool SDL_ListBox::OnMouseDown( const SDL_MouseButtonEvent * button, bool * bDraw
 		if ( !g->IsIn( button->x, button->y ) )
 			continue;
 
-		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		SDL_ListItem * pItem = dynamic_cast<SDL_ListItem *>( g );
 		if ( pItem )
 		{
 			pItem->SetSelected( true );
@@ -69,7 +69,7 @@ bool SDL_ListBox::OnMouseUp( const SDL_MouseButtonEvent * button, bool * bDraw )
 		if ( !g->IsIn( button->x, button->y ) )
 			continue;
 
-		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		SDL_ListItem * pItem = dynamic_cast<SDL_ListItem *>( g );
 		if ( pItem && pItem->GetSelected() )
 		{
 			pItem->SetSelected( false );
@@ -86,7 +86,7 @@ bool SDL_ListBox::OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw
 	if ( !( motion->state & SDL_BUTTON(1) ) )
 		return false;
 
-	GetCurrentLayout()->Scroll( motion->yrel, this );
+	Scroll( motion->yrel, this );
 
 	//
 	SDL_Iterator<SDL_Glyph> pos; 
@@ -97,7 +97,7 @@ bool SDL_ListBox::OnMouseMove( const SDL_MouseMotionEvent * motion, bool * bDraw
 		if ( !g->IsIn( motion->x, motion->y ) )
 			continue;
 
-		SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>( g );
+		SDL_ListItem * pItem = dynamic_cast<SDL_ListItem *>( g );
 		if ( pItem && pItem->GetSelected() )
 		{
 			pItem->SetSelected( false );
@@ -126,13 +126,13 @@ void SDL_ListBox::SelectItem( SDL_Glyph * g )
 
 	if ( m_curItem )
 	{
-		SDL_ListBoxItem * pCurItem = dynamic_cast<SDL_ListBoxItem *>(m_curItem);
+		SDL_ListItem * pCurItem = dynamic_cast<SDL_ListItem *>(m_curItem);
 		if ( pCurItem )
 			pCurItem->SetSelected( false );
 		m_curItem->Release();
 	}
 	
-	SDL_ListBoxItem * pItem = dynamic_cast<SDL_ListBoxItem *>(g);
+	SDL_ListItem * pItem = dynamic_cast<SDL_ListItem *>(g);
 	if ( pItem )
 		pItem->SetSelected( true );
 
@@ -140,7 +140,7 @@ void SDL_ListBox::SelectItem( SDL_Glyph * g )
 
 	SDL_Rect	rc = g->GetBounds();
 	if ( rc.y < m_pt.y )
-		GetCurrentLayout()->Scroll( m_pt.y - rc.y, this );
+		Scroll( m_pt.y - rc.y, this );
 	if ( rc.y + rc.h > m_pt.y + m_sz.h )
-		GetCurrentLayout()->Scroll( m_pt.y + m_sz.h - rc.h - rc.y, this );
+		Scroll( m_pt.y + m_sz.h - rc.h - rc.y, this );
 }

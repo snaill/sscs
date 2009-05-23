@@ -31,7 +31,7 @@ protected:
 		SDL_Glyph *		m_pContent;
 		SDL_Glyph *		m_pParent;
 		Uint32			m_bHover : 1;
-		Uint32			m_bVisible : 1;
+		Uint32			m_bHidden : 1;
 		Uint32			m_bChecked : 1;
 		Uint32			m_bSelected : 1;
 		Uint32			m_bRe : 28;
@@ -39,11 +39,7 @@ protected:
 
 public:
 	SDL_Glyph() {
-		m_aData.m_bHover = false;
-		m_aData.m_bVisible = true; 
-		m_aData.m_pParent = 0;
-		m_aData.m_bChecked = false;
-		m_aData.m_pContent = 0;
+		memset( &m_aData, 0x00, sizeof( m_aData ) );
 	}
 
 	virtual ~SDL_Glyph() {}
@@ -126,13 +122,6 @@ public:
 		return bHandled;
 	}
 	
-	///
-    virtual SDL_Glyph * GetContent(){ 	return m_aData.m_pContent;	}
-    virtual void SetContent( SDL_Glyph * content ){ m_aData.m_pContent = content; }
-	///
-    virtual SDL_Glyph * GetParent(){ return m_aData.m_pParent;	}
-    virtual void SetParent( SDL_Glyph * parent ){ m_aData.m_pParent = parent; }
-
 public:
 	virtual void RecalcLayout( bool bDraw = true )	{ 
 		SetBounds( &GetBounds() );
@@ -148,19 +137,30 @@ public:
 	}
 
 public:
-	bool GetVisible()			{ return m_aData.m_bVisible;	}
+	///
+    virtual SDL_Glyph * GetContent(){ 	return m_aData.m_pContent;	}
+    virtual void SetContent( SDL_Glyph * content ){ m_aData.m_pContent = content; }
+	///
+    virtual SDL_Glyph * GetParent(){ return m_aData.m_pParent;	}
+    virtual void SetParent( SDL_Glyph * parent ){ m_aData.m_pParent = parent; }
+
+	bool GetVisible()			{ return !m_aData.m_bHidden;	}
 	void SetVisible( bool bVisible ) { 
-		if ( m_aData.m_bVisible == bVisible )
+		if ( m_aData.m_bHidden == !bVisible )
 			return;
 
-		m_aData.m_bVisible = bVisible;
+		m_aData.m_bHidden = !bVisible;
 		if ( GetParent() )
 			GetParent()->RecalcLayout();
 	}
-	bool GetCheck()					{ return m_aData.m_bChecked;		}
-	void SetCheck( bool bCheck )	{ m_aData.m_bChecked = bCheck;	}
-	bool GetHover()					{ return m_aData.m_bHover;		}
-	void SetHover( bool bHover )	{ m_aData.m_bHover = bHover;	}
+	bool GetCheck()						{ return m_aData.m_bChecked;		}
+	void SetCheck( bool bCheck )		{ m_aData.m_bChecked = bCheck;		}
+	bool GetHover()						{ return m_aData.m_bHover;			}
+	void SetHover( bool bHover )		{ m_aData.m_bHover = bHover;		}
+	bool GetSelected()					{ return m_aData.m_bSelected;		}
+	void SetSelected( bool bSelected )	{ m_aData.m_bSelected = bSelected;	}
+	long GetParam()						{ return m_lParam;		}
+	void SetParam( long lParam )		{ m_lParam = lParam;	}
 
 protected:
     /// @brief 绘制当前图元
@@ -180,6 +180,9 @@ protected:
 
 protected:
 	int				m_nLayoutProperty;
+	Uint32			m_lParam;
+
+private:
 	GLYPH_DATA		m_aData;
 };
 
