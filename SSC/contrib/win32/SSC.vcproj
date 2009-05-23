@@ -195,10 +195,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ListBox.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\source\SSC\SDL_Toolbar.cpp"
 					>
 				</File>
@@ -220,10 +216,6 @@
 				</File>
 				<File
 					RelativePath="..\..\source\SSC\SDL_Label.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\source\SSC\SDL_ListItem.cpp"
 					>
 				</File>
 				<File
@@ -252,6 +244,26 @@
 				>
 				<File
 					RelativePath="..\..\source\SSC\SDL_SwitchUI.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ListBox"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_DirListItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ListBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_ListItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_MenuListItem.cpp"
 					>
 				</File>
 			</Filter>
@@ -353,10 +365,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_ListItem.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\source\SSC\SDL_ProgressBall.h"
 					>
 				</File>
@@ -409,11 +417,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ListBox"
+				>
+				<File
+					RelativePath="..\..\source\SSC\SDL_DirListItem.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\source\SSC\SDL_ListBox.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\SSC\SDL_Toolbar.h"
+					RelativePath="..\..\source\SSC\SDL_ListItem.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\SSC\SDL_MenuListItem.h"
 					>
 				</File>
 			</Filter>

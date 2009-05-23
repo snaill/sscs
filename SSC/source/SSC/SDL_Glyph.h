@@ -165,7 +165,10 @@ public:
 protected:
     /// @brief 绘制当前图元
     /// @param screen	屏幕Surface
-	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) {}
+	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc ) {
+		if ( GetContent() )
+			GetContent()->DrawWidget( screen, lprc );
+	}
 
     void Draw3DRect( SDL_Surface *screen, SDL_Rect rect, SDL_Color clrTopLeft, SDL_Color clrBottomRight );
 
