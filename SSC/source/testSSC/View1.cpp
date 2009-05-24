@@ -4,9 +4,9 @@
 CView1::CView1(void)
 {
 	m_listbox = new SDL_ListBox( );
-	m_itemView2 = new SDL_ListItem( new SDL_Label( L"View2"), new SDL_Label( L"ccccc"), 0 );
+	m_itemView2 = new SDL_MenuListItem( new SDL_Label( L"View2") );
 	m_listbox->Add( m_itemView2 );
-	m_listbox->Add( new SDL_ListItem( new SDL_Label( L"Test6"), new SDL_Label( L"ccccc"), 0 ));
+	m_listbox->Add( new SDL_MenuListItem( new SDL_Label( L"Test6") ));
 	m_listbox->SetLayoutProperty( SDL_BorderLayout::fill );
 	m_listbox->select.connect( this, &CView1::OnItemSelected );
 

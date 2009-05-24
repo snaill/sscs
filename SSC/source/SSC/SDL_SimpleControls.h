@@ -41,6 +41,7 @@
 #include "SDL_ProgressBar.h"
 #include "SDL_ProgressBall.h"
 #include "SDL_CheckBox.h"
+#include "SDL_MenuListItem.h"
 #include "SDL_ListBox.h"
 #include "SDL_ActionMenu.h"
 #include "SDL_Toolbar.h"

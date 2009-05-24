@@ -21,34 +21,28 @@
 #ifndef SDL_MENULISTITEM_H_INCLUDED
 #define SDL_MENULISTITEM_H_INCLUDED
 
-#include "SSC/SDL_Label.h"
-#include "SSC/SDL_Image.h"
-#include "SSC/SDL_BorderLayout.h"
+#include "SSC/SDL_ListItem.h"
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_MenuListItem : public SDL_Layout
+class SDL_MenuListItem : public SDL_ListItem
 {
 public:
-	SDL_MenuListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image );
+	SDL_MenuListItem( SDL_Label * text );
     virtual ~SDL_MenuListItem()		{}
 
 	virtual const char * GetType()	{ return "SDL_MenuListItem"; }
 
-	long GetParam()					{ return m_lParam;		}
-	void SetParam( long lParam )	{ m_lParam = lParam;	}
-	bool GetSelected()				{ return m_bSelected;		}
-	void SetSelected( bool bSelected )	{ m_bSelected = bSelected;	}
+	virtual SDL_Size GetPreferedSize();
+
+    /// @brief 设置图元所在区域
+    /// @param lprc 欲设置矩形位置
+    virtual void SetBounds( const SDL_Rect * lprc );
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_BorderLayout(); }
-
-    /// @brief 在制定区域绘制图元
+   /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
 
-protected:
-	long			m_lParam;
-	bool			m_bSelected;
 };
 
 #endif //!SDL_MENULISTITEM_H_INCLUDED

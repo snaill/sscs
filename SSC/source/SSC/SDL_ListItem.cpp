@@ -19,7 +19,6 @@
  */
 
 #include "SDL_ListItem.h"
-#include "SDL_BorderLayout.h"
 #include "SDL_WindowManager.h"
 #include <SDL_gfxPrimitives.h>
 
@@ -33,11 +32,10 @@ SDL_ListItem::SDL_ListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * im
 		return;
 	}
 
-	SDL_BorderLayout * layout = new SDL_BorderLayout();
 	if ( image )
 	{
 		image->SetLayoutProperty( SDL_BorderLayout::west );
-		layout->Add( image );
+		Add( image );
 	}
 
 	if ( remark )
@@ -47,7 +45,7 @@ SDL_ListItem::SDL_ListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * im
 		remark->SetColor( SDL_Theme::BtnText );
 		remark->SetAlign( -1 );
 		remark->SetVAlign( 0 );
-		layout->Add( remark );
+		Add( remark );
 	}
 
 	text->SetLayoutProperty( SDL_BorderLayout::fill );
@@ -55,9 +53,7 @@ SDL_ListItem::SDL_ListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * im
 	text->SetColor( SDL_Theme::BtnText );
 	text->SetAlign( -1 );
 	text->SetVAlign( 0 );	
-	layout->Add( text );
-
-	SetContent( layout );
+	Add( text );
 }
 
 void SDL_ListItem::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )   
@@ -75,7 +71,7 @@ void SDL_ListItem::DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc )
 		SDL_FillRect( screen, ( SDL_Rect * )&rc, SDL_MapRGB( screen->format, crSelect.r, crSelect.g, crSelect.b ) );
 
 	//
-	SDL_Glyph::DrawWidget( screen, lprc );
+	SDL_BorderLayout::DrawWidget( screen, lprc );
 
 	hlineRGBA( screen, m_pt.x + 4, m_pt.x + m_sz.w - 4, m_pt.y + m_sz.h - 1, color.r, color.g, color.b, 100 ); 
 }

@@ -22,7 +22,6 @@
 #define SDL_BORDERLAYOUT_H_INCLUDED
 
 #include "SDL_Layout.h"
-#include "SDL_Glyph.h"
 
 /// @brief 所有界面布局的基类，实现固定布局
 class SDL_BorderLayout : public SDL_Layout
