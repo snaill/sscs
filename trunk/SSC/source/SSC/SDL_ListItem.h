@@ -26,9 +26,10 @@
 #include "SDL_BorderLayout.h"
 
 /// @brief 所有图元对象的基类，包含对象的计数操作
-class SDL_ListItem : public SDL_Glyph
+class SDL_ListItem : public SDL_BorderLayout
 {
 public:
+	SDL_ListItem()	{}
 	SDL_ListItem( SDL_Label * text, SDL_Label * remark, SDL_Image * image );
     virtual ~SDL_ListItem()		{}
 
