@@ -28,7 +28,7 @@ class SDL_CardLayout : public SDL_Layout
 {
 // 基本属性
 public:
-	SDL_CardLayout() : m_pActiveItem(0)  	{ }
+	SDL_CardLayout()					  	{ }
     virtual ~SDL_CardLayout()				{ }
 
 	virtual const char * GetType()				{ return "SDL_CardLayout"; }
@@ -36,23 +36,41 @@ public:
 // 方法
 public:
 	virtual SDL_Size GetPreferedSize()	{
-		return m_pActiveItem ? m_pActiveItem->GetPreferedSize() : SDL_Size( 0, 0 );
+		return GetActiveItem() ? GetActiveItem()->GetPreferedSize() : SDL_Size( 0, 0 );
 	}
 
     /// @brief 设置图元所在区域
     /// @param lprc 欲设置矩形位置
     virtual void SetBounds( const SDL_Rect * lprc )
     {
-		if ( m_pActiveItem )
-			m_pActiveItem->SetBounds( lprc );
+		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			(*pos)->SetBounds( lprc );
+		}
+			
+		SDL_BoundingBox::SetBounds( lprc );
     }
 
 public:
-	SDL_Glyph *	GetActiveItem()						{ return m_pActiveItem;	}
-	void SetActiveItem( SDL_Glyph * pActiveItem )	{ m_pActiveItem = pActiveItem;	}
+	SDL_Glyph *	GetActiveItem()						{ 
+		if ( m_aChildren.empty() )
+			return 0;
+	
+		return *m_aChildren.rbegin();
+	}
 
-protected:
-	SDL_Glyph *			m_pActiveItem;
+	void SetActiveItem( SDL_Glyph * pActiveItem )	{ 
+		if ( m_aChildren.empty() )
+			return;
+
+		for ( std::vector<SDL_Glyph *>::iterator pos = m_aChildren.begin(); pos != m_aChildren.end(); pos ++ )
+		{
+			if ( pActiveItem == *pos ) {
+                m_aChildren.erase( pos );
+			}
+		}
+		m_aChildren.push_back( pActiveItem );
+	}
 };
 
 #endif // SDL_CARDLAYOUT_H_INCLUDED

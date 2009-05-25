@@ -63,6 +63,24 @@ SDL_WindowManager * SDL_WindowManager::Get()
 	return m_this;
 }
 
+SDL_Rect SDL_WindowManager::GetBounds()
+{
+	SDL_Rect	rc;
+	rc.x = m_pt.x;
+	rc.y = m_pt.y;
+	if ( m_degree == 90 || m_degree == 270 )
+	{
+		rc.w = m_sz.h;
+		rc.h = m_sz.w;
+	}
+	else
+	{
+		rc.w = m_sz.w;
+		rc.h = m_sz.h;
+	}
+	return rc;
+}
+
 void SDL_WindowManager::SetBounds( const SDL_Rect * lprc )
 {
 	SDL_Rect	rc = *lprc;
@@ -73,10 +91,37 @@ void SDL_WindowManager::SetBounds( const SDL_Rect * lprc )
 		rc.h = tmp;
 	}
 
-	if ( GetContent() )
-		GetContent()->SetBounds( &rc );
-	
-	SDL_BoundingBox::SetBounds( lprc );
+	if ( lprc->w != m_sz.w || lprc->h != m_sz.h )
+		m_screen = SDL_SetVideoMode( lprc->w, lprc->h, m_bpp, m_videoFlag );
+
+	SDL_CardLayout::SetBounds( &rc );
+}
+
+void SDL_WindowManager::SetDegree( int nDegree )
+{
+	if ( m_degree == nDegree || 180 == abs(m_degree - nDegree ) )
+		return;
+
+	if ( m_screenBuffer )
+	{
+		SDL_FreeSurface( m_screenBuffer );
+		m_screenBuffer = 0;
+	}
+
+	if ( !nDegree )
+		return;
+
+	if ( nDegree == 180 )
+	{
+		m_screenBuffer = SDL_CreateRGBSurface( 0, m_sz.w, m_sz.h, 32/*m_screen->format->BitsPerPixel*/, 
+			m_screen->format->Rmask, m_screen->format->Gmask, m_screen->format->Bmask, m_screen->format->Amask );
+	}
+	else
+	{
+		m_screenBuffer = SDL_CreateRGBSurface( 0, m_sz.h, m_sz.w, 32/*m_screen->format->BitsPerPixel*/, 
+			m_screen->format->Rmask, m_screen->format->Gmask, m_screen->format->Bmask, m_screen->format->Amask );
+	}
+	m_degree = nDegree;
 }
 
 SDL_Surface * SDL_WindowManager::GetScreen()
@@ -114,8 +159,16 @@ void SDL_WindowManager::Update( )
 		SDL_Rect	rc;
 		rc.x = m_pt.x;
 		rc.y = m_pt.y;
-		rc.w = m_sz.w;
-		rc.h = m_sz.h;
+		if ( m_degree == 90 || m_degree == 270 )
+		{
+			rc.w = m_sz.h;
+			rc.h = m_sz.w;
+		}
+		else
+		{
+			rc.w = m_sz.w;
+			rc.h = m_sz.h;
+		}
 		SDL_Surface * screen = rotateSurface90Degrees( m_screenBuffer, ( 360 - m_degree ) / 90 );
 		SDL_BlitSurface( screen, 0, m_screen, &rc );
 
@@ -133,13 +186,4 @@ void SDL_WindowManager::SetIcon( const char * icon )
 	SDL_Surface * surface = IMG_Load( icon );
 	SDL_WM_SetIcon( surface, NULL );
 	SDL_FreeSurface( surface );
-
-}
-
-SDL_Window * SDL_WindowManager::GetActiveWindow()
-{
-	if ( m_aChildren.empty() )
-		return 0;
-	
-	return ( SDL_Window * )*m_aChildren.rbegin();
 }
