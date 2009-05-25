@@ -26,7 +26,7 @@
 #include "SDL_CardLayout.h"
 
 /// @brief 屏幕类负责管理页面Surface
-class SDL_WindowManager : public SDL_Layout
+class SDL_WindowManager : public SDL_CardLayout
 {
 protected:
 	SDL_WindowManager( int width, int height, int bpp, int videoFlag );
@@ -36,7 +36,8 @@ public:
 	virtual const char * GetType()				{ return "SDL_WindowManager"; }
 
 	virtual SDL_Size GetPreferedSize( ) { return SDL_Size(0, 0); }
-    virtual void SetBounds( const SDL_Rect * lprc );
+	virtual SDL_Rect GetBounds();
+	virtual void SetBounds( const SDL_Rect * lprc );
 
 public:
 	SDL_Surface * GetScreen();
@@ -45,12 +46,11 @@ public:
 	inline SDL_Theme * GetTheme()				{ return m_theme;	}
 	inline void SetTheme( SDL_Theme * pTheme )	{ m_theme = pTheme;	}
 	void SetIcon (const char * icon );
+	void SetDegree( int nDegree );
 
 	void ToggleFullScreen()	{
 		SDL_WM_ToggleFullScreen( m_screen );
 	}
-
-	SDL_Window * GetActiveWindow();
 
 public:
 	static SDL_WindowManager * Create( int width, int height, int bpp, int videoFlag );

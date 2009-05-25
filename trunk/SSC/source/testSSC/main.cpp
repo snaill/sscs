@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
 	SDL_WindowManager * screen = SDL_WindowManager::Create( 640, 480, 0, SDL_SWSURFACE | SDL_RESIZABLE | SDL_DOUBLEBUF );
 	screen->SetTheme( new SDL_DefaultTheme( "C:\\windows\\fonts\\simsun.ttc" ) );
+	screen->SetDegree( 0 );
 
 	CView1	mainView;
 

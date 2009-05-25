@@ -33,8 +33,6 @@ public:
 	virtual const char * GetType()	{ return "SDL_DirListItem"; }
 
 protected:
-	virtual SDL_Layout * DefaultLayout() { return new SDL_BorderLayout(); }
-
     /// @brief 在制定区域绘制图元
     /// @param screen	屏幕Surface
 	virtual void DrawWidget( SDL_Surface * screen, const SDL_Rect * lprc );
